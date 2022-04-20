@@ -115,7 +115,6 @@ public class QSPanel extends LinearLayout implements Tunable {
 
     private Record mDetailRecord;
 
-    private BrightnessMirrorController mBrightnessMirrorController;
     private LinearLayout mHorizontalLinearLayout;
     protected LinearLayout mHorizontalContentContainer;
 
