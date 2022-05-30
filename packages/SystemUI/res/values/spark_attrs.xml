@@ -8,8 +8,4 @@
     <declare-styleable name="BatteryBarController">
         <attr name="viewLocation" format="integer" />
     </declare-styleable>
-
-    <declare-styleable name="ScrimView">
-        <attr name="colorSurfaceHeader" format="color" />
-    </declare-styleable>
 </resources>
