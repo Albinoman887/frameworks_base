@@ -6707,11 +6707,6 @@ public final class Settings {
         public static final String DISABLE_USERCARD = "disable_usercard";
 
         /**
-         * @hide
-         */
-        public static final String QS_TRANSPARENCY = "qs_transparency";
-
-        /**
          * These are all public system settings
          *
          * @hide
