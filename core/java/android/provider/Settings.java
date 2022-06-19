@@ -6581,7 +6581,7 @@ public final class Settings {
          * Whether to take partial screenshot with volume down + power click.
          * @hide
          */
-        public static final String CLICK_PARTIAL_SCREENSHOT = "click_partial_screenshot";
+        public static final String QS_TILE_ANIMATION_STYLE = "qs_tile_animation_style";
 
         /**
          * Statusbar clock background
@@ -6589,13 +6589,13 @@ public final class Settings {
          * 1 - show accented chip (default)
          * @hide
          */
-        public static final String STATUSBAR_CLOCK_CHIP ="statusbar_clock_chip";
+        public static final String QS_TILE_ANIMATION_DURATION = "qs_tile_animation_duration";
 
         /**
          * Battery style
          * @hide
          */
-        public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
+        public static final String QS_TILE_ANIMATION_INTERPOLATOR = "qs_tile_animation_interpolator";
 
         /**
           * Statusbar Battery %

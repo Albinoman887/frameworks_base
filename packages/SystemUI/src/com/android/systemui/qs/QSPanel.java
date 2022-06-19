@@ -18,14 +18,11 @@ package com.android.systemui.qs;
 
 import static com.android.systemui.util.Utils.useQsMediaPlayer;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.AnimatorListenerAdapter;
-import android.animation.ObjectAnimator;
 import android.annotation.NonNull;
 import android.animation.Animator;
 import android.animation.Animator.AnimatorListener;
 import android.animation.AnimatorListenerAdapter;
+
 import android.animation.ObjectAnimator;
 import android.annotation.Nullable;
 import android.content.Context;
@@ -36,7 +33,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.UserHandle;
-import android.provider.Settings;
 import android.util.ArrayMap;
 import android.os.UserHandle;
 import android.provider.Settings;
@@ -150,6 +146,10 @@ public class QSPanel extends LinearLayout implements Tunable {
     private boolean mShouldMoveMediaOnExpansion = true;
     private boolean mUsingCombinedHeaders = false;
     private QSLogger mQsLogger;
+
+    protected int mAnimStyle;
+    protected int mAnimDuration;
+    protected int mInterpolatorType;
 
     public QSPanel(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -398,6 +398,18 @@ public class QSPanel extends LinearLayout implements Tunable {
                     mAutoBrightnessView.setVisibility(mIsAutomaticBrightnessAvailable &&
                             TunerService.parseIntegerSwitch(newValue, true) ? View.VISIBLE : View.GONE);
                 }
+                break;
+            case QS_TILE_ANIMATION_STYLE:
+                mAnimStyle =
+                       TunerService.parseInteger(newValue, 0);
+                break;
+            case QS_TILE_ANIMATION_DURATION:
+                mAnimDuration =
+                       TunerService.parseInteger(newValue, 1);
+                break;
+            case QS_TILE_ANIMATION_INTERPOLATOR:
+                mInterpolatorType =
+                       TunerService.parseInteger(newValue, 0);
                 break;
             default:
                 break;
@@ -935,53 +947,48 @@ public class QSPanel extends LinearLayout implements Tunable {
 
     private void setAnimationTile(QSTileView v) {
         ObjectAnimator animTile = null;
-        int animStyle = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_STYLE, 0, UserHandle.USER_CURRENT);
-        int animDuration = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_DURATION, 2000, UserHandle.USER_CURRENT);
-        int interpolatorType = Settings.System.getIntForUser(mContext.getContentResolver(),
-                Settings.System.ANIM_TILE_INTERPOLATOR, 0, UserHandle.USER_CURRENT);
-        if (animStyle == 0) {
-            //No animation
+
+        switch (mAnimStyle) {
+            case 1:
+                animTile = ObjectAnimator.ofFloat(v, "rotationY", 0f, 360f);
+                break;
+            case 2:
+                animTile = ObjectAnimator.ofFloat(v, "rotation", 0f, 360f);
+                break;
+            default:
+                return;
         }
-        if (animStyle == 1) {
-            animTile = ObjectAnimator.ofFloat(v, "rotationY", 0f, 360f);
+
+        switch (mInterpolatorType) {
+            case 0:
+                animTile.setInterpolator(new LinearInterpolator());
+                break;
+            case 1:
+                animTile.setInterpolator(new AccelerateInterpolator());
+                break;
+            case 2:
+                animTile.setInterpolator(new DecelerateInterpolator());
+                break;
+            case 3:
+                animTile.setInterpolator(new AccelerateDecelerateInterpolator());
+                break;
+            case 4:
+                animTile.setInterpolator(new BounceInterpolator());
+                break;
+            case 5:
+                animTile.setInterpolator(new OvershootInterpolator());
+                break;
+            case 6:
+                animTile.setInterpolator(new AnticipateInterpolator());
+                break;
+            case 7:
+                animTile.setInterpolator(new AnticipateOvershootInterpolator());
+                break;
+            default:
+                break;
         }
-        if (animStyle == 2) {
-            animTile = ObjectAnimator.ofFloat(v, "rotation", 0f, 360f);
-        }
-        if (animTile != null) {
-            switch (interpolatorType) {
-                    case 0:
-                        animTile.setInterpolator(new LinearInterpolator());
-                        break;
-                    case 1:
-                        animTile.setInterpolator(new AccelerateInterpolator());
-                        break;
-                    case 2:
-                        animTile.setInterpolator(new DecelerateInterpolator());
-                        break;
-                    case 3:
-                        animTile.setInterpolator(new AccelerateDecelerateInterpolator());
-                        break;
-                    case 4:
-                        animTile.setInterpolator(new BounceInterpolator());
-                        break;
-                    case 5:
-                        animTile.setInterpolator(new OvershootInterpolator());
-                        break;
-                    case 6:
-                        animTile.setInterpolator(new AnticipateInterpolator());
-                        break;
-                    case 7:
-                        animTile.setInterpolator(new AnticipateOvershootInterpolator());
-                        break;
-                    default:
-                        break;
-            }
-            animTile.setDuration(animDuration);
-            animTile.start();
-        }
+        animTile.setDuration(mAnimDuration * 1000);
+        animTile.start();
     }
 
     private void tileClickListener(QSTile t, QSTileView v) {
