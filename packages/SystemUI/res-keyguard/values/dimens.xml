@@ -107,5 +107,5 @@
          animating. Larger values will cause it to move "faster" while fading out/in. -->
     <dimen name="one_handed_bouncer_move_animation_translation">120dp</dimen>
 
-    <dimen name="title_clock_padding">500dp</dimen>
+    <dimen name="title_clock_padding">4dp</dimen>
 </resources>
