@@ -77,6 +77,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
 
     private View mStatusArea;
     private int mSmartspaceTopOffset;
+    private int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin);
 
     /**
      * Maintain state so that a newly connected plugin can be initialized.
@@ -227,11 +228,13 @@ public class KeyguardClockSwitch extends RelativeLayout {
         }
         boolean useLargeClock = false;
         if (plugin == null) {
+           // int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin;
+
             this.mStatusArea.setVisibility(View.VISIBLE);
             this.mClockView.setVisibility(View.VISIBLE);
             this.mLargeClockView.setVisibility(View.VISIBLE);
             this.mClockFrame.setVisibility(View.VISIBLE);
-            setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
+            setMargins(this.mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
             return;
         }
         // Attach small and big clock views to hierarchy.
@@ -454,7 +457,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
         int i = 0;
         if (useLargeClock) {
             this.mClockFrame.setVisibility(View.VISIBLE);
-            setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
+            setMargins(this.mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
         } else if (hasCustomClock()) {
                 int dimensionPixelSize = mContext.getResources().getDisplayMetrics().heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_height);
                 mClockFrame.setVisibility(!mClockPlugin.shouldShowClockFrame() ? View.GONE : View.VISIBLE);
@@ -469,7 +472,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
                 }
             } else {
                 mClockFrame.setVisibility(View.VISIBLE);
-                setMargins(mLargeClockFrame, 0, 0, 0, 0);
+                setMargins(mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
             }
             refresh();
     }
