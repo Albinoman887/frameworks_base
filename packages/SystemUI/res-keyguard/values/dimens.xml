@@ -89,8 +89,8 @@
     <dimen name="num_pad_key_margin_end">12dp</dimen>
 
     <!-- additional offset for clock switch area items -->
-    <dimen name="clock_padding_start">28dp</dimen>
-    <dimen name="below_clock_padding_start">32dp</dimen>
+    <dimen name="clock_padding_start">10dp</dimen>
+    <dimen name="below_clock_padding_start">128dp</dimen>
     <dimen name="below_clock_padding_end">16dp</dimen>
     <dimen name="below_clock_padding_start_icons">28dp</dimen>
 
@@ -107,5 +107,5 @@
          animating. Larger values will cause it to move "faster" while fading out/in. -->
     <dimen name="one_handed_bouncer_move_animation_translation">120dp</dimen>
 
-    <dimen name="title_clock_padding">4dp</dimen>
+    <dimen name="title_clock_padding">450dp</dimen>
 </resources>
