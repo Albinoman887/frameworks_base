@@ -225,13 +225,13 @@ public class KeyguardClockSwitch extends RelativeLayout {
             mClockPlugin.onDestroyView();
             mClockPlugin = null;
         }
-        boolean useLargeClock = false;
+        boolean useLargeClock = true;
         if (plugin == null) {
             this.mStatusArea.setVisibility(View.VISIBLE);
             this.mClockView.setVisibility(View.VISIBLE);
             this.mLargeClockView.setVisibility(View.VISIBLE);
             this.mClockFrame.setVisibility(View.VISIBLE);
-            setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
+            setMargins(this.mLargeClockFrame, 80, 80, 80, 80);
             return;
         }
         // Attach small and big clock views to hierarchy.
@@ -254,9 +254,10 @@ public class KeyguardClockSwitch extends RelativeLayout {
         mClockPlugin.setTextColor(getCurrentTextColor());
         mClockPlugin.setDarkAmount(mDarkAmount);
         Integer num = this.mDisplayedClockSize;
-        if (num != null && num.intValue() == 0) {
+       // if (num != null && num.intValue() == 0) {
             useLargeClock = true;
-        }
+        //    Log.d(TAG, message is);
+      //  }
         setupFrames("setPlugin", useLargeClock);
         if (mColorPalette != null) {
             mClockPlugin.setColorPalette(mSupportsDarkText, mColorPalette);
@@ -454,7 +455,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
         int i = 0;
         if (useLargeClock) {
             this.mClockFrame.setVisibility(View.VISIBLE);
-            setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
+            setMargins(this.mLargeClockFrame, 80, 80, 80, 80);
         } else if (hasCustomClock()) {
                 int dimensionPixelSize = mContext.getResources().getDisplayMetrics().heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_height);
                 mClockFrame.setVisibility(!mClockPlugin.shouldShowClockFrame() ? View.GONE : View.VISIBLE);
@@ -465,11 +466,11 @@ public class KeyguardClockSwitch extends RelativeLayout {
                 if (mClockPlugin.usesPreferredY()) {
                     i = mClockPlugin.getPreferredY(dimensionPixelSize);
                 }
-                setMargins(frameLayout, 0, i, 0, 0);
+                setMargins(frameLayout, 80, 80, 80, 80);
                 }
             } else {
                 mClockFrame.setVisibility(View.VISIBLE);
-                setMargins(mLargeClockFrame, 0, 0, 0, 0);
+                setMargins(mLargeClockFrame, 80, 80, 80, 80);
             }
             refresh();
     }
