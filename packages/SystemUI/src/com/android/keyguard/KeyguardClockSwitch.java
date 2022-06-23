@@ -228,8 +228,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
         }
         boolean useLargeClock = false;
         if (plugin == null) {
-           largeClockTopMargin = getContext().getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin);
-
+            largeClockTopMargin = getContext().getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin);
             this.mStatusArea.setVisibility(View.VISIBLE);
             this.mClockView.setVisibility(View.VISIBLE);
             this.mLargeClockView.setVisibility(View.VISIBLE);
