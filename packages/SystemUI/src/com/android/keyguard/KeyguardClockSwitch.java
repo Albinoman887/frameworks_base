@@ -77,7 +77,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
 
     private View mStatusArea;
     private int mSmartspaceTopOffset;
-    private int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin);
+    private int largeClockTopMargin;
 
     /**
      * Maintain state so that a newly connected plugin can be initialized.
@@ -228,7 +228,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
         }
         boolean useLargeClock = false;
         if (plugin == null) {
-           // int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin;
+           largeClockTopMargin = getContext().getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin);
 
             this.mStatusArea.setVisibility(View.VISIBLE);
             this.mClockView.setVisibility(View.VISIBLE);
@@ -455,6 +455,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
 
     private void setupFrames(String str, boolean useLargeClock) {
         int i = 0;
+        largeClockTopMargin = getContext().getResources().getDimensionPixelSize(R.dimen.keyguard_large_clock_top_margin);
         if (useLargeClock) {
             this.mClockFrame.setVisibility(View.VISIBLE);
             setMargins(this.mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
