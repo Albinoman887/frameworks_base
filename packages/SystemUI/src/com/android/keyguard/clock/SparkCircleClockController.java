@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +30,7 @@ public class SparkCircleClockController implements ClockPlugin {
     private final ViewPreviewer mRenderer = new ViewPreviewer();
     private final Resources mResources;
     private ClockLayout mView;
-
+    private Context mContext;
     
     public String getName() {
         return "SparkCircle";
