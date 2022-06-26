@@ -4,6 +4,7 @@ import android.app.WallpaperManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.content.Context;
 import android.graphics.Paint;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -110,7 +111,7 @@ public class SparkCircleClockController implements ClockPlugin {
 
     
     public int getPreferredY(int totalheight) {
-        return totalheight / 4;
+        return totalheight / 2;
     }
 
     
