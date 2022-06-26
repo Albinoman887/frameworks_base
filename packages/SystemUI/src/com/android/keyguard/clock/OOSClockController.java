@@ -53,7 +53,7 @@ public class OOSClockController implements ClockPlugin {
 
     
     public boolean shouldShowStatusArea() {
-        return false;
+        return true;
     }
 
     public OOSClockController(Resources resources, LayoutInflater layoutInflater, SysuiColorExtractor sysuiColorExtractor) {

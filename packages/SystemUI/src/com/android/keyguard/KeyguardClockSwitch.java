@@ -465,9 +465,9 @@ public class KeyguardClockSwitch extends RelativeLayout {
                 setPluginBelowKgArea();
             } else {
                 FrameLayout frameLayout = mLargeClockFrame;
-                if (mClockPlugin.usesPreferredY()) {
+              //  if (mClockPlugin.usesPreferredY()) {
                     i = mClockPlugin.getPreferredY(dimensionPixelSize);
-                }
+                //}
                 setMargins(frameLayout, 0, i, 0, 0);
                 }
             } else {
