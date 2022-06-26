@@ -115,6 +115,13 @@ public class SparkCircleClockController implements ClockPlugin {
 
     
     public void setTextColor(int color) {
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+        int mWhiteColor = mContext.getResources().getColor(R.color.lockscreen_clock_white_color);
+
+        mTimeClock.setTextColor(mWhiteColor);
+        mTimeClockAccented.setTextColor(mWhiteColor);
+        mDay.setTextColor(mWhiteColor);
+        mColor = color;
     }
 
     
