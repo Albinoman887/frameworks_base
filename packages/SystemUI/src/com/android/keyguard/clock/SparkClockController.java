@@ -118,19 +118,18 @@ public class SparkClockController implements ClockPlugin {
 
     
     public int getPreferredY(int totalheight) {
-        return totalheight / 4;
+        return totalheight / 2;
     }
 
     
     public void setTextColor(int color) {
-        TextClock textClock = mTimeClock1;
-        int i2 = -1;
-        textClock.setTextColor(mDarkAmount < 0.5f ? Utils.getColorAttrDefaultColor(textClock.getContext(), R.attr.wallpaperTextColorAccent) : -1);
-        TextClock textClock2 = mDateClock;
-        if (mDarkAmount < 0.5f) {
-            i2 = Utils.getColorAttrDefaultColor(textClock2.getContext(), R.attr.wallpaperTextColorAccent);
-        }
-        textClock2.setTextColor(i2);
+        int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
+        int mWhiteColor = mContext.getResources().getColor(R.color.lockscreen_clock_white_color);
+
+        mTimeClock.setTextColor(mWhiteColor);
+        mTimeClockAccented.setTextColor(mWhiteColor);
+        mDay.setTextColor(mWhiteColor);
+        mColor = color;
     }
 
     
