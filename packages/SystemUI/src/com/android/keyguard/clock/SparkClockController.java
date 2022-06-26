@@ -15,12 +15,16 @@ import com.android.settingslib.Utils;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
+import android.text.Html;
 
 import java.util.TimeZone;
 
 public class SparkClockController implements ClockPlugin {
     private ClockLayout mBigClockView;
+    private int mColor;
     private final SysuiColorExtractor mColorExtractor;
+    private TextClock mDate;
+    private TextClock mDay;
     private float mDarkAmount;
     private TextClock mDateClock;
     private final LayoutInflater mLayoutInflater;
