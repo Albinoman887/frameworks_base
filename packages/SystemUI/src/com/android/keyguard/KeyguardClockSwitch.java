@@ -143,6 +143,9 @@ public class KeyguardClockSwitch extends RelativeLayout {
         public void onStartedGoingToSleep(int i) {
             if (mDisplayedClockSize != null) {
                 KeyguardClockSwitch keyguardClockSwitch = KeyguardClockSwitch.this;
+                if (!hasCustomClock()) {
+                    setupFrames("startedGoingToSleep", mDisplayedClockSize.intValue() != 0);    
+                }
             }
         }
     };
@@ -233,7 +236,11 @@ public class KeyguardClockSwitch extends RelativeLayout {
             this.mClockView.setVisibility(View.VISIBLE);
             this.mLargeClockView.setVisibility(View.VISIBLE);
             this.mClockFrame.setVisibility(View.VISIBLE);
-            setMargins(this.mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
+            if (hasCustomClock()) {
+                setMargins(this.mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
+            } else {
+                setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
+            }
             return;
         }
         // Attach small and big clock views to hierarchy.
@@ -258,6 +265,9 @@ public class KeyguardClockSwitch extends RelativeLayout {
         Integer num = this.mDisplayedClockSize;
         if (num != null && num.intValue() == 0) {
             useLargeClock = true;
+        }
+        if (!hasCustomClock()) {
+            setupFrames("setPlugin", useLargeClock);
         }
         if (mColorPalette != null) {
             mClockPlugin.setColorPalette(mSupportsDarkText, mColorPalette);
@@ -346,6 +356,9 @@ public class KeyguardClockSwitch extends RelativeLayout {
             }
         });
         mStatusAreaAnim.start();
+        if (!hasCustomClock()) {
+            setupFrames("useLargeClock", !useLargeClock);
+        }
     }
 
     private void setPluginBelowKgArea() {
@@ -450,6 +463,31 @@ public class KeyguardClockSwitch extends RelativeLayout {
         }
     }
 
+    private void setupFrames(String str, boolean useLargeClock) {
+        if (!hasCustomClock()) {
+            int i = 0;
+            if (useLargeClock) {
+                this.mClockFrame.setVisibility(View.VISIBLE);
+                setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
+            } else if (hasCustomClock()) {
+                    int dimensionPixelSize = mContext.getResources().getDisplayMetrics().heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_height);
+                    mClockFrame.setVisibility(!mClockPlugin.shouldShowClockFrame() ? View.GONE : View.VISIBLE);
+                if (mClockPlugin.shouldShowStatusArea()) {
+                    setPluginBelowKgArea();
+                } else {
+                    FrameLayout frameLayout = mLargeClockFrame;
+                    if (mClockPlugin.usesPreferredY()) {
+                        i = mClockPlugin.getPreferredY(dimensionPixelSize);
+                    }
+                    setMargins(frameLayout, 0, i, 0, 0);
+                    }
+                } else {
+                    mClockFrame.setVisibility(View.VISIBLE);
+                    setMargins(mLargeClockFrame, 0, 0, 0, 0);
+                }
+                refresh();
+        }
+    }
 
     public void setMargins(View view, int i, int i2, int i3, int i4) {
         if (view.getLayoutParams() instanceof ViewGroup.MarginLayoutParams) {
