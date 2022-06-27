@@ -1,9 +1,7 @@
 package com.android.keyguard.clock;
 
-import android.app.WallpaperManager;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Paint;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -15,9 +13,9 @@ import com.android.settingslib.Utils;
 import com.android.systemui.R;
 import com.android.systemui.colorextraction.SysuiColorExtractor;
 import com.android.systemui.plugins.ClockPlugin;
-import android.text.Html;
-
 import java.util.TimeZone;
+import android.graphics.BitmapFactory;
+import android.text.Html;
 
 public class SparkClockController implements ClockPlugin {
     private ClockLayout mBigClockView;
@@ -35,7 +33,10 @@ public class SparkClockController implements ClockPlugin {
     private final Resources mResources;
     private ClockLayout mView;
     private Context mContext;
-    
+    private TextClock mTimeClock1Accented;
+    private TextClock mTimeClock2Accented;
+    private TextClock mTimeClock3Accented;
+
     public String getName() {
         return "Spark";
     }
@@ -131,8 +132,12 @@ public class SparkClockController implements ClockPlugin {
         int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
         int mWhiteColor = mContext.getResources().getColor(R.color.lockscreen_clock_white_color);
 
-        mTimeClock.setTextColor(mWhiteColor);
-        mTimeClockAccented.setTextColor(mWhiteColor);
+        mTimeClock1.setTextColor(mWhiteColor);
+        mTimeClock2.setTextColor(mWhiteColor);
+        mTimeClock3.setTextColor(mWhiteColor);
+        mTimeClock1Accented.setTextColor(mWhiteColor);
+        mTimeClock2Accented.setTextColor(mWhiteColor);
+        mTimeClock3Accented.setTextColor(mWhiteColor);
         mDay.setTextColor(mWhiteColor);
         mColor = color;
     }
