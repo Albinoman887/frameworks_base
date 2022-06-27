@@ -35,6 +35,9 @@ public class SparkCircleClockController implements ClockPlugin {
     private final Resources mResources;
     private ClockLayout mView;
     private Context mContext;
+    private TextClock mTimeClock1Accented;
+    private TextClock mTimeClock2Accented;
+    private TextClock mTimeClock3Accented;
     
     public String getName() {
         return "SparkCircle";
@@ -123,8 +126,12 @@ public class SparkCircleClockController implements ClockPlugin {
         int mAccentColor = mContext.getResources().getColor(R.color.lockscreen_clock_accent_color);
         int mWhiteColor = mContext.getResources().getColor(R.color.lockscreen_clock_white_color);
 
-        mTimeClock.setTextColor(mWhiteColor);
-        mTimeClockAccented.setTextColor(mWhiteColor);
+        mTimeClock1.setTextColor(mWhiteColor);
+        mTimeClock2.setTextColor(mWhiteColor);
+        mTimeClock3.setTextColor(mWhiteColor);
+        mTimeClock1Accented.setTextColor(mWhiteColor);
+        mTimeClock2Accented.setTextColor(mWhiteColor);
+        mTimeClock3Accented.setTextColor(mWhiteColor);
         mDay.setTextColor(mWhiteColor);
         mColor = color;
     }
