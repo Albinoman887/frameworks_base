@@ -227,11 +227,14 @@ public class KeyguardClockSwitch extends RelativeLayout {
         }
         boolean useLargeClock = false;
         if (plugin == null) {
+            int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(
+                R.dimen.keyguard_large_clock_top_margin);
+
             this.mStatusArea.setVisibility(View.VISIBLE);
             this.mClockView.setVisibility(View.VISIBLE);
             this.mLargeClockView.setVisibility(View.VISIBLE);
             this.mClockFrame.setVisibility(View.VISIBLE);
-            setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
+            setMargins(this.mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
             return;
         }
         // Attach small and big clock views to hierarchy.
