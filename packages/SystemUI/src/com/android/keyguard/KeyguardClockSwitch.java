@@ -466,31 +466,34 @@ public class KeyguardClockSwitch extends RelativeLayout {
     }
 
     private void setupFrames(String str, boolean useLargeClock) {
+        Log.d(TAG, "setupFrames function called...."); 
         if (mClockPlugin != null) {
             int i = 0;
             if (useLargeClock) {
                 Log.d("Is Use Large Clock?", String.valueOf(useLargeClock));
                 this.mClockFrame.setVisibility(View.VISIBLE);
+                Log.d(TAG, "SetMargins while UseLargeClock True called"); 
                 setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
              } else if (hasCustomClock()) {
                     int dimensionPixelSize = mContext.getResources().getDisplayMetrics().heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_height);
                     mClockFrame.setVisibility(!mClockPlugin.shouldShowClockFrame() ? View.GONE : View.VISIBLE);
                     if (mClockPlugin.shouldShowStatusArea()) {
                         setPluginBelowKgArea(); 
+                        Log.d(TAG, "SetPluginBelowKgArea called");    
                 } else {
                     FrameLayout frameLayout = mLargeClockFrame;
                     if (mClockPlugin.usesPreferredY()) {
                         i = mClockPlugin.getPreferredY(dimensionPixelSize);
+                        Log.d(TAG, "UsesPerferedY called");
                     }
-                    setMargins(frameLayout, 0, i, 0, 0);
-                    }
-                    Log.d(TAG, "SetMargins with Perfered Y called");
+                    Log.d(TAG, "SetMargins with CustomClock called");
                     Log.d("Perfered Y Val", Integer.toString(i));
-                    
+                    setMargins(frameLayout, 0, i, 0, 0);
+                    }                    
                 } else {
                     mClockFrame.setVisibility(View.VISIBLE);
                     setMargins(mLargeClockFrame, 0, 0, 0, 0);
-                    Log.d(TAG, "SetMargins without Perfered Y");
+                    Log.d(TAG, "SetMargins with UseLargeClock FALSE called");
                 }
                 refresh();
         }
