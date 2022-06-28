@@ -21,6 +21,7 @@ import android.os.PowerManager;
 import android.os.SystemClock;
 import android.provider.Settings;
 import android.content.Context;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -143,8 +144,10 @@ public class KeyguardClockSwitch extends RelativeLayout {
         public void onStartedGoingToSleep(int i) {
             if (mDisplayedClockSize != null) {
                 KeyguardClockSwitch keyguardClockSwitch = KeyguardClockSwitch.this;
-                if (hasCustomClock()) {
-                    setupFrames("startedGoingToSleep", mDisplayedClockSize.intValue() != 0);    
+                if (mClockPlugin != null) {
+                    if (hasCustomClock()) {
+                        setupFrames("startedGoingToSleep", mDisplayedClockSize.intValue() != 0);    
+                    }
                 }
             }
         }
@@ -181,6 +184,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
 
         mSmartspaceTopOffset = mContext.getResources().getDimensionPixelSize(
                 R.dimen.keyguard_smartspace_top_offset);
+                Log.d(TAG, "onDpiChanged called");
     }
 
     public void onThemeChanged() {
@@ -211,6 +215,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
 
         onDensityOrFontScaleChanged();
         onThemeChanged();
+        Log.d(TAG, "FinishedInflate");
     }
 
     void setClockPlugin(ClockPlugin plugin, int statusBarState) {
@@ -237,7 +242,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
             this.mLargeClockView.setVisibility(View.VISIBLE);
             this.mClockFrame.setVisibility(View.VISIBLE);
                 setMargins(this.mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
-
+                Log.d(TAG, "Set Margins When ClockPlugin is NULL");
             return;
         }
         // Attach small and big clock views to hierarchy.
@@ -461,25 +466,31 @@ public class KeyguardClockSwitch extends RelativeLayout {
     }
 
     private void setupFrames(String str, boolean useLargeClock) {
-        if (mClockPlugin != null)  {
+        if (mClockPlugin != null) {
             int i = 0;
-
+            if (useLargeClock) {
+                Log.d("Is Use Large Clock?", String.valueOf(useLargeClock));
                 this.mClockFrame.setVisibility(View.VISIBLE);
                 setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
- if (hasCustomClock()) {
+             } else if (hasCustomClock()) {
                     int dimensionPixelSize = mContext.getResources().getDisplayMetrics().heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_height);
                     mClockFrame.setVisibility(!mClockPlugin.shouldShowClockFrame() ? View.GONE : View.VISIBLE);
-
-
+                    if (mClockPlugin.shouldShowStatusArea()) {
+                        setPluginBelowKgArea(); 
+                } else {
                     FrameLayout frameLayout = mLargeClockFrame;
                     if (mClockPlugin.usesPreferredY()) {
                         i = mClockPlugin.getPreferredY(dimensionPixelSize);
                     }
                     setMargins(frameLayout, 0, i, 0, 0);
-
+                    }
+                    Log.d(TAG, "SetMargins with Perfered Y called");
+                    Log.d("Perfered Y Val", Integer.toString(i));
+                    
                 } else {
                     mClockFrame.setVisibility(View.VISIBLE);
                     setMargins(mLargeClockFrame, 0, 0, 0, 0);
+                    Log.d(TAG, "SetMargins without Perfered Y");
                 }
                 refresh();
         }
@@ -505,3 +516,4 @@ public class KeyguardClockSwitch extends RelativeLayout {
         pw.println("  mDisplayedClockSize: " + mDisplayedClockSize);
     }
 }
+

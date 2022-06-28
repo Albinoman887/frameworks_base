@@ -89,7 +89,7 @@ public class KeyguardClockSwitchController extends ViewController<KeyguardClockS
     private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
     private final KeyguardBypassController mBypassController;
 
-    private int mKeyguardClockTopMargin = 0;
+    private int mKeyguardClockTopMargin = 16;
 
     /**
      * Listener for changes to the color palette.
@@ -207,7 +207,6 @@ public class KeyguardClockSwitchController extends ViewController<KeyguardClockS
         if (mOnlyClock) {
             View ksv = mView.findViewById(R.id.keyguard_slice_view);
             ksv.setVisibility(View.GONE);
-
             View nic = mView.findViewById(
                     R.id.left_aligned_notification_icon_container);
             nic.setVisibility(View.GONE);
