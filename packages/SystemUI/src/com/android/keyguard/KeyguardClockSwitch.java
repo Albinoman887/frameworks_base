@@ -354,7 +354,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
             }
         });
         mStatusAreaAnim.start();
-        if (plugin != null) {
+        if (mClockPlugin != null) {
         setupFrames("useLargeClock", !useLargeClock);
         }
     }
@@ -462,7 +462,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
     }
 
     private void setupFrames(String str, boolean useLargeClock) {
-        if (plugin != null) {
+        if (mClockPlugin != null) {
         int i = 0;
         if (useLargeClock) {
             this.mClockFrame.setVisibility(View.VISIBLE);
