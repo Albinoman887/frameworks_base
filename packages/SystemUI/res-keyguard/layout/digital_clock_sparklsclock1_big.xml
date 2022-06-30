@@ -5,19 +5,20 @@ xmlns:app="http://schemas.android.com/apk/res-auto"
 xmlns:aapt="http://schemas.android.com/aapt" 
 android:layout_gravity="top|center_vertical|center_horizontal|center"
 android:layout_width="match_parent" 
-android:layout_height="match_parent" 
+android:layout_height="300px"
+android:layout_alignParentTop="true"
 android:layoutDirection="ltr"
-android:paddingTop="214dp">
+android:paddingTop="214px">
     <LinearLayout 
 	android:layout_gravity="center_horizontal" 
 	android:orientation="vertical" 
 	android:id="@+id/clock_view" 
 	android:layout_width="wrap_content" 
-	android:layout_height="wrap_content" 
+	android:layout_height="match_parent" 
 	android:layoutDirection="ltr">
 			<LinearLayout 
-			android:layout_gravity="center" 
-			android:gravity="center" 
+			android:layout_gravity="top" 
+			android:gravity="top" 
 			android:orientation="vertical" 
 			android:layout_width="wrap_content" 
 			android:layout_height="wrap_content">
@@ -28,14 +29,15 @@ android:paddingTop="214dp">
 				android:layout_width="wrap_content" 
 				android:layout_height="wrap_content" 
 				android:singleLine="true" 
-				android:textSize="120.0sp" 
+				android:textSize="120.0dp" 
 				android:textColor="?attr/wallpaperTextColor" 
 				android:textStyle="normal" 
 				android:typeface="monospace"
 				android:format12Hour="hh" 
 				android:format24Hour="kk" 
 				android:textAllCaps="true" 
-				android:letterSpacing="0.05"/>
+				android:letterSpacing="0.03"
+				android:elegantTextHeight="false"/>
 				<ImageView 
 				android:layout_gravity="center" 
 				android:gravity="center" 
@@ -50,13 +52,14 @@ android:paddingTop="214dp">
 				android:layout_width="wrap_content" 
 				android:layout_height="wrap_content" 
 				android:singleLine="true" 
-				android:textSize="120.0sp" 
+				android:textSize="120.0dp" 
 				android:textColor="?attr/wallpaperTextColor" 
 				android:textStyle="normal" 
 				android:format12Hour="mm" 
 				android:format24Hour="mm" 
 				android:textAllCaps="true" 
-				android:letterSpacing="0.05"/>
+				android:elegantTextHeight="false"
+				android:letterSpacing="0.03"/>
 			</LinearLayout>
 			<FrameLayout 
 			android:layout_gravity="center" 
@@ -89,11 +92,12 @@ android:paddingTop="214dp">
 				android:layout_width="wrap_content" 
 				android:layout_height="wrap_content" 
 				android:singleLine="true" 
-				android:textSize="18.0sp" 
+				android:textSize="18.0dp" 
 				android:textColor="?attr/wallpaperTextColor" 
 				android:textStyle="bold" 
 				android:format12Hour="EEE, MMM dd" 
 				android:format24Hour="EEE, MMM dd" 
+				android:elegantTextHeight="false"
 				android:textAllCaps="false" />
 			</FrameLayout>
 		</LinearLayout>
