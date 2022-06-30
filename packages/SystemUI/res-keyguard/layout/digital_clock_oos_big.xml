@@ -7,7 +7,7 @@ android:layout_gravity="center"
 android:layout_width="match_parent" 
 android:layout_height="match_parent" 
 android:layoutDirection="ltr" 
-android:paddingTop="214dp">
+android:paddingTop="90dp">
     <LinearLayout 
     android:layout_gravity="center_horizontal" 
     android:orientation="vertical" 
