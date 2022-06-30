@@ -42,6 +42,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.Arrays;
 import java.util.TimeZone;
+import android.util.Log;
 
 /**
  * Switch to show plugin clock when plugin is connected, otherwise it will show default clock.
@@ -179,6 +180,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
 
         mSmartspaceTopOffset = mContext.getResources().getDimensionPixelSize(
                 R.dimen.keyguard_smartspace_top_offset);
+                Log.d(TAG, "On DPI Change called.."); 
     }
 
     public void onThemeChanged() {
@@ -188,6 +190,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
                 : Typeface.create(font, Typeface.NORMAL);
         mClockView.setTypeface(tf);
         mLargeClockView.setTypeface(tf);
+        Log.d(TAG, "ON THEME CHANGE function called...."); 
     }
 
     /**
@@ -235,8 +238,12 @@ public class KeyguardClockSwitch extends RelativeLayout {
             this.mLargeClockView.setVisibility(View.VISIBLE);
             this.mClockFrame.setVisibility(View.VISIBLE);
             if (plugin == null) {
+                Log.d(TAG, "SetupClockPlugin - looks like we are on default clock, set margins with padding.."); 
+                Log.d("Current clock:", String.valueOf(mClockPlugin.getName()));
                 setMargins(this.mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
             } else {
+                Log.d(TAG, "SetupClockPlugin - using custom clock, set margins to 0."); 
+                Log.d("Current clock:", String.valueOf(mClockPlugin.getName()));
                 setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
             }
             return;
@@ -462,12 +469,17 @@ public class KeyguardClockSwitch extends RelativeLayout {
     }
 
     private void setupFrames(String str, boolean useLargeClock) {
+        Log.d(TAG, "inside setupFrames");
         if (mClockPlugin != null) {
+            Log.d(TAG, "mClockPlugin is not NULL");
         int i = 0;
         if (useLargeClock) {
             this.mClockFrame.setVisibility(View.VISIBLE);
+            Log.d(TAG, "Setting Margin for ", String.valueOf(mClockPlugin.getName()));
+
             setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
         } else if (hasCustomClock()) {
+            Log.d(TAG, "hasCustomClock = true");
                 int dimensionPixelSize = mContext.getResources().getDisplayMetrics().heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_height);
                 mClockFrame.setVisibility(!mClockPlugin.shouldShowClockFrame() ? View.GONE : View.VISIBLE);
             if (mClockPlugin.shouldShowStatusArea()) {
@@ -475,12 +487,16 @@ public class KeyguardClockSwitch extends RelativeLayout {
             } else {
                 FrameLayout frameLayout = mLargeClockFrame;
                 if (mClockPlugin.usesPreferredY()) {
+                    Log.d(TAG, "Clock uses PreferredY");
                     i = mClockPlugin.getPreferredY(dimensionPixelSize);
                 }
+                Log.d(TAG, "Setting Preferred Y Margin for ", String.valueOf(mClockPlugin.getName()));
                 setMargins(frameLayout, 0, i, 0, 0);
                 }
             } else {
                 mClockFrame.setVisibility(View.VISIBLE);
+                Log.d(TAG, "Clock using Small clock view");
+                Log.d("Setting Margin for ", String.valueOf(mClockPlugin.getName()));
                 setMargins(mLargeClockFrame, 0, 0, 0, 0);
             }
             refresh();
