@@ -7,7 +7,7 @@ android:layout_gravity="center"
 android:layout_width="match_parent" 
 android:layout_height="match_parent" 
 android:layoutDirection="ltr" 
-android:paddingTop="90dp">
+android:paddingTop="100dp">
     <LinearLayout 
     android:layout_gravity="center_horizontal" 
     android:orientation="vertical" 
@@ -16,7 +16,7 @@ android:paddingTop="90dp">
     android:layout_height="wrap_content" 
     android:layoutDirection="ltr">
         <TextClock 
-        android:textSize="40dp" 
+        android:textSize="59.5sp" 
         android:textColor="?attr/wallpaperTextColorAccent" 
         android:ellipsize="none" 
         android:layout_gravity="center" 
@@ -27,7 +27,7 @@ android:paddingTop="90dp">
         android:format12Hour="EEEE" 
         android:format24Hour="EEEE"/>
         <TextClock 
-        android:textSize="100dp" 
+        android:textSize="100sp" 
         android:textColor="?attr/wallpaperTextColorAccent" 
         android:ellipsize="none" 
         android:gravity="center_horizontal" 
@@ -39,7 +39,7 @@ android:paddingTop="90dp">
         android:format24Hour="kk" 
         android:paddingBottom="-32dp"/>
         <TextClock 
-        android:textSize="100dp" 
+        android:textSize="100sp" 
         android:textColor="?attr/wallpaperTextColorAccent" 
         android:ellipsize="none" 
         android:layout_gravity="center" 
@@ -49,7 +49,7 @@ android:paddingTop="90dp">
         android:format12Hour="mm" 
         android:format24Hour="mm"/>
         <TextClock 
-        android:textSize="20dp" 
+        android:textSize="20sp" 
         android:textColor="?attr/wallpaperTextColorAccent" 
         android:ellipsize="none" 
         android:layout_gravity="center" 

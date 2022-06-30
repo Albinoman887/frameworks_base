@@ -3,11 +3,11 @@ xmlns:androidprv="http://schemas.android.com/apk/prv/res/android"
 xmlns:android="http://schemas.android.com/apk/res/android" 
 xmlns:app="http://schemas.android.com/apk/res-auto" 
 xmlns:aapt="http://schemas.android.com/aapt" 
-android:layout_gravity="center_vertical|center_horizontal|top"
+android:layout_gravity="top|center_vertical|center_horizontal|center"
 android:layout_width="match_parent" 
 android:layout_height="match_parent" 
-android:layoutDirection="ltr">
-android:paddingTop="110dp">
+android:layoutDirection="ltr"
+android:paddingTop="214dp">
     <LinearLayout 
 	android:layout_gravity="center_horizontal" 
 	android:orientation="vertical" 
