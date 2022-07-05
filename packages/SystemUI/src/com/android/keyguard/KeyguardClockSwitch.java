@@ -261,9 +261,9 @@ public class KeyguardClockSwitch extends RelativeLayout {
         if (num != null && num.intValue() == 0) {
             useLargeClock = true;
         }
-        if (plugin != null) {
+      //  if (plugin != null) {
             setupFrames("setPlugin", useLargeClock);
-        }
+      //  }
         if (mColorPalette != null) {
             mClockPlugin.setColorPalette(mSupportsDarkText, mColorPalette);
         }
@@ -351,9 +351,9 @@ public class KeyguardClockSwitch extends RelativeLayout {
             }
         });
         mStatusAreaAnim.start();
-        if (mClockPlugin != null) {
+       // if (mClockPlugin != null) {
         setupFrames("useLargeClock", !useLargeClock);
-        }
+       // }
     }
 
     private void setPluginBelowKgArea() {
@@ -459,7 +459,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
     }
 
     private void setupFrames(String str, boolean useLargeClock) {
-        if (mClockPlugin != null) {
+      //  if (mClockPlugin != null) {
         int i = 0;
         int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(
             R.dimen.keyguard_large_clock_top_margin);
@@ -483,7 +483,7 @@ public class KeyguardClockSwitch extends RelativeLayout {
                 setMargins(mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
             }
             refresh();
-        }
+      //  }
     }
 
     public void setMargins(View view, int i, int i2, int i3, int i4) {

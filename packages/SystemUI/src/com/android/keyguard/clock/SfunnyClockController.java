@@ -52,7 +52,7 @@ public class SfunnyClockController implements ClockPlugin {
 
     
     public boolean usesPreferredY() {
-        return true;
+        return false;
     }
 
     
