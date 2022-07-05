@@ -55,7 +55,7 @@ public class SparkClockController implements ClockPlugin {
 
     
     public boolean usesPreferredY() {
-        return true;
+        return false;
     }
 
     
