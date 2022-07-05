@@ -44,7 +44,7 @@ public class OOSClockController implements ClockPlugin {
 
     
     public boolean usesPreferredY() {
-        return true;
+        return false;
     }
 
     
