@@ -227,6 +227,8 @@ public class KeyguardClockSwitch extends RelativeLayout {
         }
         boolean useLargeClock = false;
         if (plugin == null) {
+            int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(
+                R.dimen.keyguard_large_clock_top_margin);
             this.mStatusArea.setVisibility(View.VISIBLE);
             this.mClockView.setVisibility(View.VISIBLE);
             this.mLargeClockView.setVisibility(View.VISIBLE);
@@ -249,10 +251,26 @@ public class KeyguardClockSwitch extends RelativeLayout {
         }
         mStatusArea.setVisibility(plugin.shouldShowStatusArea() ? View.VISIBLE : View.GONE);
         // Initialize plugin parameters.
+        int largeClockTopMargin = getContext().getResources().getDimensionPixelSize(
+            R.dimen.keyguard_large_clock_top_margin);
+        int dimensionPixelSize = mContext.getResources().getDisplayMetrics().heightPixels - mContext.getResources().getDimensionPixelSize(R.dimen.status_bar_height);
+
         mClockPlugin = plugin;
         mClockPlugin.setStyle(getPaint().getStyle());
         mClockPlugin.setTextColor(getCurrentTextColor());
         mClockPlugin.setDarkAmount(mDarkAmount);
+      //  if (mClockPlugin.usesPreferredY()) {
+       //     Log.d(TAG, "Inside Preferred Y If statement");
+//
+         //   largeClockTopMargin = mClockPlugin.getPreferredY(dimensionPixelSize);
+     //   }
+     if (mClockPlugin.getName().equals("default")) {  
+        setMargins(mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
+     } else if (mClockPlugin.getTitle().equals("default")) {
+        setMargins(mLargeClockFrame, 0, largeClockTopMargin, 0, 0);
+     } else {
+        setMargins(this.mLargeClockFrame, 0, 0, 0, 0);
+     }
         Integer num = this.mDisplayedClockSize;
         if (num != null && num.intValue() == 0) {
             useLargeClock = true;
