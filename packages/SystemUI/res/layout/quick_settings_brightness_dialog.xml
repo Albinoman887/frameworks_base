@@ -31,7 +31,7 @@
         <com.android.systemui.settings.brightness.ToggleSeekBar
             android:id="@+id/slider"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="48dp"
             android:layout_gravity="center_vertical"
             android:minHeight="48dp"
             android:thumb="@null"
@@ -57,7 +57,6 @@
             android:layout_height="22dp"
             android:layout_centerVertical="true"
             android:layout_marginEnd="16dp"
-            android:layout_alignParentEnd="true"
             android:scaleType="fitCenter"
             android:src="@drawable/ic_dot_brightness_high" />
 

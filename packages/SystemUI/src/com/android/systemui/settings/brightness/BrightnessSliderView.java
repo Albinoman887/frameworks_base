@@ -80,7 +80,7 @@ public class BrightnessSliderView extends LinearLayout {
                     .findDrawableByLayerId(android.R.id.progress);
             LayerDrawable actualProgressSlider = (LayerDrawable) progressSlider.getDrawable();
             mProgressDrawable = actualProgressSlider.findDrawableByLayerId(R.id.slider_foreground);
-            updateStartEndIconTint();
+           // updateStartEndIconTint();
         } catch (Exception e) {
             // Nothing to do, mProgressDrawable will be null.
         }
@@ -143,16 +143,7 @@ public class BrightnessSliderView extends LinearLayout {
         // Not the best conversion, but at least it works
         // TODO: Make it more efficient
         int percentage = (int) ((Float.parseFloat(String.valueOf(getValue())) / Float.parseFloat(String.valueOf(getMax()))) * 100f);
-        mLeftIcon.setImageTintList(
-                Utils.getColorAttr(mLeftIcon.getContext(), percentage <= 10 ?
-                        android.R.attr.textColorPrimary :
-                        android.R.attr.textColorPrimaryInverse)
-        );
-        mRightIcon.setImageTintList(
-                Utils.getColorAttr(mLeftIcon.getContext(), percentage <= 90 ?
-                        android.R.attr.textColorPrimary :
-                        android.R.attr.textColorPrimaryInverse)
-        );
+
     }
 
     /**
@@ -170,7 +161,7 @@ public class BrightnessSliderView extends LinearLayout {
      * @param enable
      */
     public void enableSlider(boolean enable) {
-        mSlider.setEnabled(enable);
+        mSlider.setEnabled(true);
     }
 
     /**
@@ -231,7 +222,7 @@ public class BrightnessSliderView extends LinearLayout {
     public void setSliderScaleY(float scale) {
         if (scale != mScale) {
             mScale = scale;
-            applySliderScale();
+           // applySliderScale();
         }
     }
 
