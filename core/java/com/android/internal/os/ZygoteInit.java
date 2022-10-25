@@ -186,6 +186,12 @@ public class ZygoteInit {
         Log.i(TAG, "Preloading shared libraries...");
         System.loadLibrary("android");
         System.loadLibrary("jnigraphics");
+
+        try {
+            System.loadLibrary("qti_performance");
+        } catch (UnsatisfiedLinkError e) {
+            Log.e(TAG, "Couldn't load qti_performance");
+        }
     }
 
     native private static void nativePreloadAppProcessHALs();
