@@ -99,8 +99,8 @@ public final class GmsDynamiteClientHooks {
                 System.exit(1);
             }
 
-            File.lastModifiedHook = GmsDynamiteClientHooks::getFileLastModified;
-            DelegateLastClassLoader.modifyClassLoaderPathHook = GmsDynamiteClientHooks::maybeModifyClassLoaderPath;
+        //    File.lastModifiedHook = GmsDynamiteClientHooks::getFileLastModified;
+          //  DelegateLastClassLoader.modifyClassLoaderPathHook = GmsDynamiteClientHooks::maybeModifyClassLoaderPath;
             enabled = true;
         }
     }

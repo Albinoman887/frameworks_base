@@ -62,7 +62,7 @@ public final class PlayStoreHooks {
 
         obbDir = Environment.getExternalStorageDirectory().getPath() + "/Android/obb";
         playStoreObbDir = obbDir + '/' + GmsInfo.PACKAGE_PLAY_STORE;
-        File.mkdirsFailedHook = PlayStoreHooks::mkdirsFailed;
+    //    File.mkdirsFailedHook = PlayStoreHooks::mkdirsFailed;
         packageManager = GmsCompat.appContext().getPackageManager();
         commitExecutor = Executors.newSingleThreadExecutor();
     }
