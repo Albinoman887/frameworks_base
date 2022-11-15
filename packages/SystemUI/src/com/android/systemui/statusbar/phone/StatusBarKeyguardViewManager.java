@@ -269,14 +269,6 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
                 }
             }
         }
-
-        @Override
-        public void onBiometricAuthenticated(int userId, BiometricSourceType biometricSourceType,
-                boolean isStrongBiometric) {
-            if (biometricSourceType == BiometricSourceType.FACE) {
-                hideFaceRecognizingMessage();
-            }
-        }
     };
 
     @Inject
@@ -1237,10 +1229,6 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
                 mKeyguardUpdateManager.isUnlockWithFacePossible(mKeyguardUpdateManager.getCurrentUser())) {
             showBouncerMessage(mContext.getString(R.string.face_unlock_recognizing), null);
         }
-    }
-
-    private void hideFaceRecognizingMessage(){
-        showBouncerMessage("", null);
     }
 
     public void showBouncerMessage(String message, ColorStateList colorState) {
