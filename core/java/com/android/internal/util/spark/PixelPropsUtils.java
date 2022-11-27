@@ -36,7 +36,7 @@ public class PixelPropsUtils {
     private static final String PACKAGE_WALLPAPERS = "com.google.android.apps.wallpaper";
     private static final String SAMSUNG = "com.samsung.android.";
 
-    private static final String DEVICE = "com.spark.device";
+    private static final String DEVICE = "ro.spark.device";
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
     private static boolean isPixelDevice = false;
