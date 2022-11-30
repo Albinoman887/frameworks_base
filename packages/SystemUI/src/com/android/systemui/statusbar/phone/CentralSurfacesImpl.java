@@ -921,7 +921,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         statusBarWindowStateController.addListener(this::onStatusBarWindowStateChanged);
 
         mScreenOffAnimationController = screenOffAnimationController;
-        mSystemSettings = systemSettings;
+       // mSystemSettings = systemSettings;
         mBurnInProtectionController = burnInProtectionController;
 
         mPanelExpansionStateManager.addExpansionListener(this::onPanelExpansionChanged);

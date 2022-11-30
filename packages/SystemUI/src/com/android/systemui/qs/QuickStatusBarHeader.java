@@ -79,7 +79,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private static final String QS_SHOW_BATTERY_ESTIMATE =
             "system:" + Settings.System.QS_SHOW_BATTERY_ESTIMATE;
 
-    private final Handler mHandler = new Handler();
+  //  private final Handler mHandler = new Handler();
   //  public static final String QS_SHOW_INFO_HEADER = "qs_show_info_header";
 
     private static final String QS_WEATHER_POSITION =
@@ -429,7 +429,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 // These views appear on expanding down
                 .addFloat(mDateView, "alpha", 0, 0, 1)
                 .addFloat(mClockDateView, "alpha", 1, 0, 0)
-                .addFloat(mSystemInfoLayout, "alpha", 1, 1)
+  //              .addFloat(mSystemInfoLayout, "alpha", 1, 1)
                 .addFloat(mQsWeatherHeaderView, "alpha", 0, 0, 1)
                 .addFloat(mQsWeatherView, "alpha", 1, 0, 0)
                 .addFloat(mQSCarriers, "alpha", 0, 1)
@@ -478,10 +478,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     }
 
     void setChipVisibility(boolean visibility) {
-        boolean showSystemInfo = mSystemInfoMode != 0;
-        if (showSystemInfo) {
-            mSystemInfoLayout.setVisibility(visibility ? View.GONE : View.VISIBLE);
-         }
+ //      boolean showSystemInfo = mSystemInfoMode != 0;
+   //     if (showSystemInfo) {
+     //       mSystemInfoLayout.setVisibility(visibility ? View.GONE : View.VISIBLE);
+       //  }
         if (visibility) {
             // Animates the icons and battery indicator from alpha 0 to 1, when the chip is visible
             mIconsAlphaAnimator = mIconsAlphaAnimatorFixed;
