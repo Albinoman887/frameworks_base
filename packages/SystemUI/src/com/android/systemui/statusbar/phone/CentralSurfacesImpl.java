@@ -118,7 +118,6 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.Lifecycle;
 import androidx.lifecycle.LifecycleRegistry;
 import com.android.systemui.dagger.qualifiers.Background;
-import com.android.systemui.util.settings.SystemSettings;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.internal.colorextraction.ColorExtractor;
@@ -725,7 +724,6 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
     private final InteractionJankMonitor mJankMonitor;
     private final SysUiState mSysUiState;
-    private final SystemSettings mSystemSettings;
     private final BurnInProtectionController mBurnInProtectionController;
 
     /**
@@ -834,7 +832,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
             TaskHelper taskHelper,
             SysUiState sysUiState,
             BurnInProtectionController burnInProtectionController,
-            SystemSettings systemSettings,
+            //SystemSettings systemSettings,
             @Background Handler backgroundHandler) {
         super(context);
         mNotificationsController = notificationsController;
@@ -931,7 +929,7 @@ public class CentralSurfacesImpl extends CoreStartable implements
         statusBarWindowStateController.addListener(this::onStatusBarWindowStateChanged);
 
         mScreenOffAnimationController = screenOffAnimationController;
-        mSystemSettings = systemSettings;
+      //  mSystemSettings = systemSettings;
         mBurnInProtectionController = burnInProtectionController;
 
         mPanelExpansionStateManager.addExpansionListener(this::onPanelExpansionChanged);
@@ -2164,8 +2162,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
         }
 
         void observe() {
-            mSystemSettings.registerContentObserverForUser(Settings.System.QS_SYSTEM_INFO, this, UserHandle.USER_ALL);
-            mSystemSettings.registerContentObserverForUser(Settings.System.QS_SYSTEM_INFO_ICON, this, UserHandle.USER_ALL);
+         //   mSystemSettings.registerContentObserverForUser(Settings.System.QS_SYSTEM_INFO, this, UserHandle.USER_ALL);
+         //   mSystemSettings.registerContentObserverForUser(Settings.System.QS_SYSTEM_INFO_ICON, this, UserHandle.USER_ALL);
         }
 
         @Override
