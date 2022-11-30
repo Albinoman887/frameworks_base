@@ -114,11 +114,7 @@
          when it is highlighted (with background) -->
     <dimen name="internet_dialog_wifi_toggle_connected_height">72dp</dimen>
 
-    <!-- QS System Info -->
     <dimen name="qs_header_alarm_icon_size">@dimen/status_bar_icon_drawing_size</dimen>
-    <dimen name="qs_status_separator">8dp</dimen>
-    <dimen name="qs_temperatur_icon_size">16sp</dimen>
-
     <!-- More battery styles -->
     <dimen name="status_bar_battery_icon_height_landscape_signal">21.0dip</dimen>
     <dimen name="status_bar_battery_icon_width_landscape_signal">16.0dip</dimen>
