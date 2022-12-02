@@ -833,7 +833,9 @@ public class CentralSurfacesImpl extends CoreStartable implements
             IDreamManager dreamManager,
             TaskHelper taskHelper,
             SysUiState sysUiState,
-            BurnInProtectionController burnInProtectionController) {
+            BurnInProtectionController burnInProtectionController,
+            SystemSettings systemSettings,
+            @Background Handler backgroundHandler) {
         super(context);
         mNotificationsController = notificationsController;
         mFragmentService = fragmentService;
