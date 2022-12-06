@@ -12075,17 +12075,7 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String KG_CUSTOM_CLOCK_TOP_MARGIN = "kg_custom_clock_top_margin";
-
-        /**
-         * @hide
-         */
-        public static final String KG_LARGE_CLOCK_TEXT_SIZE = "kg_large_clock_text_size";
-
-        /**
-         * @hide
-         */
-        public static final String KG_SMALL_CLOCK_TEXT_SIZE = "kg_small_clock_text_size";
+        public static final String ENABLE_COMBINED_SIGNAL_ICONS = "enable_combined_signal_icons";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to

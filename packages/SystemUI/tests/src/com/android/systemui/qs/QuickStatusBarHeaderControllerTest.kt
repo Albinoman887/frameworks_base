@@ -20,6 +20,22 @@ import android.content.Context
 import android.testing.AndroidTestingRunner
 import androidx.test.filters.SmallTest
 import com.android.systemui.SysuiTestCase
+import com.android.systemui.battery.BatteryMeterViewController
+import com.android.systemui.demomode.DemoModeController
+import com.android.systemui.flags.FeatureFlags
+import com.android.systemui.flags.Flags
+import com.android.systemui.qs.carrier.QSCarrierGroup
+import com.android.systemui.qs.carrier.QSCarrierGroupController
+import com.android.systemui.statusbar.phone.StatusBarContentInsetsProvider
+import com.android.systemui.statusbar.phone.StatusBarIconController
+import com.android.systemui.statusbar.phone.StatusIconContainer
+import com.android.systemui.statusbar.policy.Clock
+import com.android.systemui.statusbar.policy.VariableDateView
+import com.android.systemui.statusbar.policy.VariableDateViewController
+import com.android.systemui.util.mockito.any
+import com.android.systemui.util.mockito.argumentCaptor
+import com.android.systemui.util.mockito.capture
+import com.google.common.truth.Truth.assertThat
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
@@ -27,6 +43,8 @@ import org.junit.runner.RunWith
 import org.mockito.Answers
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
+import org.mockito.Mockito.anyBoolean
+import org.mockito.Mockito.reset
 import org.mockito.Mockito.verify
 import org.mockito.MockitoAnnotations
 
@@ -64,7 +82,85 @@ class QuickStatusBarHeaderControllerTest : SysuiTestCase() {
         controller.setListening(true)
         verify(quickQSPanelController).setListening(true)
 
-        controller.setListening(false)
-        verify(quickQSPanelController).setListening(false)
+    @Test
+    fun testSingleCarrierListenerAttachedOnInit() {
+        controller.init()
+
+        verify(qsCarrierGroupController).setOnSingleCarrierChangedListener(any())
+    }
+
+    @Test
+    fun testSingleCarrierSetOnViewOnInit_false() {
+        `when`(qsCarrierGroupController.isSingleCarrier).thenReturn(false)
+        controller.init()
+
+        verify(view).setIsSingleCarrier(false)
+    }
+
+    @Test
+    fun testSingleCarrierSetOnViewOnInit_true() {
+        `when`(qsCarrierGroupController.isSingleCarrier).thenReturn(true)
+        controller.init()
+
+        verify(view).setIsSingleCarrier(true)
+    }
+
+    @Test
+    fun testRSSISlot_notCombined() {
+        `when`(featureFlags.isEnabled(Flags.COMBINED_STATUS_BAR_SIGNAL_ICONS)).thenReturn(false)
+        controller.init()
+
+        val captor = argumentCaptor<List<String>>()
+        verify(view).onAttach(any(), any(), capture(captor), any(), anyBoolean())
+
+        assertThat(captor.value).containsExactly(
+            mContext.getString(com.android.internal.R.string.status_bar_mobile)
+        )
+    }
+
+    @Test
+    fun testRSSISlot_combined() {
+        `when`(featureFlags.isEnabled(Flags.COMBINED_STATUS_BAR_SIGNAL_ICONS)).thenReturn(true)
+        controller.init()
+
+        val captor = argumentCaptor<List<String>>()
+        verify(view).onAttach(any(), any(), capture(captor), any(), anyBoolean())
+
+        assertThat(captor.value).containsExactly(
+            mContext.getString(com.android.internal.R.string.status_bar_no_calling),
+            mContext.getString(com.android.internal.R.string.status_bar_call_strength)
+        )
+    }
+
+    @Test
+    fun testSingleCarrierCallback() {
+        controller.init()
+        reset(view)
+
+        val captor = argumentCaptor<QSCarrierGroupController.OnSingleCarrierChangedListener>()
+        verify(qsCarrierGroupController).setOnSingleCarrierChangedListener(capture(captor))
+
+        captor.value.onSingleCarrierChanged(true)
+        verify(view).setIsSingleCarrier(true)
+
+        captor.value.onSingleCarrierChanged(false)
+        verify(view).setIsSingleCarrier(false)
+    }
+
+    @Test
+    fun testAlarmIconIgnored() {
+        controller.init()
+
+        verify(iconContainer).addIgnoredSlot(
+                mContext.getString(com.android.internal.R.string.status_bar_alarm_clock))
+    }
+
+    private fun stubViews() {
+        `when`(view.findViewById<View>(anyInt())).thenReturn(mockView)
+        `when`(view.findViewById<QSCarrierGroup>(R.id.carrier_group)).thenReturn(qsCarrierGroup)
+        `when`(view.findViewById<StatusIconContainer>(R.id.statusIcons)).thenReturn(iconContainer)
+        `when`(view.findViewById<Clock>(R.id.clock)).thenReturn(clock)
+        `when`(view.requireViewById<VariableDateView>(R.id.date)).thenReturn(variableDateView)
+        `when`(view.requireViewById<VariableDateView>(R.id.date_clock)).thenReturn(variableDateView)
     }
 }
