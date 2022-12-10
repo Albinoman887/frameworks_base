@@ -401,7 +401,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
 
         mContext.registerReceiver(mVolteSwitchObserver,
                 new IntentFilter("org.codeaurora.intent.action.ACTION_ENHANCE_4G_SWITCH"));
-        //mFeatureConnector.connect();
+        mFeatureConnector.connect();
     }
 
     // There is no listener to monitor whether the IMS service is ready, so we have to retry the
