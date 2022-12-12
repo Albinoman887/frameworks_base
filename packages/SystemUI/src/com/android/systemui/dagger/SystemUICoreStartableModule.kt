@@ -48,6 +48,7 @@ import dagger.Module
 import dagger.multibindings.ClassKey
 import dagger.multibindings.IntoMap
 
+import com.android.systemui.VendorServices
 /**
  * Collection of {@link CoreStartable}s that should be run on AOSP.
  */
@@ -205,4 +206,10 @@ abstract class SystemUICoreStartableModule {
     @IntoMap
     @ClassKey(KeyguardLiftController::class)
     abstract fun bindKeyguardLiftController(sysui: KeyguardLiftController): CoreStartable
+
+    /** Inject into VendorServices.  */
+    @Binds
+    @IntoMap
+    @ClassKey(VendorServices::class)
+    abstract fun bindVendorServices(sysui: VendorServices): CoreStartable
 }
