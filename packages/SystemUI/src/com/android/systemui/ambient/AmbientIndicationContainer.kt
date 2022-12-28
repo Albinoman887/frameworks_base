@@ -1,4 +1,4 @@
-package com.android.systemui.ambient
+package com.statix.android.systemui.ambient
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -305,7 +305,7 @@ class AmbientIndicationContainer(private val context: Context, attrs: AttributeS
         }
     }
 
-    override fun onPrimaryMetadataOrStateChanged(mediaMetadata: MediaMetadata, mediaState: Int) {
+    override fun onPrimaryMetadataOrStateChanged(mediaMetadata: MediaMetadata?, mediaState: Int) {
         if (mediaPlaybackState != mediaState) {
             mediaPlaybackState = mediaState
             if (!isMediaPlaying()) {
