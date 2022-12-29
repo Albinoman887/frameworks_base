@@ -131,6 +131,7 @@ android_library {
         "colorkt",
         "themelib",
         "AndroidSystemBlur-platform",
+        "bcsmartspace-google",
     ],
     manifest: "AndroidManifest.xml",
 
