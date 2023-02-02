@@ -19,12 +19,15 @@
 package com.android.internal.util.evolution;
 
 import android.app.Application;
+import android.content.res.Resources;
 import android.content.Context;
 import android.os.Build;
 import android.os.Build.VERSION;
 import android.os.SystemProperties;
 import android.text.TextUtils;
 import android.util.Log;
+
+import com.android.internal.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -34,12 +37,26 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class PixelPropsUtils {
+    private static final String PACKAGE_ARCORE = "com.google.ar.core";
+    private static final String PACKAGE_GPHOTOS = "com.google.android.apps.photos";
+    private static final String PACKAGE_GMS = "com.google.android.gms";
+    private static final String PROCESS_GMS_UNSTABLE = PACKAGE_GMS + ".unstable";
+    public static final String PACKAGE_NETFLIX = "com.netflix.mediaclient";
+    private static final String PACKAGE_PS = "com.android.vending";
+    public static final String PACKAGE_SETTINGS_SERVICES = "com.google.android.settings.intelligence";
     private static final String SAMSUNG = "com.samsung.android.";
     private static final String SPOOF_MUSIC_APPS = "persist.sys.disguise_props_for_music_app";
+
+    private static final String sCertifiedFp =
+    Resources.getSystem().getString(R.string.config_certifiedFingerprint);
+
+    private static final String sStockFp =
+    Resources.getSystem().getString(R.string.config_stockFingerprint);
 
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final String DEVICE = "ro.product.device";
     private static final boolean DEBUG = false;
+    private static boolean isPixelDevice = false;
 
     private static final Map<String, Object> propsToChange;
     private static final Map<String, Object> propsToChangePixel7Pro;
@@ -195,7 +212,7 @@ public class PixelPropsUtils {
 
     static {
         propsToKeep = new HashMap<>();
-        propsToKeep.put("com.google.android.settings.intelligence", new ArrayList<>(Collections.singletonList("FINGERPRINT")));
+        propsToKeep.put(PACKAGE_SETTINGS_SERVICES, new ArrayList<>(Collections.singletonList("FINGERPRINT")));
         propsToChange = new HashMap<>();
         propsToChangePixel7Pro = new HashMap<>();
         propsToChangePixel7Pro.put("BRAND", "google");
@@ -246,6 +263,7 @@ public class PixelPropsUtils {
         propsToChangeMeizu.put("DISPLAY", "Flyme");
         propsToChangeMeizu.put("PRODUCT", "meizu_16thPlus_CN");
         propsToChangeMeizu.put("MODEL", "meizu 16th Plus");
+        isPixelDevice = Arrays.asList(pixelCodenames).contains(SystemProperties.get(DEVICE));
     }
 
     public static void setProps(String packageName) {
@@ -259,20 +277,18 @@ public class PixelPropsUtils {
                 || packageName.startsWith(SAMSUNG)
                 || Arrays.asList(extraPackagesToChange).contains(packageName)) {
 
-            boolean isPixelDevice = Arrays.asList(pixelCodenames).contains(SystemProperties.get(DEVICE));
-
-            if (packageName.equals("com.google.android.apps.photos")) {
+            if (packageName.equals(PACKAGE_GPHOTOS)) {
                 if (SystemProperties.getBoolean("persist.sys.pixelprops.gphotos", true)) {
                     propsToChange.putAll(propsToChangePixelXL);
                 } else {
                     if (isPixelDevice) return;
                     propsToChange.putAll(propsToChangePixel5);
                 }
-            } else if (packageName.equals("com.netflix.mediaclient") &&
-                    !SystemProperties.getBoolean("persist.sys.pixelprops.netflix", false)) {
+            } else if (packageName.equals(PACKAGE_NETFLIX) &&
+            !SystemProperties.getBoolean("persist.sys.pixelprops.netflix", false)) {
                 if (DEBUG) Log.d(TAG, "Netflix spoofing disabled by system prop");
                 return;
-            } else if (packageName.equals("com.android.vending")) {
+            } else if (packageName.equals(PACKAGE_PS)) {
                 sIsFinsky = true;
                 return;
             } else if (!isPixelDevice) {
@@ -284,26 +300,39 @@ public class PixelPropsUtils {
             }
 
             if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
-            for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
-                String key = prop.getKey();
-                Object value = prop.getValue();
-                if (propsToKeep.containsKey(packageName) && propsToKeep.get(packageName).contains(key)) {
-                    if (DEBUG) Log.d(TAG, "Not defining " + key + " prop for: " + packageName);
-                    continue;
+            if (!isPixelDevice) {
+                for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
+                    String key = prop.getKey();
+                    Object value = prop.getValue();
+                    if (propsToKeep.containsKey(packageName) && propsToKeep.get(packageName).contains(key)) {
+                        if (DEBUG) Log.d(TAG, "Not defining " + key + " prop for: " + packageName);
+                        continue;
+                    }
+                    if (DEBUG) Log.d(TAG, "Defining " + key + " prop for: " + packageName);
+                    setPropValue(key, value);
                 }
-                if (DEBUG) Log.d(TAG, "Defining " + key + " prop for: " + packageName);
-                setPropValue(key, value);
             }
-            if (packageName.equals("com.google.android.gms")) {
+            if (packageName.equals(PACKAGE_GMS)) {
                 final String processName = Application.getProcessName();
-                if (processName.equals("com.google.android.gms.unstable")) {
+                if (processName.equals(PROCESS_GMS_UNSTABLE)) {
                     sIsGms = true;
-                    spoofBuildGms();
+                }
+                if (!sCertifiedFp.isEmpty() && (sIsGms || sIsFinsky)) {
+                    if (DEBUG) Log.d(TAG, "Setting certified fingerprint for: " + packageName);
+                    setPropValue("FINGERPRINT", sCertifiedFp);
+                } else if (!sStockFp.isEmpty() && packageName.equals(PACKAGE_ARCORE)) {
+                    if (DEBUG) Log.d(TAG, "Setting stock fingerprint for: " + packageName);
+                    setPropValue("FINGERPRINT", sStockFp);
+                } else if (sIsGms) {
+                    if (DEBUG) Log.d(TAG, "Setting 6P fingerprint for: " + packageName);
+                    setPropValue("FINGERPRINT", "google/angler/angler:6.0/MDB08L/2343525:user/release-keys");
+                    setPropValue("MODEL", "angler");
+                    setPropValue("TYPE", "userdebug");
                 }
                 return;
             }
             // Set proper indexing fingerprint
-            if (packageName.equals("com.google.android.settings.intelligence")) {
+            if (packageName.equals(PACKAGE_SETTINGS_SERVICES)) {
                 setPropValue("FINGERPRINT", String.valueOf(Build.TIME));
             }
         } else {
@@ -416,13 +445,6 @@ public class PixelPropsUtils {
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, "Failed to spoof Build." + key, e);
         }
-    }
-
-    private static void spoofBuildGms() {
-        // Alter model name and fingerprint to avoid hardware attestation enforcement
-        setBuildField("FINGERPRINT", "google/angler/angler:6.0/MDB08L/2343525:user/release-keys");
-        setBuildField("MODEL", Build.MODEL + "\u200b");
-        setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.S);
     }
 
     private static boolean isCallerSafetyNet() {
