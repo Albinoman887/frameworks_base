@@ -6934,11 +6934,6 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String SMART_CHARGING_RESUME_LEVEL = "smart_charging_resume_level";
-
-        /**
-         * @hide
-         */
         public static final String NOTIFICATION_MATERIAL_DISMISS_BGSTYLE = "notification_material_dismiss_bgstyle";
 
         /**
