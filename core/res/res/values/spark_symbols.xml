@@ -149,9 +149,6 @@
     <!-- Aerr -->
     <java-symbol type="id" name="aerr_disable" />
 
-    <!-- Smart charging -->
-    <java-symbol type="integer" name="config_smartChargingBatteryLevel" />
-
     <!-- Whether the device supports Smart Pixels -->
     <java-symbol type="bool" name="config_supportSmartPixels" />
 
