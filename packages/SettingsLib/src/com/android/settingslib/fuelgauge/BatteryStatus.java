@@ -24,7 +24,6 @@ import static android.os.BatteryManager.EXTRA_HEALTH;
 import static android.os.BatteryManager.EXTRA_LEVEL;
 import static android.os.BatteryManager.EXTRA_MAX_CHARGING_CURRENT;
 import static android.os.BatteryManager.EXTRA_MAX_CHARGING_VOLTAGE;
-import static android.os.BatteryManager.EXTRA_TEMPERATURE;
 import static android.os.BatteryManager.EXTRA_PLUGGED;
 import static android.os.BatteryManager.EXTRA_PRESENT;
 import static android.os.BatteryManager.EXTRA_STATUS;
@@ -61,8 +60,6 @@ public class BatteryStatus {
     public final int level;
     public final int plugged;
     public final int health;
-    public final int maxChargingCurrent;
-    public final int maxChargingVoltage;
     public final int maxChargingWattage;
     public final boolean present;
     public final boolean dashChargeStatus;
@@ -71,21 +68,17 @@ public class BatteryStatus {
     public final boolean turboPowerStatus;
     public final boolean oemChargeStatus;
 
-    public final float temperature;
 
     public BatteryStatus(int status, int level, int plugged, int health,
             int maxChargingWattage, boolean dashChargeStatus,
             boolean warpChargeStatus, boolean voocChargeStatus,
             boolean turboPowerStatus, boolean oemChargeStatus, boolean present,
             int maxChargingCurrent, int maxChargingVoltage,
-            float temperature) {
 
         this.status = status;
         this.level = level;
         this.plugged = plugged;
         this.health = health;
-        this.maxChargingCurrent = maxChargingCurrent;
-        this.maxChargingVoltage = maxChargingVoltage;
         this.maxChargingWattage = maxChargingWattage;
         this.dashChargeStatus = dashChargeStatus;
         this.warpChargeStatus = warpChargeStatus;
@@ -93,7 +86,6 @@ public class BatteryStatus {
         this.turboPowerStatus = turboPowerStatus;
         this.oemChargeStatus = oemChargeStatus;
         this.present = present;
-        this.temperature = temperature;
     }
 
     public BatteryStatus(Intent batteryChangedIntent) {
@@ -107,7 +99,6 @@ public class BatteryStatus {
         turboPowerStatus = batteryChangedIntent.getBooleanExtra(EXTRA_TURBO_POWER, false);
         oemChargeStatus = batteryChangedIntent.getBooleanExtra(EXTRA_OEM_FAST_CHARGER, false);
         present = batteryChangedIntent.getBooleanExtra(EXTRA_PRESENT, true);
-        temperature = batteryChangedIntent.getIntExtra(EXTRA_TEMPERATURE, -1);
 
         final int maxChargingMicroAmp = batteryChangedIntent.getIntExtra(EXTRA_MAX_CHARGING_CURRENT,
                 -1);
@@ -121,12 +112,8 @@ public class BatteryStatus {
             // to maintain precision equally on both factors.
             maxChargingWattage = (maxChargingMicroAmp / 1000)
                     * (maxChargingMicroVolt / 1000);
-            maxChargingCurrent = maxChargingMicroAmp;
-            maxChargingVoltage = maxChargingMicroVolt;
         } else {
             maxChargingWattage = -1;
-            maxChargingCurrent = -1;
-            maxChargingVoltage = -1;
         }
     }
 
