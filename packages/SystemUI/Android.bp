@@ -87,6 +87,7 @@ android_library {
         "res-hwkeys",
     ],
     static_libs: [
+        "adaptivecharging",
         "WifiTrackerLib",
         "WindowManager-Shell",
         "SystemUIAnimationLib",
