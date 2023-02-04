@@ -188,6 +188,8 @@ public class KeyguardIndicationController {
     private final FaceHelpMessageDeferral mFaceAcquiredMessageDeferral;
     private boolean mInited;
     private boolean mFaceDetectionRunning;
+    private String mMessageToShowOnScreenOn;
+
 
     private KeyguardUpdateMonitorCallback mUpdateMonitorCallback;
 
