@@ -834,7 +834,6 @@ public final class PowerManagerService extends SystemService
 
     // Smart charging
     private boolean mSmartChargingEnabled;
-    private boolean mSmartChargingResetStats;
     private boolean mPowerInputSuspended;
     private int mSmartChargingLevel;
     private int mSmartChargingResumeLevel;
@@ -1434,9 +1433,6 @@ public final class PowerManagerService extends SystemService
                 Settings.System.SMART_CHARGING_RESUME_LEVEL),
                 false, mSettingsObserver, UserHandle.USER_ALL);
         resolver.registerContentObserver(Settings.System.getUriFor(
-                Settings.System.SMART_CHARGING_RESET_STATS),
-                false, mSettingsObserver, UserHandle.USER_ALL);
-        resolver.registerContentObserver(Settings.System.getUriFor(
                 Settings.System.SMART_CUTOFF_TEMPERATURE),
                 false, mSettingsObserver, UserHandle.USER_ALL);
         resolver.registerContentObserver(Settings.System.getUriFor(
@@ -1628,8 +1624,6 @@ public final class PowerManagerService extends SystemService
         mSmartChargingResumeLevel = Settings.System.getInt(resolver,
                 Settings.System.SMART_CHARGING_RESUME_LEVEL,
                 mSmartChargingResumeLevelDefaultConfig);
-        mSmartChargingResetStats = Settings.System.getIntForUser(resolver,
-                Settings.System.SMART_CHARGING_RESET_STATS, 0, UserHandle.USER_CURRENT) == 1;
         mSmartCutoffEnabled = Settings.System.getInt(resolver,
                 Settings.System.SMART_CUTOFF, 0) == 1;
         mSmartCutoffTemperature = Settings.System.getInt(resolver,
@@ -2722,14 +2716,6 @@ public final class PowerManagerService extends SystemService
                     FileUtils.stringToFile(mPowerInputSuspendSysfsNode, mPowerInputSuspendValue);
                 } catch (IOException e) {
                     Slog.e(TAG, "failed to write to " + mPowerInputSuspendSysfsNode);
-                }
-            }
-            if (suspendBySmartCharging && mSmartChargingResetStats) {
-                Slog.i(TAG, "Smart charging reset stats: " + mSmartChargingResetStats);
-                try {
-                     mBatteryStats.resetStatistics();
-                } catch (RemoteException e) {
-                     Slog.e(TAG, "failed to reset battery statistics");
                 }
             }
         }

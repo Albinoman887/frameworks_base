@@ -2980,15 +2980,4 @@ public final class BatteryStatsService extends IBatteryStats.Stub
     public void suspendBatteryInput() {
         mBatteryManagerInternal.suspendBatteryInput();
     }
-
-    /**
-     * Battery stats and history reset
-     */
-    @Override
-    public void resetStatistics() {
-        synchronized (mStats) {
-            mStats.resetAllStatsCmdLocked();
-            mBatteryUsageStatsStore.removeAllSnapshots();
-        }
-    }
 }
