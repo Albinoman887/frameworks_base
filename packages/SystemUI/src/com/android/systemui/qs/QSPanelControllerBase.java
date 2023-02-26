@@ -69,6 +69,10 @@ import kotlin.jvm.functions.Function1;
 public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewController<T>
         implements Dumpable{
     private static final String TAG = "QSPanelControllerBase";
+
+    private static final String QS_TILE_LABEL_SIZE =
+            "system:" + Settings.System.QS_TILE_LABEL_SIZE;
+
     protected final QSTileHost mHost;
     private final QSCustomizerController mQsCustomizerController;
     private final boolean mUsingMediaPlayer;
@@ -208,6 +212,7 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         switchTileLayout(true);
 
         mDumpManager.registerDumpable(mView.getDumpableTag(), this);
+        mTunerService.addTunable(this, QS_TILE_LABEL_SIZE);
     }
 
     protected void registerObserver(String key) {
@@ -499,6 +504,20 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         // We have to prevent the media container position from moving during the transition to have
         // a smooth translation animation without stuttering.
         mView.setShouldMoveMediaOnExpansion(!isOnSplitShadeLockscreen);
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case QS_TILE_LABEL_SIZE:
+                if (mView.getTileLayout() != null) {
+                    mView.getTileLayout().updateSettings();
+                    setTiles();
+                }
+                break;
+            default:
+                break;
+         }
     }
 
     /** */
