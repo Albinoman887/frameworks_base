@@ -61,6 +61,8 @@ import javax.inject.Named;
 import kotlin.Unit;
 import kotlin.jvm.functions.Function1;
 
+import com.android.systemui.tuner.TunerService;
+
 /**
  * Controller for QSPanel views.
  *
@@ -70,6 +72,14 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         implements Dumpable{
     private static final String TAG = "QSPanelControllerBase";
 
+    private static final String QS_TILE_VERTICAL_LAYOUT =
+            "system:" + Settings.System.QS_TILE_VERTICAL_LAYOUT;
+    private static final String QS_LAYOUT_COLUMNS =
+            "system:" + Settings.System.QS_LAYOUT_COLUMNS;
+    private static final String QS_LAYOUT_COLUMNS_LANDSCAPE =
+            "system:" + Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE;
+    private static final String QS_TILE_LABEL_HIDE =
+            "system:" + Settings.System.QS_TILE_LABEL_HIDE;
     private static final String QS_TILE_LABEL_SIZE =
             "system:" + Settings.System.QS_TILE_LABEL_SIZE;
 
@@ -81,6 +91,7 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
     private final UiEventLogger mUiEventLogger;
     private final QSLogger mQSLogger;
     private final DumpManager mDumpManager;
+        private final TunerService mTunerService;
     protected final ArrayList<TileRecord> mRecords = new ArrayList<>();
     protected boolean mShouldUseSplitNotificationShade;
 
@@ -147,7 +158,8 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
             QSLogger qsLogger,
             DumpManager dumpManager,
 	    @Main Handler mainHandler,
-	    SystemSettings systemSettings
+	    SystemSettings systemSettings,
+            TunerService tunerService
     ) {
         super(view);
         mHost = host;
@@ -158,6 +170,7 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         mUiEventLogger = uiEventLogger;
         mQSLogger = qsLogger;
         mDumpManager = dumpManager;
+                mTunerService = tunerService;
         mShouldUseSplitNotificationShade =
                 LargeScreenUtils.shouldUseSplitNotificationShade(getResources());
         mSystemSettings = systemSettings;
@@ -223,6 +236,8 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
     @Override
     protected void onViewDetached() {
         mQSLogger.logOnViewDetached(mLastOrientation, mView.getDumpableTag());
+        mTunerService.removeTunable(mView);
+        
         mView.removeOnConfigurationChangedListener(mOnConfigurationChangedListener);
         mHost.removeCallback(mQSHostCallback);
 
@@ -506,7 +521,7 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         mView.setShouldMoveMediaOnExpansion(!isOnSplitShadeLockscreen);
     }
 
-    @Override
+  //  @Override
     public void onTuningChanged(String key, String newValue) {
         switch (key) {
             case QS_TILE_LABEL_SIZE:

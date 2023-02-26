@@ -28,11 +28,33 @@ import android.provider.Settings;
 
 public class QSLayoutUtils {
 
+    public static int getQSColumnsCount(Context context, int resourceCount) {
+        final int QS_COLUMNS_MIN = 2;
+        final Resources res = context.getResources();
+        int value = QS_COLUMNS_MIN;
+        if (res.getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+            value = Settings.System.getIntForUser(
+                    context.getContentResolver(), Settings.System.QS_LAYOUT_COLUMNS,
+                    resourceCount, UserHandle.USER_CURRENT);
+        } else {
+            value = Settings.System.getIntForUser(
+                    context.getContentResolver(), Settings.System.QS_LAYOUT_COLUMNS_LANDSCAPE,
+                    resourceCount, UserHandle.USER_CURRENT);
+        }
+        return Math.max(QS_COLUMNS_MIN, value);
+    }
+
    public static boolean getQSTileLabelHide(Context context) {
    return Settings.System.getIntForUser(context.getContentResolver(),
          Settings.System.QS_TILE_LABEL_HIDE,
          0, UserHandle.USER_CURRENT) == 1;
    }
+
+    public static float getQSTileLabelSize(Context context) {
+        return (float) Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_LABEL_SIZE,
+                14, UserHandle.USER_CURRENT);
+    }
 
    public static boolean getQSTileVerticalLayout(Context context) {
        return Settings.System.getIntForUser(context.getContentResolver(),
