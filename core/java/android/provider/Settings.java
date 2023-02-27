@@ -6877,11 +6877,6 @@ public final class Settings {
         /**
          * @hide
          */
-        public static final String QS_TILE_LABEL_SIZE = "qs_tile_label_size";
-
-        /**
-         * @hide
-         */
         public static final String QS_TILE_VERTICAL_LAYOUT = "qs_tile_vertical_layout";
 
         /**
