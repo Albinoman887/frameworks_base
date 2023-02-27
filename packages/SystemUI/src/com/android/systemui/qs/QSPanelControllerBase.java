@@ -193,6 +193,7 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
     @Override
     protected void onViewAttached() {
         registerObserver(Settings.System.QS_TILE_LABEL_HIDE);
+        registerObserver(Settings.System.QS_TILE_LABEL_SIZE);
         registerObserver(Settings.System.QS_TILE_VERTICAL_LAYOUT);
         mQsTileRevealController = createTileRevealController();
         if (mQsTileRevealController != null) {
