@@ -6675,6 +6675,11 @@ public final class Settings {
          * @hide
          */
         public static final String QS_TILE_LABEL_HIDE = "qs_tile_label_hide";
+        
+        /**
+         * @hide
+         */
+        public static final String QS_TILE_LABEL_SIZE = "qs_tile_label_size";
 
         /**
          * Whether to enable or disable vibration on succesful fingerprint auth
