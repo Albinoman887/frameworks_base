@@ -123,13 +123,12 @@ public class PagedTileLayout extends ViewPager implements QSTileLayout {
 
     @Override
     public int getTilesHeight() {
-        // Find the maximum height among all pages.
-        int height = mPages.stream()
-                           .filter(p -> p != null)
-                           .mapToInt(p -> p.getTilesHeight())
-                           .max().orElse(0);
-        if (DEBUG) Log.d(TAG, "getTilesHeight ret=" + height);
-        return height;
+        // Use the first page as that is the maximum height we need to show.
+        TileLayout tileLayout = mPages.get(0);
+        if (tileLayout == null) {
+            return 0;
+        }
+        return tileLayout.getTilesHeight();
     }
 
     @Override
