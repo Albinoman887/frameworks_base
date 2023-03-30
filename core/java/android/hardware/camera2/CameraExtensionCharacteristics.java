@@ -42,6 +42,8 @@ import android.util.Pair;
 import android.util.Range;
 import android.util.Size;
 
+import com.android.internal.util.PixelCameraServicesUtils;
+
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.util.ArrayList;
@@ -241,6 +243,21 @@ public final class CameraExtensionCharacteristics {
 
         public static CameraExtensionManagerGlobal get() {
             return GLOBAL_CAMERA_MANAGER;
+        }
+
+        private static boolean validateVendorCameraExtensionsPackage(Context ctx, String pkgName) {
+            if (PixelCameraServicesUtils.validatePackage(ctx, pkgName)) {
+                return true;
+            }
+
+            try {
+                ApplicationInfo ai = ctx.getPackageManager().getApplicationInfo(pkgName,
+                        ApplicationInfoFlags.of(0L));
+                return ai.isSystemApp();
+            } catch (PackageManager.NameNotFoundException e) {
+                e.printStackTrace();
+                return false;
+            }
         }
 
         private void connectToProxyLocked(Context ctx) {
