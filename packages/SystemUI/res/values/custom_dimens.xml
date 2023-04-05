@@ -35,4 +35,7 @@
     <dimen name="mobile_type_icon_height_with_activity">8dp</dimen>
     <dimen name="mobile_type_icon_margin_vertical">1.5dp</dimen>
     <dimen name="mobile_type_icon_inset_vertical">-2dp</dimen>
+    
+     <!-- Expanded QS clock/date paddings -->
+    <dimen name="qs_expanded_clock_date_padding_start">8dp</dimen>
 </resources>
