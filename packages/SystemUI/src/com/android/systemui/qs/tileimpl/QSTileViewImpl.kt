@@ -43,6 +43,7 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import com.android.settingslib.Utils
+import com.android.systemui.FontSizeUtils
 import com.android.systemui.R
 import com.android.systemui.animation.LaunchableView
 import com.android.systemui.animation.LaunchableViewDelegate
@@ -111,6 +112,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
             Utils.getColorAttrDefaultColor(context, android.R.attr.textColorSecondary)
     private val colorSecondaryLabelUnavailable =
         Utils.getColorAttrDefaultColor(context, com.android.internal.R.attr.textColorTertiary)
+    private val colorSecondaryLabelActiveRandom = colorLabelActiveRandom
 
     private lateinit var label: TextView
     protected lateinit var secondaryLabel: TextView
@@ -198,8 +200,8 @@ open class QSTileViewImpl @JvmOverloads constructor(
     }
 
     fun updateResources() {
-        label.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
-        secondaryLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
+        FontSizeUtils.updateFontSize(label, R.dimen.qs_tile_text_size)
+        FontSizeUtils.updateFontSize(secondaryLabel, R.dimen.qs_tile_secondary_label_text_size)
 
         val iconSize = context.resources.getDimensionPixelSize(R.dimen.qs_icon_size)
         _icon.layoutParams.apply {
