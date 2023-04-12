@@ -65,6 +65,7 @@ import java.util.List;
 import java.util.concurrent.TimeoutException;
 
 import com.android.internal.util.crdroid.PixelPropsUtils;
+import com.android.internal.util.crdroid.AttestationHooks;
 
 /**
  * Base class for implementing application instrumentation code.  When running
