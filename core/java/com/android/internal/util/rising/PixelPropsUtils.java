@@ -1,8 +1,7 @@
 /*
  * Copyright (C) 2020 The Pixel Experience Project
  *               2021-2022 crDroid Android Project
- *               2019-2023 Evolution X
- *               2019-2023 RisingOS
+ *               2023 RisingOS Android Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -34,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class PixelPropsUtils {
@@ -208,14 +208,21 @@ public class PixelPropsUtils {
         propsToChangePixel7Pro.put("DEVICE", "cheetah");
         propsToChangePixel7Pro.put("PRODUCT", "cheetah");
         propsToChangePixel7Pro.put("MODEL", "Pixel 7 Pro");
-        propsToChangePixel7Pro.put("FINGERPRINT", "google/cheetah/cheetah:13/TQ1A.230205.002/9471150:user/release-keys");
+        propsToChangePixel7Pro.put("FINGERPRINT", "google/cheetah/cheetah:13/TQ2A.230305.008.C1/9619669:user/release-keys");
         propsToChangePixel5 = new HashMap<>();
         propsToChangePixel5.put("BRAND", "google");
         propsToChangePixel5.put("MANUFACTURER", "Google");
         propsToChangePixel5.put("DEVICE", "redfin");
         propsToChangePixel5.put("PRODUCT", "redfin");
         propsToChangePixel5.put("MODEL", "Pixel 5");
-        propsToChangePixel5.put("FINGERPRINT", "google/redfin/redfin:13/TQ1A.230205.002/9471150:user/release-keys");
+        propsToChangePixel5.put("FINGERPRINT", "google/redfin/redfin:13/TQ2A.230305.008.C1/9619669:user/release-keys");
+        propsToChangePixelXL = new HashMap<>();
+        propsToChangePixelXL.put("BRAND", "google");
+        propsToChangePixelXL.put("MANUFACTURER", "Google");
+        propsToChangePixelXL.put("DEVICE", "marlin");
+        propsToChangePixelXL.put("PRODUCT", "marlin");
+        propsToChangePixelXL.put("MODEL", "Pixel XL");
+        propsToChangePixelXL.put("FINGERPRINT", "google/marlin/marlin:10/QP1A.191005.007.A3/5972272:user/release-keys");
         propsToChangeROG1 = new HashMap<>();
         propsToChangeROG1.put("MODEL", "ASUS_Z01QD");
         propsToChangeROG1.put("MANUFACTURER", "asus");
@@ -245,19 +252,26 @@ public class PixelPropsUtils {
         propsToChangeMeizu.put("PRODUCT", "meizu_16thPlus_CN");
         propsToChangeMeizu.put("MODEL", "meizu 16th Plus");
     }
-
+    
     public static void setProps(String packageName) {
-        if (packageName == null || packageName.isEmpty()) {
+    	String pkgName = packageName.toLowerCase();
+        if (pkgName == null || pkgName.isEmpty()
+            || List.of("camera", "youtube", "euicc", "searchbox" , "ar.core").stream().anyMatch(pkgName::contains)
+            || Arrays.asList(packagesToKeep).contains(pkgName)) {
             return;
         }
-        if (Arrays.asList(packagesToKeep).contains(packageName)) {
-            return;
+        Map<String, Object> propsToChange = new HashMap<>();;
+        sIsFinsky = List.of(".apps.restore", "com.google.android.gms", "com.android.vending").stream().anyMatch(pkgName::contains);
+        if (sIsFinsky) {
+             final String processName = Application.getProcessName().toLowerCase();
+             sIsGms = List.of("unstable", "persistent", "pixelmigrate", "restore").stream().anyMatch(processName::contains);
+             if (!sIsGms) return;
+             spoofBuildGms();
         }
         if (packageName.startsWith("com.google.")
                 || packageName.startsWith(SAMSUNG)
                 || Arrays.asList(extraPackagesToChange).contains(packageName)) {
 
-            Map<String, Object> propsToChange = new HashMap<>();
             boolean isPixelDevice = Arrays.asList(pixelCodenames).contains(SystemProperties.get(DEVICE));
 
             if (packageName.equals(PACKAGE_NETFLIX) &&
