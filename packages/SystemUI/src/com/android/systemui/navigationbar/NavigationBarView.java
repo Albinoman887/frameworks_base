@@ -546,10 +546,8 @@ public class NavigationBarView extends FrameLayout implements TunerService.Tunab
     }
 
     private void orientBackButton(KeyButtonDrawable drawable) {
-        boolean IsHideIMESpaceEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
-                     Settings.System.HIDE_IME_SPACE_ENABLE , 0, UserHandle.USER_CURRENT) != 0;
         final boolean useAltBack =
-                (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_BACK_ALT) != 0 && !IsHideIMESpaceEnabled;
+                (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_BACK_ALT) != 0;
         final boolean isRtl = mConfiguration.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL;
         float degrees = useAltBack ? (isRtl ? 90 : -90) : 0;
         if (drawable.getRotation() == degrees) {
@@ -557,12 +555,7 @@ public class NavigationBarView extends FrameLayout implements TunerService.Tunab
         }
 
         if (isGesturalMode(mNavBarMode)) {
-            if (IsHideIMESpaceEnabled) {
-                drawable.setAlpha(0);
-            } else {
-            	drawable.setAlpha(255);
-                drawable.setRotation(degrees);
-            }
+            drawable.setRotation(degrees);
             return;
         }
 
@@ -664,13 +657,14 @@ public class NavigationBarView extends FrameLayout implements TunerService.Tunab
 
         updateRecentsIcon();
 
+	final boolean hideIMESpace = isHideIMESpaceEnabled();
         boolean disableCursorKeys = !mShowCursorKeys || !useAltBack ||
                 (QuickStepContract.isGesturalMode(mNavBarMode) && mImeVisible);
 
         // Update IME button visibility, a11y and rotate button always overrides the appearance
         boolean disableImeSwitcher =
                 (mNavigationIconHints & StatusBarManager.NAVIGATION_HINT_IME_SWITCHER_SHOWN) == 0
-                || isImeRenderingNavButtons() || !disableCursorKeys;
+                || isImeRenderingNavButtons() || !disableCursorKeys && hideIMESpace;
         mContextualButtonGroup.setButtonVisibility(R.id.ime_switcher, !disableImeSwitcher);
 
         mBarTransitions.reapplyDarkIntensity();
@@ -687,7 +681,7 @@ public class NavigationBarView extends FrameLayout implements TunerService.Tunab
 
         boolean disableBack = !useAltBack && (mEdgeBackGestureHandler.isHandlingGestures()
                 || ((mDisabledFlags & View.STATUS_BAR_DISABLE_BACK) != 0))
-                || isImeRenderingNavButtons();
+                || isImeRenderingNavButtons() || hideIMESpace;
 
         // When screen pinning, don't hide back and home when connected service or back and
         // recents buttons when disconnected from launcher service in screen pinning mode,
@@ -1086,9 +1080,7 @@ public class NavigationBarView extends FrameLayout implements TunerService.Tunab
                     : getResources().getDimensionPixelSize(
                             com.android.internal.R.dimen.navigation_bar_height);
 	    int frameHeight;
-            boolean IsHideIMESpaceEnabled = Settings.System.getIntForUser(getContext().getContentResolver(),
-                     Settings.System.HIDE_IME_SPACE_ENABLE , 0, UserHandle.USER_CURRENT) != 0;
-	    if (IsHideIMESpaceEnabled) {
+	    if (isHideIMESpaceEnabled()) {
               frameHeight = getResources().getDimensionPixelSize(
                       com.android.internal.R.dimen.navigation_bar_frame_height_hide_ime);
 	    } else {
@@ -1336,5 +1328,10 @@ public class NavigationBarView extends FrameLayout implements TunerService.Tunab
 
     interface UpdateActiveTouchRegionsCallback {
         void update();
+    }
+    
+    public boolean isHideIMESpaceEnabled() {
+        return Settings.System.getIntForUser(getContext().getContentResolver(),
+                     Settings.System.HIDE_IME_SPACE_ENABLE , 0, UserHandle.USER_CURRENT) != 0;
     }
 }

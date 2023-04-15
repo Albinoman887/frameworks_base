@@ -94,7 +94,7 @@ public class DisplayLayout {
     private final Rect mStableInsets = new Rect();
     private boolean mHasNavigationBar = false;
     private boolean mHasStatusBar = false;
-    private boolean mIsHideIMESpaceEnabled = true;
+    private boolean mIsHideIMESpaceEnabled = false;
     private int mNavBarFrameHeight = 0;
     private boolean mAllowSeamlessRotationDespiteNavBarMoving = false;
     private boolean mNavigationBarCanMove = false;
