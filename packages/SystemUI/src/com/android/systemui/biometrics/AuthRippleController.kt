@@ -49,6 +49,7 @@ import com.android.systemui.util.ViewController
 import java.io.PrintWriter
 import javax.inject.Inject
 import javax.inject.Provider
+import android.provider.Settings
 
 /***
  * Controls two ripple effects:
