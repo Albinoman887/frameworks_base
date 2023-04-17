@@ -805,7 +805,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
         mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
 	mPerf = new BoostFramework();
 
-        if (com.android.internal.util.crdroid.Utils.isPackageInstalled(mContext, "com.crdroid.udfps.animations")) {
+        if (com.android.internal.util.rising.Utils.isPackageInstalled(mContext, "com.rising.udfps.animations")) {
             mUdfpsAnimation = new UdfpsAnimation(mContext, mWindowManager, mSensorProps);
         }
     }

@@ -84,7 +84,7 @@ public class UdfpsAnimation extends ImageView {
         mMaxBurnInOffsetY = context.getResources()
             .getDimensionPixelSize(R.dimen.udfps_burn_in_offset_y);
 
-        mUdfpsAnimationPackage = "com.crdroid.udfps.animations";
+        mUdfpsAnimationPackage = "com.rising.udfps.animations";
 
         mAnimationSize = mContext.getResources().getDimensionPixelSize(R.dimen.udfps_animation_size);
         mAnimationOffset = mContext.getResources().getDimensionPixelSize(R.dimen.udfps_animation_offset);
