@@ -490,14 +490,11 @@ public class KeyguardSliceProvider extends SliceProvider implements
                 && TextUtils.equals(artist, mMediaArtist)) {
             return;
         }
-
-        // Set new track info from playing media notification
         mMediaTitle = title;
         mMediaArtist = artist;
         mMediaIsVisible = nextVisible;
         notifyChange();
     }
-
 
     protected void notifyChange() {
         mContentResolver.notifyChange(mSliceUri, null /* observer */);

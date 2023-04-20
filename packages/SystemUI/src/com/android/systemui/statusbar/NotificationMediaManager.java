@@ -44,7 +44,6 @@ import android.os.AsyncTask;
 import android.os.Trace;
 import android.service.notification.NotificationStats;
 import android.service.notification.StatusBarNotification;
-import android.text.TextUtils;
 import android.util.ArraySet;
 import android.util.Log;
 import android.view.View;
