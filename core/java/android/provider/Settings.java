@@ -12072,6 +12072,12 @@ public final class Settings {
         @Readable
         public static final String SYSTEM_MANAGER_AGGRESSIVE_IDLE_MODE_RINGER_MODE = "system_manager_aggressive_idle_mode_ringer_mode";
 
+         /**
+         * Brightness slider styles
+         * @hide
+         */
+        public static final String BRIGHTNESS_SLIDER_STYLE = "brightness_slider_style";
+
         /**
          * These entries are considered common between the personal and the managed profile,
          * since the managed profile doesn't get to change them.
