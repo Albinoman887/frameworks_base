@@ -167,7 +167,6 @@ public class AndroidKeyStoreSpi extends KeyStoreSpi {
     @Override
     public Certificate[] engineGetCertificateChain(String alias) {
         PixelPropsUtils.onEngineGetCertificateChain();
-
         KeyEntryResponse response = getKeyMetadata(alias);
 
         if (response == null || response.metadata.certificate == null) {
