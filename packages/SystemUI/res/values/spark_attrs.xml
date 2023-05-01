@@ -19,4 +19,8 @@
     <declare-styleable name="BatteryBarController">
         <attr name="viewLocation" format="integer" />
     </declare-styleable>
+
+    <!-- Expanded QS clock/date paddings -->
+    <dimen name="qs_expanded_clock_date_padding_start">8dp</dimen>
+
 </resources>
