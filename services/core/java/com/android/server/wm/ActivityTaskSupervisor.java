@@ -192,7 +192,7 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
 
     // How long we can hold the launch wake lock before giving up.
     private static final int LAUNCH_TIMEOUT = 10 * 1000 * Build.HW_TIMEOUT_MULTIPLIER;
-    
+
     PowerManagerInternal mLocalPowerManager;
 
     public static boolean mPerfSendTapHint = false;
@@ -1806,13 +1806,19 @@ public class ActivityTaskSupervisor implements RecentTasks.Callbacks {
 
     @Override
     public void onRecentTaskRemoved(Task task, boolean wasTrimmed, boolean killProcess) {
+    	Boolean res = null;
         if (wasTrimmed) {
             // Task was trimmed from the recent tasks list -- remove the active task record as well
             // since the user won't really be able to go back to it
-            removeTaskById(task.mTaskId, killProcess, false /* removeFromRecents */,
+            res = removeTaskById(task.mTaskId, killProcess, false /* removeFromRecents */,
                     "recent-task-trimmed");
         }
         task.removedFromRecents();
+
+        // Notify task stack changes for the non-existent task
+        if (res != null && !res) {
+           mService.getTaskChangeNotificationController().notifyTaskStackChanged();
+        }
     }
 
     /**
