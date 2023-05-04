@@ -797,7 +797,6 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
             } else if (VOLUME_DIALOG_TIMEOUT.equals(key)) {
                 mTimeOutDesired = TunerService.parseInteger(newValue, 3);
                 mTimeOut = mTimeOutDesired * 1000;
-            }
             } else if (CUSTOM_VOLUME_STYLES.equals(key)) {
                 final int selectedVolStyle = TunerService.parseInteger(newValue, 0);
                 if (customVolumeStyles != selectedVolStyle) {
