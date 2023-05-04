@@ -1128,6 +1128,11 @@ public class GnssLocationProvider extends AbstractLocationProvider implements
             setStarted(true);
             mPositionMode = getSuplMode(isAssistedGpsEnabled());
 
+            boolean agpsEnabled =
+                    (Settings.Global.getInt(mContext.getContentResolver(),
+                            Settings.Global.ASSISTED_GPS_ENABLED, 0) != 0) || isEmergency;
+            mPositionMode = getSuplMode(agpsEnabled);
+
             if (DEBUG) {
                 String mode;
 
