@@ -5254,6 +5254,11 @@ public final class PowerManagerService extends SystemService
         @Override
         public void onReceive(Context context, Intent intent) {
             synchronized (mLock) {
+                int temperature = intent.getIntExtra(BatteryManager.EXTRA_TEMPERATURE, 0);
+                if (temperature > 0) {
+                    float temp = ((float) temperature) / 10f;
+                    mBatteryTemperature=(int) ((temp) + 0.5f);
+                }
                 handleBatteryStateChangedLocked();
             }
         }
