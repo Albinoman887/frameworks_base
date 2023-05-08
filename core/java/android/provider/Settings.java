@@ -6234,6 +6234,146 @@ public final class Settings {
         public static final String GESTURE_NAVBAR_RADIUS = "gesture_navbar_radius";
 
         /**
+         * Whether to enable StatusBar network traffic indicator.
+         * 0 means disabled, 1 means enabled.
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_ENABLED = "network_traffic_enabled";
+
+        /**
+         * Threshold value in KiB/s below which upload speed will be hidden.
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTO_HIDE_THRESHOLD_TX = "network_traffic_auto_hide_threshold_tx";
+
+        /**
+         * Threshold value in KiB/s below which download speed will be hidden.
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_AUTO_HIDE_THRESHOLD_RX = "network_traffic_auto_hide_threshold_rx";
+
+        /**
+         * Text size for the unit text (like KiB/s).
+         * Values should be in Typedvalue.COMPLEX_UNIT_SP
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_UNIT_TEXT_SIZE = "network_traffic_unit_text_size";
+
+        /**
+         * Text scale factor for the rate used to scale the
+         * rate text size based on the unit text size.
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_RATE_TEXT_SCALE_FACTOR = "network_traffic_rate_text_scale_factor";
+
+        /**
+        * Ambient Customization
+        * @hide
+        */
+        public static final String AMBIENT_TEXT = "ambient_text";
+
+        /**
+         * Ambient text string
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_STRING = "ambient_text_string";
+
+        /**
+         * Ambient text animation
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_ANIMATION = "ambient_text_animation";
+
+        /**
+         * Ambient text size
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_SIZE = "ambient_text_size";
+
+        /**
+         * Ambient text alignment
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_ALIGNMENT = "ambient_text_alignment";
+
+        /**
+         * Ambient text color
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_COLOR = "ambient_text_color";
+
+        /**
+         * Ambient text type color
+         * @hide
+         */
+        public static final String AMBIENT_TEXT_TYPE_COLOR = "ambient_text_type_color";
+
+        /**
+        * Ambient Customization
+        * @hide
+        */
+        public static final String AMBIENT_IMAGE = "ambient_image";
+
+        /**
+         * Ambient Custom Image
+         * @hide
+         */
+        public static final String AMBIENT_CUSTOM_IMAGE = "ambient_custom_image";
+
+        /**
+         * @hide
+         */
+        public static final String QS_PANEL_STYLE = "qs_panel_style";
+
+        /**
+         * @hide
+         */
+        public static final String RECENTS_LOCKED_TASKS = "recents_locked_tasks";
+
+        /**
+         * Settings Dashboard Style
+         * @hide
+         */
+        public static final String SETTINGS_DASHBOARD_STYLE = "settings_dashboard_style";
+
+        /**
+         * Bottom screen shortcuts on keyguard
+         * Two lists of strings delimeted by ;
+         * Each list of string is delimited by ,
+         * for valid string see BuiltInKeyguardQuickAffordanceKeys under SystemUI
+         * The order in each list decides the priority for each shortcut
+         * @hide
+         */
+        @Readable
+        public static final String KEYGUARD_QUICK_TOGGLES_NEW = "keyguard_quick_toggles_new";
+
+        /**
+         * QS Header
+         * @hide
+         */
+        public static final String QS_HEADER_IMAGE = "qs_header_image";
+
+        /**
+         * Volume styles
+         * @hide
+         */
+        public static final String CUSTOM_VOLUME_STYLES = "custom_volume_styles";
+
+        /**
+         * Whether to display set of animations when prompting the power menu
+         *
+         * @hide
+         */
+        public static final String POWER_MENU_ANIMATIONS = "power_menu_animations";
+
+        /**
+         » Whether to enable QS haptic feedback
+         *
+         * @hide
+         */
+         public static final String QS_HAPTIC_FEEDBACK = "qs_haptic_feedback";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -6355,6 +6495,14 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE_VENDOR_HINT);
             PRIVATE_SETTINGS.add(DESKTOP_MODE);
+            PRIVATE_SETTINGS.add(MAX_VISIBLE_NOTIFICATION_ICONS);
+            PRIVATE_SETTINGS.add(STATUSBAR_LEFT_PADDING);
+            PRIVATE_SETTINGS.add(STATUSBAR_RIGHT_PADDING);
+            PRIVATE_SETTINGS.add(STATUSBAR_TOP_PADDING);
+            PRIVATE_SETTINGS.add(AMBIENT_TEXT_COLOR);
+            PRIVATE_SETTINGS.add(AMBIENT_TEXT_TYPE_COLOR);
+            PRIVATE_SETTINGS.add(OMNIJAWS_WEATHER_ICON_PACK);
+            PRIVATE_SETTINGS.add(QS_HAPTIC_FEEDBACK);
         }
 
         /**
