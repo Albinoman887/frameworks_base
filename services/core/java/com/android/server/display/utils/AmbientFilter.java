@@ -35,10 +35,10 @@ import java.util.Arrays;
  */
 abstract public class AmbientFilter {
 
-    protected static final boolean DEBUG = false; // Enable for verbose logs.
+    protected static final boolean DEBUG = true; // Enable for verbose logs.
 
     protected final String mTag;
-    protected boolean mLoggingEnabled;
+    protected boolean mLoggingEnabled = true;
 
     // How long ambient value changes are kept and taken into consideration.
     private final int mHorizon; // Milliseconds
@@ -57,7 +57,7 @@ abstract public class AmbientFilter {
     AmbientFilter(String tag, int horizon) {
         validateArguments(horizon);
         mTag = tag;
-        mLoggingEnabled = false;
+        mLoggingEnabled = true;
         mHorizon = horizon;
         mBuffer = new RollingBuffer();
     }

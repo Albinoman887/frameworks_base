@@ -56,7 +56,7 @@ import java.util.LinkedList;
 class HighBrightnessModeController {
     private static final String TAG = "HighBrightnessModeController";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     @VisibleForTesting
     static final float HBM_TRANSITION_POINT_INVALID = Float.POSITIVE_INFINITY;

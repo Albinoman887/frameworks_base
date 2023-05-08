@@ -134,7 +134,7 @@ class AutomaticBrightnessController {
     private final HysteresisLevels mAmbientBrightnessThresholdsIdle;
     private final HysteresisLevels mScreenBrightnessThresholdsIdle;
 
-    private boolean mLoggingEnabled;
+    private boolean mLoggingEnabled = true;
 
     // Amount of time to delay auto-brightness after screen on while waiting for
     // the light sensor to warm-up in milliseconds.

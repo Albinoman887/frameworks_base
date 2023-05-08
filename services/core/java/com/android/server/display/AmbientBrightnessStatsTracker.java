@@ -50,7 +50,7 @@ import java.util.Map;
 public class AmbientBrightnessStatsTracker {
 
     private static final String TAG = "AmbientBrightnessStatsTracker";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     @VisibleForTesting
     static final float[] BUCKET_BOUNDARIES_FOR_NEW_STATS =
