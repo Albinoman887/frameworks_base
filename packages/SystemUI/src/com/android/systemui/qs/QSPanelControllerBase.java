@@ -46,7 +46,6 @@ import com.android.systemui.qs.customize.QSCustomizerController;
 import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.qs.logging.QSLogger;
 import com.android.systemui.qs.tileimpl.QSTileViewImpl;
-//import com.android.systemui.tuner.TunerService;
 import com.android.systemui.util.LargeScreenUtils;
 import com.android.systemui.util.ViewController;
 import com.android.systemui.util.animation.DisappearParameters;
@@ -70,13 +69,7 @@ import kotlin.jvm.functions.Function1;
  * @param <T> Type of QSPanel.
  */
 public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewController<T>
-        implements Dumpable {
-
-    private static final String QS_TILE_LABEL_HIDE =
-            "system:" + Settings.System.QS_TILE_LABEL_HIDE;
-    private static final String QS_TILE_VERTICAL_LAYOUT =
-            "system:" + Settings.System.QS_TILE_VERTICAL_LAYOUT;
-
+        implements Dumpable{
     private static final String TAG = "QSPanelControllerBase";
     protected final QSTileHost mHost;
     private final QSCustomizerController mQsCustomizerController;
@@ -242,12 +235,10 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
 
         mMediaHost.removeVisibilityChangeListener(mMediaHostVisibilityListener);
 
-	if (areThereTiles()) {
-            for (TileRecord record : mRecords) {
-                record.tile.removeCallbacks();
-            }
-            mRecords.clear();
+        for (TileRecord record : mRecords) {
+            record.tile.removeCallbacks();
         }
+        mRecords.clear();
         mDumpManager.unregisterDumpable(mView.getDumpableTag());
     }
 
@@ -282,7 +273,6 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
 
     /** */
     public void refreshAllTiles() {
-    	if (!areThereTiles()) return;
         for (QSPanelControllerBase.TileRecord r : mRecords) {
             if (!r.tile.isListening()) {
                 // Only refresh tiles that were not already in the listening state. Tiles that are
@@ -524,23 +514,6 @@ public abstract class QSPanelControllerBase<T extends QSPanel> extends ViewContr
         // a smooth translation animation without stuttering.
         mView.setShouldMoveMediaOnExpansion(!isOnSplitShadeLockscreen);
     }
-
-    /**
-        @Override
-        public void onTuningChanged(String key, String newValue) {
-            switch (key) {
-                case QS_TILE_VERTICAL_LAYOUT:
-                case QS_TILE_LABEL_HIDE:
-                    if (mView.getTileLayout() != null) {
-                        mView.getTileLayout().updateSettings();
-                        setTiles();
-                    }
-                    break;
-                default:
-                    break;
-             }
-        }
-    */
 
     /** */
     public static final class TileRecord {
