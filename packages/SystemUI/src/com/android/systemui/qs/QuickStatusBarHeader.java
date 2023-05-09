@@ -55,6 +55,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import com.android.internal.graphics.ColorUtils;
 import com.android.internal.policy.SystemBarUtils;
 import com.android.settingslib.Utils;
+import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.battery.BatteryMeterView;
 import com.android.systemui.plugins.ActivityStarter;
@@ -110,8 +111,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     @Nullable
     private TouchAnimator mIconsAlphaAnimator;
     private TouchAnimator mIconsAlphaAnimatorFixed;
-
-    private final ActivityStarter mActivityStarter;
 
     protected QuickQSPanel mHeaderQsPanel;
     private View mDatePrivacyView;
@@ -538,9 +537,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                         mClockDateView.setVisibility(View.GONE);
                         mQSCarriers.setVisibility(View.VISIBLE);
                         updateRightLayout(true);
-                        if (mQSWeatherTemp != null) {
-                           mQSWeatherTemp.setSelected(true);
-                        }
+                      //  if (mQSWeatherTemp != null) {
+                      //     mQSWeatherTemp.setSelected(true);
+                      //  }
                     }
 
                     @Override
@@ -568,12 +567,16 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                         setSeparatorVisibility(mShowClockIconsSeparator);
                         updateRightLayout(false);
                         mClockHeight = mClockView.getMeasuredHeight();
-                        if (mQsWeatherHeaderView != null) {
-                            mQsWeatherHeaderView.setVisibility(View.GONE);
-                        }
-                        if (mQsWeatherView != null) {
-                            mQsWeatherView.setVisibility(mQQSWeather != 1 ? View.VISIBLE : View.GONE);
-                        }
+                        /**
+                            if (mQsWeatherHeaderView != null) {
+                                mQsWeatherHeaderView.setVisibility(View.GONE);
+                            }
+                        */
+                        /**
+                            if (mQsWeatherView != null) {
+                                mQsWeatherView.setVisibility(mQQSWeather != 1 ? View.VISIBLE : View.GONE);
+                            }
+                        */
                     }
                 });
         mAlphaAnimator = builder.build();
@@ -606,16 +609,20 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
             // Animates the icons and battery indicator from alpha 0 to 1, when the chip is visible
             mIconsAlphaAnimator = mIconsAlphaAnimatorFixed;
             mIconsAlphaAnimator.setPosition(mKeyguardExpansionFraction);
-            setBatteryRemainingOnClick(false);
-            if (mQQSWeather > 0 && mQsWeatherHeaderView != null) {
-                mQSWeatherTemp.setSelected(false);
-                mQsWeatherHeaderView.setVisibility(View.GONE);
-            }
+            //setBatteryRemainingOnClick(false);
+            /**
+                if (mQQSWeather > 0 && mQsWeatherHeaderView != null) {
+                    mQSWeatherTemp.setSelected(false);
+                    mQsWeatherHeaderView.setVisibility(View.GONE);
+                }
+            */
         } else {
-            if (mQQSWeather > 0 && mQsWeatherHeaderView != null) {
-                mQsWeatherHeaderView.setVisibility(View.VISIBLE);
-                mQSWeatherTemp.setSelected(true);
-            }
+            /**
+                if (mQQSWeather > 0 && mQsWeatherHeaderView != null) {
+                    mQsWeatherHeaderView.setVisibility(View.VISIBLE);
+                    mQSWeatherTemp.setSelected(true);
+                }
+            */
             mIconsAlphaAnimator = null;
             mIconContainer.setAlpha(1);
             mBatteryRemainingIcon.setAlpha(1);
