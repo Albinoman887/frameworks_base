@@ -54,8 +54,7 @@ import javax.inject.Provider;
 
 /** Controller for {@link QuickQSPanel}. */
 @QSScope
-public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel>
-        implements TunerService.Tunable {
+public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel> {
 
     private final Provider<Boolean> mUsingCollapsedLandscapeMediaProvider;
     private final BrightnessController mBrightnessController;
@@ -124,9 +123,6 @@ public class QuickQSPanelController extends QSPanelControllerBase<QuickQSPanel>
         mTunerService.addTunable(mView, QSPanel.QS_BRIGHTNESS_SLIDER_POSITION);
         mTunerService.addTunable(mView, QSPanel.QS_SHOW_AUTO_BRIGHTNESS);
         mTunerService.addTunable(mView, QSPanel.QS_SHOW_BRIGHTNESS_SLIDER);
-        mTunerService.addTunable(mView, QSPanel.QS_TILE_ANIMATION_STYLE);
-        mTunerService.addTunable(mView, QSPanel.QS_TILE_ANIMATION_DURATION);
-        mTunerService.addTunable(mView, QSPanel.QS_TILE_ANIMATION_INTERPOLATOR);
 
         mView.setBrightnessRunnable(() -> {
             mView.updateResources();
