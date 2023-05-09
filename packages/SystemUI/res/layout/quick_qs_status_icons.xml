@@ -55,6 +55,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/status_bar_left_clock_end_padding"
             android:gravity="center_vertical|start"
+            android:singleLine="true"
             android:textAlignment="viewStart"
             android:includeFontPadding="false"
             android:singleLine="true"
