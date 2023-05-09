@@ -200,6 +200,7 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
     private int mDialogCornerRadius;
     private int mRingerDrawerItemSize;
     private int mRingerRowsPadding;
+    private int mTargetTapSize;
     private boolean mShowVibrate;
     private int mRingerCount;
     private final boolean mShowLowMediaVolumeIcon;
@@ -760,6 +761,8 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
         mRingerRowsPadding = mContext.getResources().getDimensionPixelSize(
                 R.dimen.volume_dialog_ringer_rows_padding);
         mShowVibrate = mController.hasVibrator();
+	    mTargetTapSize = mContext.getResources().getDimensionPixelSize(
+                R.dimen.volume_dialog_tap_target_size);        
 
         // Normal, mute, and possibly vibrate.
         mRingerCount = mShowVibrate ? 3 : 2;
@@ -1318,7 +1321,15 @@ public class VolumeDialogImpl implements VolumeDialog, Dumpable,
                 == BluetoothProfile.STATE_CONNECTED;
     }
 
-
+    private boolean isMediaControllerAvailable() {
+        final MediaController mediaController = getActiveLocalMediaController();
+        if (mShowMediaController) {
+          return mediaController != null &&
+                !TextUtils.isEmpty(mediaController.getPackageName());
+	} else {
+	  return false;
+	}
+    }
 
     private void initSettingsH(int lockTaskModeState) {
         if (mRoundedBorderBottom != null) {
