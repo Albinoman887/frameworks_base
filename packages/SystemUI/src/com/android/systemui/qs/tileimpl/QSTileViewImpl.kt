@@ -56,7 +56,6 @@ import com.android.systemui.plugins.qs.QSTile.BooleanState
 import com.android.systemui.plugins.qs.QSTileView
 import com.android.systemui.qs.logging.QSLogger
 import com.android.systemui.qs.tileimpl.QSIconViewImpl.QS_ANIM_LENGTH
-import com.android.internal.util.systemui.qs.QSLayoutUtils;
 import java.util.Objects
 import java.util.Random
 
