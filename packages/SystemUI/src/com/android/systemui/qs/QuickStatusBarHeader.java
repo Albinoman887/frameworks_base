@@ -27,12 +27,8 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
-import android.net.Uri;
 import android.os.UserHandle;
-import android.os.VibrationEffect;
-import android.os.Vibrator;
 import android.provider.AlarmClock;
-import android.provider.CalendarContract;
 import android.provider.Settings;
 import android.util.AttributeSet;
 import android.util.Pair;
@@ -52,7 +48,6 @@ import androidx.annotation.Nullable;
 import com.android.internal.graphics.ColorUtils;
 import com.android.internal.policy.SystemBarUtils;
 import com.android.settingslib.Utils;
-import com.android.systemui.Dependency;
 import com.android.systemui.R;
 import com.android.systemui.battery.BatteryMeterView;
 import com.android.systemui.plugins.ActivityStarter;
@@ -71,29 +66,33 @@ import java.util.List;
  * View that contains the top-most bits of the QS panel (primarily the status bar with date, time,
  * battery, carrier info and privacy icons) and also contains the {@link QuickQSPanel}.
  */
-public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tunable,
-        View.OnClickListener, View.OnLongClickListener {
 
-    private static final int CLOCK_POSITION_LEFT = 2;
-    private static final int CLOCK_POSITION_HIDE = 3;
+/** public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tunable,
+*        View.OnClickListener, View.OnLongClickListener {
+*
+*    private static final int CLOCK_POSITION_LEFT = 2;
+*    private static final int CLOCK_POSITION_HIDE = 3;
+*
+*   private static final String SHOW_QS_CLOCK =
+*            "system:" + Settings.System.SHOW_QS_CLOCK;
+*    private static final String SHOW_QS_DATE =
+*            "system:" + Settings.System.SHOW_QS_DATE;
+*    public static final String STATUS_BAR_BATTERY_STYLE =
+*            "system:" + Settings.System.STATUS_BAR_BATTERY_STYLE;
+*   public static final String QS_BATTERY_STYLE =
+*           "system:" + Settings.System.QS_BATTERY_STYLE;
+*   public static final String QS_BATTERY_LOCATION =
+*            "system:" + Settings.System.QS_BATTERY_LOCATION;
+*    private static final String QS_SHOW_BATTERY_PERCENT =
+*            "system:" + Settings.System.QS_SHOW_BATTERY_PERCENT;
+*    private static final String QS_SHOW_BATTERY_ESTIMATE =
+*            "system:" + Settings.System.QS_SHOW_BATTERY_ESTIMATE;
+*
+*    private static final String QS_HEADER_IMAGE =
+*            "system:" + Settings.System.QS_HEADER_IMAGE;
+*/
 
-    private static final String SHOW_QS_CLOCK =
-            "system:" + Settings.System.SHOW_QS_CLOCK;
-    private static final String SHOW_QS_DATE =
-            "system:" + Settings.System.SHOW_QS_DATE;
-    public static final String STATUS_BAR_BATTERY_STYLE =
-            "system:" + Settings.System.STATUS_BAR_BATTERY_STYLE;
-    public static final String QS_BATTERY_STYLE =
-            "system:" + Settings.System.QS_BATTERY_STYLE;
-    public static final String QS_BATTERY_LOCATION =
-            "system:" + Settings.System.QS_BATTERY_LOCATION;
-    private static final String QS_SHOW_BATTERY_PERCENT =
-            "system:" + Settings.System.QS_SHOW_BATTERY_PERCENT;
-    private static final String QS_SHOW_BATTERY_ESTIMATE =
-            "system:" + Settings.System.QS_SHOW_BATTERY_ESTIMATE;
-
-    private static final String QS_HEADER_IMAGE =
-            "system:" + Settings.System.QS_HEADER_IMAGE;
+public class QuickStatusBarHeader extends FrameLayout {
 
     private boolean mExpanded;
     private boolean mQsDisabled;
@@ -105,6 +104,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     @Nullable
     private TouchAnimator mIconsAlphaAnimator;
     private TouchAnimator mIconsAlphaAnimatorFixed;
+
+    private final ActivityStarter mActivityStarter;
 
     protected QuickQSPanel mHeaderQsPanel;
     private View mDatePrivacyView;
@@ -163,15 +164,11 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private boolean mUseCombinedQSHeader;
     private boolean mShowDate;
 
-    private final ActivityStarter mActivityStarter;
-    private final Vibrator mVibrator;
-
     private int mStatusBarBatteryStyle, mQSBatteryStyle, mQSBatteryLocation;
 
     public QuickStatusBarHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
         mActivityStarter = Dependency.get(ActivityStarter.class);
-        mVibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
     }
 
     /**
@@ -195,11 +192,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mIconContainer = findViewById(R.id.statusIcons);
         mPrivacyChip = findViewById(R.id.privacy_chip);
         mDateView = findViewById(R.id.date);
-        mDateView.setOnClickListener(this);
-        mDateView.setOnLongClickListener(this);
         mClockDateView = findViewById(R.id.date_clock);
-        mClockDateView.setOnClickListener(this);
-        mClockDateView.setOnLongClickListener(this);
         mClockIconsSeparator = findViewById(R.id.separator);
         mRightLayout = findViewById(R.id.rightLayout);
         mDateContainer = findViewById(R.id.date_container);
@@ -207,14 +200,13 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
         mClockContainer = findViewById(R.id.clock_container);
         mClockView = findViewById(R.id.clock);
-        mClockView.setQsHeader();
-        mClockView.setOnClickListener(this);
+        mClockView.setOnClickListener(
+                v -> mActivityStarter.postStartActivityDismissingKeyguard(
+                        new Intent(AlarmClock.ACTION_SHOW_ALARMS), 0));
         mDatePrivacySeparator = findViewById(R.id.space);
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
         mBatteryRemainingIcon.mQS = true;
-        mBatteryRemainingIcon.setOnClickListener(this);
-        mBatteryRemainingIcon.setOnLongClickListener(this);
 
         mBatteryIcon = findViewById(R.id.batteryIcon);
 
@@ -294,43 +286,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     public void onRtlPropertiesChanged(int layoutDirection) {
         super.onRtlPropertiesChanged(layoutDirection);
         updateResources();
-    }
-
-    @Override
-    public void onClick(View v) {
-        // Clock view is still there when the panel is not expanded
-        // Making sure we get the date action when the user clicks on it
-        // but actually is seeing the date
-        if (v == mClockView) {
-            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
-                    AlarmClock.ACTION_SHOW_ALARMS), 0);
-        } else if (v == mDateView || v == mClockDateView) {
-            Uri.Builder builder = CalendarContract.CONTENT_URI.buildUpon();
-            builder.appendPath("time");
-            builder.appendPath(Long.toString(System.currentTimeMillis()));
-            Intent todayIntent = new Intent(Intent.ACTION_VIEW, builder.build());
-            mActivityStarter.postStartActivityDismissingKeyguard(todayIntent, 0);
-        } else if (v == mBatteryRemainingIcon) {
-            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
-                    Intent.ACTION_POWER_USAGE_SUMMARY), 0);
-        }
-    }
-
-    @Override
-    public boolean onLongClick(View v) {
-        if (v == mClockView || v == mDateView || v == mClockDateView) {
-            Intent nIntent = new Intent(Intent.ACTION_MAIN);
-            nIntent.setClassName("com.android.settings",
-                    "com.android.settings.Settings$DateTimeSettingsActivity");
-            mActivityStarter.startActivity(nIntent, true /* dismissShade */);
-            mVibrator.vibrate(VibrationEffect.createOneShot(50, VibrationEffect.DEFAULT_AMPLITUDE));
-            return true;
-        } else if (v == mBatteryRemainingIcon) {
-            mActivityStarter.postStartActivityDismissingKeyguard(new Intent(
-                    Intent.ACTION_POWER_USAGE_SUMMARY), 0);
-            return true;
-        }
-        return false;
     }
 
     private void setDatePrivacyContainersWidth(boolean landscape) {
