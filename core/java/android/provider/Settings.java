@@ -6434,11 +6434,6 @@ public final class Settings {
          */
         public static final String VOLUME_MEDIA_OUTPUT_TOGGLE = "volume_media_output_toggle";
 
-	/**
-         * @hide
-         */
-        public static final String VOLUME_MEDIA_OUTPUT_TOGGLE = "volume_media_output_toggle";
-
         /**
          * Whether to wake the screen with the camera key half-press.
          * 0 = 0ff, 1 = on
@@ -6919,11 +6914,6 @@ public final class Settings {
          * @hide
          */
         public static final String CLOCK_USE_CUSTOM_FORMAT = "clock_use_custom_format";
-
-        /**
-         * @hide
-         */
-        public static final String QS_PANEL_STYLE = "qs_panel_style";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
