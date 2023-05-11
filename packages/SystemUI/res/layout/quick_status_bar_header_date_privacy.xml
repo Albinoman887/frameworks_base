@@ -25,7 +25,6 @@
     android:gravity="center"
     android:layout_gravity="top"
     android:orientation="horizontal"
-    android:clickable="true"
     android:minHeight="@dimen/qs_panel_padding_top"
     android:clickable="true">
 
