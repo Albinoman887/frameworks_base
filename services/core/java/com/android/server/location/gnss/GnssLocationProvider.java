@@ -1128,11 +1128,6 @@ public class GnssLocationProvider extends AbstractLocationProvider implements
             setStarted(true);
             mPositionMode = getSuplMode(isAssistedGpsEnabled());
 
-            boolean agpsEnabled =
-                    (Settings.Global.getInt(mContext.getContentResolver(),
-                            Settings.Global.ASSISTED_GPS_ENABLED, 0) != 0) || isEmergency;
-            mPositionMode = getSuplMode(agpsEnabled);
-
             if (DEBUG) {
                 String mode;
 
@@ -1788,11 +1783,5 @@ public class GnssLocationProvider extends AbstractLocationProvider implements
         }
         return (Settings.Global.getInt(mContext.getContentResolver(),
                         Settings.Global.ASSISTED_GPS_ENABLED, 0) != 0) || isEmergency;
-    }
-
-    private void toggleXtraDaemon() {
-        Log.i(TAG, "Toggling xtra-daemon via property");
-        SystemProperties.set("persist.sys.xtra-daemon.enabled",
-                Boolean.toString(isAssistedGpsEnabled()));
     }
 }
