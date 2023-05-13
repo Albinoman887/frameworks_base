@@ -175,7 +175,10 @@ public class PixelPropsUtils {
                 }
             }
             boolean useFallbackFp = false;
-            if (!sCertifiedFp.isEmpty() && (sIsGms || sIsFinsky)) {
+            if (packageName.equals("com.google.android.apps.photos")) {
+                if (SystemProperties.getBoolean("persist.sys.pixelprops.gphotos", true)) {
+                sPXLProps.forEach((k, v) -> setPropValue(k, v));
+            } else if (!sCertifiedFp.isEmpty() && (sIsGms || sIsFinsky)) {
                 dlog("Setting certified fingerprint for: " + packageName);
                 setPropValue("FINGERPRINT", sCertifiedFp);
             } else if (!sStockFp.isEmpty() && packageName.equals(PACKAGE_ARCORE)) {
