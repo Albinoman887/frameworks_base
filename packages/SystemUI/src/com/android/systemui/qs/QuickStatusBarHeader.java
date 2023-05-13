@@ -382,9 +382,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         boolean largeScreenHeaderActive =
                 LargeScreenUtils.shouldUseLargeScreenShadeHeader(resources);
 
-        boolean gone = largeScreenHeaderActive || mUseCombinedQSHeader || mQsDisabled;
-        mStatusIconsView.setVisibility(gone ? View.GONE : View.VISIBLE);
-        mDatePrivacyView.setVisibility(gone ? View.GONE : View.VISIBLE);
+        boolean gone = true;
+        mStatusIconsView.setVisibility(View.GONE);
+        mDatePrivacyView.setVisibility(View.GONE);
 
         mRoundedCornerPadding = resources.getDimensionPixelSize(
                 R.dimen.rounded_corner_content_padding);
@@ -517,6 +517,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private void updateAlphaAnimator() {
         int endPadding = mContext.getResources()
                 .getDimensionPixelSize(R.dimen.status_bar_left_clock_end_padding);
+
+        mClockDateView.setVisibility(View.GONE);
+        
         if (mUseCombinedQSHeader) {
             mAlphaAnimator = null;
             return;
