@@ -104,9 +104,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private static final float LARGE_CLOCK_SCALE_X = 2.3f;
     private static final float LARGE_CLOCK_SCALE_Y = 2.4f;
 
-    private static final float LARGE_CLOCK_SCALE_X = 2.3f;
-    private static final float LARGE_CLOCK_SCALE_Y = 2.4f;
-
     private boolean mExpanded;
     private boolean mQsDisabled;
 
@@ -180,7 +177,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
     private int mStatusBarBatteryStyle, mQSBatteryStyle, mQSBatteryLocation;
 
-    private final ActivityStarter mActivityStarter;
     private final Vibrator mVibrator;
 
     private boolean mQsExpanding;
@@ -399,8 +395,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mStatusBarPaddingEnd = resources.getDimensionPixelSize(
                 R.dimen.status_bar_padding_end);
 
-        int statusBarHeight = SystemBarUtils.getStatusBarHeight(mContext);
-
         mStatusBarPaddingTop = resources.getDimensionPixelSize(
                 R.dimen.status_bar_padding_top);
 
@@ -519,7 +513,7 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 .getDimensionPixelSize(R.dimen.status_bar_left_clock_end_padding);
 
         mClockDateView.setVisibility(View.GONE);
-        
+
         if (mUseCombinedQSHeader) {
             mAlphaAnimator = null;
             return;
