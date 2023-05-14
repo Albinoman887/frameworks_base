@@ -219,9 +219,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
         mClockContainer = findViewById(R.id.clock_container);
         mClockView = findViewById(R.id.clock);
-        mClockView.setOnClickListener(
-                v -> mActivityStarter.postStartActivityDismissingKeyguard(
-                        new Intent(AlarmClock.ACTION_SHOW_ALARMS), 0));
+        mClockView.setOnClickListener(this);
+        mClockView.setOnLongClickListener(this);
         mDatePrivacySeparator = findViewById(R.id.space);
         mClockView.setPivotX(0);
         mClockView.setPivotY(mClockView.getMeasuredHeight());
@@ -231,8 +230,15 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
         mBatteryRemainingIcon.mQS = true;
         mBatteryRemainingIcon.setOnClickListener(this);
         mBatteryRemainingIcon.setOnLongClickListener(this);
+        mBatteryRemainingIcon.mQS = true;
 
-	updateResources();
+	mBatteryIcon = findViewById(R.id.batteryIcon);
+
+	    mQsHeaderLayout = findViewById(R.id.layout_header);
+        mQsHeaderImageView = findViewById(R.id.qs_header_image_view);
+        mQsHeaderImageView.setClipToOutline(true);
+
+    updateResources();
 
         Configuration config = mContext.getResources().getConfiguration();
         setDatePrivacyContainersWidth(config.orientation == Configuration.ORIENTATION_LANDSCAPE);
