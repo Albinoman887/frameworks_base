@@ -73,8 +73,11 @@ import java.util.List;
  * View that contains the top-most bits of the QS panel (primarily the status bar with date, time,
  * battery, carrier info and privacy icons) and also contains the {@link QuickQSPanel}.
  */
+
+
 public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tunable,
         View.OnClickListener, View.OnLongClickListener {
+      
 
     private static final int CLOCK_POSITION_LEFT = 2;
     private static final int CLOCK_POSITION_HIDE = 3;
@@ -227,7 +230,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
-        mBatteryRemainingIcon.mQS = true;
         mBatteryRemainingIcon.setOnClickListener(this);
         mBatteryRemainingIcon.setOnLongClickListener(this);
         mBatteryRemainingIcon.mQS = true;
@@ -543,8 +545,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
 
                     @Override
                     public void onAnimationStarted() {
-                        mClockDateView.setVisibility(View.VISIBLE);
-                        mClockDateView.setFreezeSwitching(true);
+                        if (mShowDate) {
+                            mClockDateView.setVisibility(View.VISIBLE);
+                            mClockDateView.setFreezeSwitching(true);
+                        }
                         mDateView.setVisibility(View.VISIBLE);
                         mQSCarriers.setVisibility(View.VISIBLE);
                         setChipVisibility(mPrivacyChip.getVisibility() == View.VISIBLE);
@@ -554,8 +558,10 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                     @Override
                     public void onAnimationAtStart() {
                         super.onAnimationAtStart();
+                        if (mShowDate) {
                         mClockDateView.setFreezeSwitching(false);
                         mClockDateView.setVisibility(View.VISIBLE);
+                        }
                         mClockView.setVisibility(View.VISIBLE);
                         mDateView.setVisibility(View.GONE);
                         mQSCarriers.setVisibility(View.GONE);
