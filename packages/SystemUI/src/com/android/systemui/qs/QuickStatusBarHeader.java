@@ -171,7 +171,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private boolean mUseCombinedQSHeader;
     private boolean mShowDate;
 
-    private final ActivityStarter mActivityStarter;
     private final Vibrator mVibrator;
     private int mStatusBarBatteryStyle, mQSBatteryStyle, mQSBatteryLocation;
 
