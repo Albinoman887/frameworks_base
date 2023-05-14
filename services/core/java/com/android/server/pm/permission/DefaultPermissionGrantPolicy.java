@@ -1058,6 +1058,10 @@ final class DefaultPermissionGrantPolicy {
         // Chromium Sign-in
         grantSystemFixedPermissionsToSystemPackage(pm, "org.chromium.chrome", userId, CONTACTS_PERMISSIONS,
                 STORAGE_PERMISSIONS);
+
+        // OmniJaws
+        String omnijawsServicePackageName = "org.omnirom.omnijaws";
+        grantSystemFixedPermissionsToSystemPackage(pm, omnijawsServicePackageName, userId, ALWAYS_LOCATION_PERMISSIONS);
     }
 
     private String getDefaultSystemHandlerActivityPackageForCategory(PackageManagerWrapper pm,
