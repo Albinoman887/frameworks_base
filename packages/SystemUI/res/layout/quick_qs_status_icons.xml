@@ -35,15 +35,17 @@
         >
         <com.android.systemui.statusbar.policy.Clock
             android:id="@+id/clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:gravity="center_vertical|start"
             android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
             android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
             android:singleLine="true"
             android:textAlignment="center" 
             android:includeFontPadding="false"
-            android:textAppearance="@style/TextAppearance.QS.Status" />
+            android:textAppearance="@style/TextAppearance.QS.Status" 
+            android:visibility="invisible"
+            />
 
         <com.android.systemui.statusbar.policy.VariableDateView
             android:id="@+id/date_clock"
@@ -57,6 +59,7 @@
             android:textAppearance="@style/TextAppearance.QS.Status"
             systemui:longDatePattern="@string/abbrev_wday_month_day_no_year_alarm"
             systemui:shortDatePattern="@string/abbrev_month_day_no_year"
+            android:visibility="invisible"            
         />
 
 
@@ -64,8 +67,8 @@
 
     <com.android.systemui.statusbar.policy.VariableDateView
         android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="1dp"
+        android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:gravity="center_vertical"
         android:singleLine="true"
@@ -77,6 +80,7 @@
         systemui:shortDatePattern="@string/abbrev_month_day_no_year"
         app:layout_constraintTop_toBottomOf="@+id/clock_container"
         app:layout_constraintStart_toStartOf="parent"
+        android:visibility="invisible"
     />
 
     <View
@@ -93,13 +97,15 @@
     <include layout="@layout/qs_carrier_group"
         android:id="@+id/carrier_group"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:minWidth="48dp"
         android:focusable="false"
         app:layout_constraintTop_toTopOf="@+id/clock"
         app:layout_constraintBottom_toBottomOf="@+id/clock"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constrainedHeight="true" />
+        app:layout_constrainedHeight="true"
+        android:visibility="gone"
+ />
 
     <LinearLayout
         android:id="@+id/rightLayout"
@@ -117,11 +123,13 @@
 
         <com.android.systemui.battery.BatteryMeterView
             android:id="@+id/batteryRemainingIcon"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:layout_width="0dp"
             android:layout_weight="1"
             systemui:textAppearance="@style/TextAppearance.QS.Status"
-            android:paddingEnd="2dp" />
+            android:paddingEnd="2dp"
+            android:visibility="gone"
+ />
 
     </LinearLayout>
 
