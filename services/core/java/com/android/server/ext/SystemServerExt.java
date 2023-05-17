@@ -54,7 +54,8 @@ public final class SystemServerExt {
         sse.bgHandler.post(sse::initBgThread);
         instance = sse;
 
-        new GoogleEuiccLpaDisabler(sse);
+        // init synchronously to make sure they are disabled before any of the apps are started
+        new GoogleEuiccPkgsDisabler(sse);
     }
 
     void initBgThread() {
