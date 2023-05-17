@@ -33,6 +33,7 @@ import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.app.ActivityThread;
 import android.app.AppGlobals;
+import android.app.compat.gms.GmsCompat;
 import android.bluetooth.BluetoothDevice;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.content.pm.ActivityInfo;
@@ -65,6 +66,7 @@ import android.provider.DocumentsContract;
 import android.provider.DocumentsProvider;
 import android.provider.MediaStore;
 import android.provider.OpenableColumns;
+import android.provider.Settings;
 import android.service.chooser.ChooserAction;
 import android.telecom.PhoneAccount;
 import android.telecom.TelecomManager;
@@ -1843,6 +1845,13 @@ public class Intent implements Parcelable, Cloneable {
      */
     public static final String EXTRA_UNINSTALL_ALL_USERS
             = "android.intent.extra.UNINSTALL_ALL_USERS";
+
+    /**
+     * Specify whether the "More options" button should be shown in the package uninstallation UI.
+     * @hide
+     */
+    public static final String EXTRA_UNINSTALL_SHOW_MORE_OPTIONS_BUTTON
+            = "android.intent.extra.UNINSTALL_SHOW_MORE_OPTIONS_BUTTON";
 
     /**
      * A string that associates with a metadata entry, indicating the last run version of the
@@ -9469,6 +9478,13 @@ public class Intent implements Parcelable, Cloneable {
      * @see #resolveActivityInfo
      */
     public ComponentName resolveActivity(@NonNull PackageManager pm) {
+        if (GmsCompat.isEnabled()) {
+            if (Settings.ACTION_SETTINGS_EMBED_DEEP_LINK_ACTIVITY.equals(getAction())) {
+                // LAUNCH_MULTI_PANE_SETTINGS_DEEP_LINK permission has protectionLevel="signature|preinstalled"
+                return null;
+            }
+        }
+
         if (mComponent != null) {
             return mComponent;
         }

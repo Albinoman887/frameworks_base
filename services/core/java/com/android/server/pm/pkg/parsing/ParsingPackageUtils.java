@@ -91,6 +91,8 @@ import com.android.internal.R;
 import com.android.internal.os.ClassLoaderFactory;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.XmlUtils;
+import com.android.server.ext.GmsSysServerHooks;
+import com.android.server.ext.PackageManagerHooks;
 import com.android.server.pm.SharedUidMigration;
 import com.android.server.pm.permission.CompatibilityPermissionInfo;
 import com.android.server.pm.pkg.component.ComponentMutateUtils;
@@ -2203,6 +2205,10 @@ public class ParsingPackageUtils {
             pkg.addActivity(a.getResult());
         }
 
+        GmsSysServerHooks.maybeAddServiceDuringParsing(pkg);
+        GmsSysServerHooks.fixupPermissions(pkg);
+        PackageManagerHooks.amendParsedPackage(pkg);
+
         if (hasActivityOrder) {
             pkg.sortActivities();
         }
@@ -2221,6 +2227,8 @@ public class ParsingPackageUtils {
 
         pkg.setHasDomainUrls(hasDomainURLs(pkg));
 
+        pkg.addUsesPermission(new ParsedUsesPermissionImpl(android.Manifest.permission.OTHER_SENSORS, 0));
+
         return input.success(pkg);
     }
 
@@ -2236,7 +2244,7 @@ public class ParsingPackageUtils {
         // CHECKSTYLE:off
         pkg
                 // Default true
-                .setAllowBackup(bool(true, R.styleable.AndroidManifestApplication_allowBackup, sa))
+                .setAllowBackup(bool(sa == null ? false : true, R.styleable.AndroidManifestApplication_allowBackup, sa))
                 .setAllowClearUserData(bool(true, R.styleable.AndroidManifestApplication_allowClearUserData, sa))
                 .setAllowClearUserDataOnFailedRestore(bool(true, R.styleable.AndroidManifestApplication_allowClearUserDataOnFailedRestore, sa))
                 .setAllowNativeHeapPointerTagging(bool(true, R.styleable.AndroidManifestApplication_allowNativeHeapPointerTagging, sa))

@@ -161,7 +161,7 @@ public class PackageManagerServiceUtils {
     /**
      * The initial enabled state of the cache before other checks are done.
      */
-    private static final boolean DEFAULT_PACKAGE_PARSER_CACHE_ENABLED = true;
+    private static final boolean DEFAULT_PACKAGE_PARSER_CACHE_ENABLED = false;
 
     /**
      * Whether to skip all other checks and force the cache to be enabled.
@@ -1310,6 +1310,7 @@ public class PackageManagerServiceUtils {
             boolean isUserDebugBuild, String incrementalVersion, boolean isUpgrade) {
         if (!FORCE_PACKAGE_PARSED_CACHE_ENABLED) {
             if (!DEFAULT_PACKAGE_PARSER_CACHE_ENABLED) {
+                FileUtils.deleteContentsAndDir(Environment.getPackageCacheDirectory());
                 return null;
             }
 
@@ -1363,7 +1364,9 @@ public class PackageManagerServiceUtils {
         // NOTE: When no BUILD_NUMBER is set by the build system, it defaults to a build
         // that starts with "eng." to signify that this is an engineering build and not
         // destined for release.
-        if (isUserDebugBuild && incrementalVersion.startsWith("eng.")) {
+        if (incrementalVersion.startsWith("eng.")) {
+            Slog.w(TAG, "Wiping cache directory because the system partition changed.");
+
             // Heuristic: If the /system directory has been modified recently due to an "adb sync"
             // or a regular make, then blow away the cache. Note that mtimes are *NOT* reliable
             // in general and should not be used for production changes. In this specific case,

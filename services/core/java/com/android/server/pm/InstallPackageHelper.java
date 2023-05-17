@@ -600,6 +600,7 @@ final class InstallPackageHelper {
                         permissionParamsBuilder.setAllowlistedRestrictedPermissions(
                                 pkgSetting.getPkg().getRequestedPermissions());
                     }
+                    permissionParamsBuilder.setNewlyInstalledInUserId(userId);
                     mPm.mPermissionManager.onPackageInstalled(pkgSetting.getPkg(),
                             Process.INVALID_UID /* previousAppId */,
                             permissionParamsBuilder.build(), userId);
@@ -2035,15 +2036,6 @@ final class InstallPackageHelper {
                     if (DEBUG_INSTALL) {
                         Slog.d(TAG, "Implicitly enabling system package on upgrade: " + pkgName);
                     }
-                    // Enable system package for requested users
-                    if (res.mOrigUsers != null) {
-                        for (int origUserId : res.mOrigUsers) {
-                            if (userId == UserHandle.USER_ALL || userId == origUserId) {
-                                ps.setEnabled(COMPONENT_ENABLED_STATE_DEFAULT,
-                                        origUserId, installerPackageName);
-                            }
-                        }
-                    }
                     // Also convey the prior install/uninstall state
                     if (allUsers != null && installedForUsers != null) {
                         for (int currentUserId : allUsers) {
@@ -2088,14 +2080,11 @@ final class InstallPackageHelper {
                     // It's implied that when a user requests installation, they want the app to
                     // be installed and enabled.
                     ps.setInstalled(true, userId);
-                    ps.setEnabled(COMPONENT_ENABLED_STATE_DEFAULT, userId, installerPackageName);
                 } else if (allUsers != null) {
                     // The caller explicitly specified INSTALL_ALL_USERS flag.
                     // Thus, updating the settings to install the app for all users.
                     for (int currentUserId : allUsers) {
                         ps.setInstalled(true, currentUserId);
-                        ps.setEnabled(COMPONENT_ENABLED_STATE_DEFAULT, userId,
-                                installerPackageName);
                     }
                 }
 
@@ -2122,6 +2111,10 @@ final class InstallPackageHelper {
                     }
                 }
 
+                final PermissionManagerServiceInternal.PackageInstalledParams.Builder
+                        permissionParamsBuilder =
+                        new PermissionManagerServiceInternal.PackageInstalledParams.Builder();
+
                 // Set install reason for users that are having the package newly installed.
                 final int[] allUsersList = mPm.mUserManager.getUserIds();
                 if (userId == UserHandle.USER_ALL) {
@@ -2129,10 +2122,12 @@ final class InstallPackageHelper {
                         if (!previousUserIds.contains(currentUserId)
                                 && ps.getInstalled(currentUserId)) {
                             ps.setInstallReason(installReason, currentUserId);
+                            permissionParamsBuilder.setNewlyInstalledInUserId(currentUserId);
                         }
                     }
                 } else if (!previousUserIds.contains(userId)) {
                     ps.setInstallReason(installReason, userId);
+                    permissionParamsBuilder.setNewlyInstalledInUserId(userId);
                 }
 
                 // TODO(b/169721400): generalize Incremental States and create a Callback object
@@ -2153,9 +2148,6 @@ final class InstallPackageHelper {
 
                 mPm.mSettings.writeKernelMappingLPr(ps);
 
-                final PermissionManagerServiceInternal.PackageInstalledParams.Builder
-                        permissionParamsBuilder =
-                        new PermissionManagerServiceInternal.PackageInstalledParams.Builder();
                 final boolean grantPermissions = (installArgs.mInstallFlags
                         & PackageManager.INSTALL_GRANT_RUNTIME_PERMISSIONS) != 0;
                 if (grantPermissions) {
@@ -2491,6 +2483,13 @@ final class InstallPackageHelper {
                                     PackageManager.INSTALL_FAILED_VERSION_DOWNGRADE, errorMsg);
                         }
                     }
+                }
+            }
+
+            if (!Build.isDebuggable() && dataOwnerPkg != null && dataOwnerPkg.isSystem()) {
+                if (dataOwnerPkg.getLongVersionCode() == pkgLite.getLongVersionCode()) {
+                    return Pair.create(INSTALL_FAILED_SESSION_INVALID,
+                            "Not allowed to update system package to the same versionCode");
                 }
             }
         }

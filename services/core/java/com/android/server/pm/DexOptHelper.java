@@ -349,8 +349,13 @@ final class DexOptHelper {
             pkgs.add(pkgSettings.get(index).getPkg());
         }
 
+        // Show the post-upgrade "Optimizing apps" UI.
+        // Note that this dialog is fully disabled elsewhere during the first boot.
+        boolean shouldShowDialog = causeUpgrade;
+
         final long startTime = System.nanoTime();
-        final int[] stats = performDexOptUpgrade(pkgs, mPm.isPreNUpgrade() /* showDialog */,
+        final int[] stats = performDexOptUpgrade(pkgs,
+                shouldShowDialog,
                 causeFirstBoot ? REASON_FIRST_BOOT : REASON_BOOT_AFTER_OTA,
                 false /* bootComplete */);
 
@@ -629,6 +634,11 @@ final class DexOptHelper {
             // No historical info. Take all.
             remainingPredicate = pkgSetting -> true;
         }
+
+        // Override the "don't compile apps that weren't used in the last 7 days" policy:
+        // JIT is disabled, apps that aren't compiled would run via the slow interpreter
+        remainingPredicate = pkgSetting -> true;
+
         applyPackageFilter(snapshot, remainingPredicate, result, remainingPkgSettings, sortTemp,
                 packageManagerService);
 

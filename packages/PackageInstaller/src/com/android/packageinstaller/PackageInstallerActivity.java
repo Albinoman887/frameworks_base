@@ -44,17 +44,20 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Process;
+import android.os.RemoteException;
 import android.os.UserManager;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.android.internal.app.AlertActivity;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -130,6 +133,9 @@ public class PackageInstallerActivity extends AlertActivity {
 
     // Would the mOk button be enabled if this activity would be resumed
     private boolean mEnableOk = false;
+    private boolean mPermissionResultWasSet;
+    private boolean mAllowNextOnPause;
+    private CheckBox mGrantInternetPermission;
 
     private void startInstallConfirm(PackageInfo oldInfo) {
         requireViewById(R.id.updating_app_view).setVisibility(View.VISIBLE); // the main layout
@@ -147,6 +153,16 @@ public class PackageInstallerActivity extends AlertActivity {
         } else {
             // This is a new application with no permissions.
             viewToEnable = requireViewById(R.id.install_confirm_question);
+
+            if (mPkgInfo != null) {
+                ApplicationInfo ai = mPkgInfo.applicationInfo;
+                boolean isSystemApp = ai != null && ai.isSystemApp();
+                String[] perms = mPkgInfo.requestedPermissions;
+                if (!isSystemApp && perms != null && Arrays.asList(perms).contains(Manifest.permission.INTERNET)) {
+                    mGrantInternetPermission = requireViewById(R.id.install_allow_INTERNET_permission);
+                    mGrantInternetPermission.setVisibility(View.VISIBLE);
+                }
+            }
         }
         newVersionView = requireViewById(R.id.updating_app_version);
         ((TextView)newVersionView).setText(
@@ -311,6 +327,7 @@ public class PackageInstallerActivity extends AlertActivity {
     protected void onCreate(Bundle icicle) {
         if (mLocalLOGV) Log.i(TAG, "creating for user " + getUserId());
         getWindow().addSystemFlags(SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS);
+        getWindow().setCloseOnTouchOutside(false);
 
         super.onCreate(null);
 
@@ -403,6 +420,24 @@ public class PackageInstallerActivity extends AlertActivity {
             // Don't allow the install button to be clicked as there might be overlays
             mOk.setEnabled(false);
         }
+        // sometimes this activity becomes hidden after onPause(),
+        // and the user is unable to bring it back
+        if (!mPermissionResultWasSet && mSessionId != -1) {
+            if (mAllowNextOnPause) {
+                mAllowNextOnPause = false;
+            } else {
+                if (!isFinishing()) {
+                    finish();
+                }
+            }
+        }
+    }
+
+    // handles startActivity() calls too
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        mAllowNextOnPause = true;
+        super.startActivityForResult(intent, requestCode, options);
     }
 
     @Override
@@ -418,6 +453,9 @@ public class PackageInstallerActivity extends AlertActivity {
         while (!mActiveUnknownSourcesListeners.isEmpty()) {
             unregister(mActiveUnknownSourcesListeners.get(0));
         }
+        if (!mPermissionResultWasSet) {
+            mInstaller.setPermissionsResult(mSessionId, false);
+        }
     }
 
     private void bindUi() {
@@ -427,8 +465,11 @@ public class PackageInstallerActivity extends AlertActivity {
         mAlert.setButton(DialogInterface.BUTTON_POSITIVE, getString(R.string.install),
                 (ignored, ignored2) -> {
                     if (mOk.isEnabled()) {
+                        handleSpecialRuntimePermissionAutoGrants();
+
                         if (mSessionId != -1) {
                             mInstaller.setPermissionsResult(mSessionId, true);
+                            mPermissionResultWasSet = true;
                             finish();
                         } else {
                             startInstall();
@@ -441,6 +482,7 @@ public class PackageInstallerActivity extends AlertActivity {
                     setResult(RESULT_CANCELED);
                     if (mSessionId != -1) {
                         mInstaller.setPermissionsResult(mSessionId, false);
+                        mPermissionResultWasSet = true;
                     }
                     finish();
                 }, null);
@@ -612,6 +654,7 @@ public class PackageInstallerActivity extends AlertActivity {
     public void onBackPressed() {
         if (mSessionId != -1) {
             mInstaller.setPermissionsResult(mSessionId, false);
+            mPermissionResultWasSet = true;
         }
         super.onBackPressed();
     }
@@ -878,6 +921,26 @@ public class PackageInstallerActivity extends AlertActivity {
         @Override
         public void onCancel(DialogInterface dialog) {
             getActivity().finish();
+        }
+    }
+
+    void handleSpecialRuntimePermissionAutoGrants() {
+        var skipPermissionAutoGrants = new ArrayList<String>();
+
+        if (mGrantInternetPermission != null) {
+            if (!mGrantInternetPermission.isChecked()) {
+                skipPermissionAutoGrants.add(Manifest.permission.INTERNET);
+            }
+        }
+
+        var pm = AppGlobals.getPackageManager();
+        var pkgName = mPkgInfo.packageName;
+        int userId = getUserId();
+        try {
+            pm.skipSpecialRuntimePermissionAutoGrantsForPackage(pkgName,
+                    userId, skipPermissionAutoGrants);
+        } catch (RemoteException e) {
+            throw e.rethrowFromSystemServer();
         }
     }
 }

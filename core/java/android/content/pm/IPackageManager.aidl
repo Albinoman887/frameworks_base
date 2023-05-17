@@ -806,4 +806,18 @@ interface IPackageManager {
     void setKeepUninstalledPackages(in List<String> packageList);
 
     boolean canPackageQuery(String sourcePackageName, String targetPackageName, int userId);
+
+    int getSpecialRuntimePermissionFlags(String packageName);
+
+    android.content.pm.GosPackageState getGosPackageState(String packageName, int userId);
+
+    android.content.pm.GosPackageState setGosPackageState(String packageName, int userId, in android.content.pm.GosPackageState updatedPs, boolean killUid);
+
+    void skipSpecialRuntimePermissionAutoGrantsForPackage(String packageName, int userId, in List<String> permissions);
+
+    PackageInfo findPackage(String packageName, long minVersion, in Bundle validSignaturesSha256);
+
+    boolean updateListOfBusyPackages(boolean add, in List<String> packageNames, IBinder callerBinder);
+
+    void updateSeInfo(String packageName);
 }

@@ -60,6 +60,8 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
 import android.database.ContentObserver;
+import android.ext.settings.ExtSettings;
+import android.ext.settings.IntSetting;
 import android.location.GnssCapabilities;
 import android.location.GnssStatus;
 import android.location.INetInitiatedListener;
@@ -100,6 +102,7 @@ import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.util.Slog;
 import android.util.TimeUtils;
 
 import com.android.internal.annotations.GuardedBy;
@@ -127,6 +130,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Consumer;
 
 /**
  * A GNSS implementation of LocationProvider used by LocationManager.
@@ -481,6 +485,13 @@ public class GnssLocationProvider extends AbstractLocationProvider implements
         mGnssNative.setNotificationCallbacks(this);
         mGnssNative.setLocationRequestCallbacks(this);
         mGnssNative.setTimeCallbacks(this);
+
+        Consumer<IntSetting> suplSettingObserver = setting -> {
+            Slog.d(TAG, "SUPL setting changed, value: " + setting.get(mContext));
+            reloadGpsProperties();
+        };
+
+        ExtSettings.GNSS_SUPL.registerObserver(mContext, suplSettingObserver, mHandler);
     }
 
     /** Called when system is ready. */
@@ -1717,41 +1728,7 @@ public class GnssLocationProvider extends AbstractLocationProvider implements
 
     @Override
     public void onRequestSetID(@GnssNative.AGpsCallbacks.AgpsSetIdFlags int flags) {
-        TelephonyManager phone = (TelephonyManager)
-                mContext.getSystemService(Context.TELEPHONY_SERVICE);
-        int type = AGPS_SETID_TYPE_NONE;
-        String setId = null;
-        final Boolean isEmergency = mNIHandler.getInEmergency();
-
-        // Unless we are in an emergency, do not provide sensitive subscriber information
-        // to SUPL servers.
-        if (!isEmergency) {
-            mGnssNative.setAgpsSetId(type, "");
-            return;
-        }
-
-        int subId = SubscriptionManager.getDefaultDataSubscriptionId();
-        if (isEmergency && mNetworkConnectivityHandler.getActiveSubId() >= 0) {
-            subId = mNetworkConnectivityHandler.getActiveSubId();
-        }
-        if (SubscriptionManager.isValidSubscriptionId(subId)) {
-            phone = phone.createForSubscriptionId(subId);
-        }
-        if ((flags & AGPS_REQUEST_SETID_IMSI) == AGPS_REQUEST_SETID_IMSI) {
-            setId = phone.getSubscriberId();
-            if (setId != null) {
-                // This means the framework has the SIM card.
-                type = AGPS_SETID_TYPE_IMSI;
-            }
-        } else if ((flags & AGPS_REQUEST_SETID_MSISDN) == AGPS_REQUEST_SETID_MSISDN) {
-            setId = phone.getLine1Number();
-            if (setId != null) {
-                // This means the framework has the SIM card.
-                type = AGPS_SETID_TYPE_MSISDN;
-            }
-        }
-
-        mGnssNative.setAgpsSetId(type, (setId == null) ? "" : setId);
+        mGnssNative.setAgpsSetId(AGPS_SETID_TYPE_NONE, "");
     }
 
     @Override

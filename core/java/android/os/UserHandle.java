@@ -22,6 +22,7 @@ import android.annotation.Nullable;
 import android.annotation.SystemApi;
 import android.annotation.TestApi;
 import android.annotation.UserIdInt;
+import android.app.compat.gms.GmsCompat;
 import android.compat.annotation.UnsupportedAppUsage;
 import android.util.SparseArray;
 
@@ -275,6 +276,7 @@ public final class UserHandle implements Parcelable {
      * Returns the user id for a given uid.
      * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     @UnsupportedAppUsage
     @TestApi
     public static @UserIdInt int getUserId(int uid) {
@@ -365,6 +367,7 @@ public final class UserHandle implements Parcelable {
      * Returns the uid that is composed from the userId and the appId.
      * @hide
      */
+    @SystemApi(client = SystemApi.Client.MODULE_LIBRARIES)
     @UnsupportedAppUsage
     @TestApi
     public static int getUid(@UserIdInt int userId, @AppIdInt int appId) {
@@ -563,6 +566,10 @@ public final class UserHandle implements Parcelable {
     @Deprecated
     @SystemApi
     public boolean isOwner() {
+        if (GmsCompat.isEnabled()) {
+            return isSystem();
+        }
+
         return this.equals(OWNER);
     }
 
@@ -572,6 +579,11 @@ public final class UserHandle implements Parcelable {
      */
     @SystemApi
     public boolean isSystem() {
+        if (GmsCompat.isEnabled()) {
+            // "system" user means "primary" ("Owner") user
+            return true;
+        }
+
         return this.equals(SYSTEM);
     }
 
