@@ -12287,10 +12287,11 @@ public final class Settings {
         public static final String FACE_UNLOCK_METHOD = "face_unlock_method";
 
         /**
-         * Control whether GMS is enabled for this user.
+         * Control whether FLAG_SECURE is ignored for all windows.
          * @hide
          */
-        public static final String GMS_ENABLED = "gms_enabled";
+        @Readable
+        public static final String WINDOW_IGNORE_SECURE = "window_ignore_secure";
 
         /**
          * Whether to enable DOZE only when charging
