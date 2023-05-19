@@ -512,8 +512,7 @@ class LargeScreenShadeHeaderController @Inject constructor(
         roundedCorners = resources.getDimensionPixelSize(R.dimen.rounded_corner_content_padding)
         sbPaddingLeft = resources.getDimensionPixelSize(R.dimen.status_bar_padding_start)
         sbPaddingRight = resources.getDimensionPixelSize(R.dimen.status_bar_padding_end)
-        val padding = resources.getDimensionPixelSize(R.dimen.qs_panel_padding)
-        header.setPadding(padding, header.paddingTop, padding, header.paddingBottom)
+        header.setPadding(sbPaddingLeft, header.paddingTop, sbPaddingRight, header.paddingBottom)
         updateQQSPaddings()
 
         val fillColor = Utils.getColorAttrDefaultColor(context, android.R.attr.textColorPrimary)
