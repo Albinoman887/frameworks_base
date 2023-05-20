@@ -1094,6 +1094,34 @@ public class TransitionAnimation {
     }
 
     private static int updateToFreeform(int anim) {
+        if (anim == R.anim.activity_open_enter) {
+            return R.anim.activity_freeform_open_enter;
+        }
+        if (anim == R.anim.activity_open_exit) {
+            return R.anim.activity_freeform_open_exit;
+        }
+        if (anim == R.anim.activity_close_enter) {
+            return R.anim.activity_freeform_close_enter;
+        }
+        if (anim == R.anim.activity_close_exit) {
+            return R.anim.activity_freeform_close_exit;
+        }
+        return anim;
+    }
+
+    private static int updateToFreeform(int anim) {
+        if (anim == R.anim.activity_open_enter) {
+            return R.anim.activity_freeform_open_enter;
+        }
+        if (anim == R.anim.activity_open_exit) {
+            return R.anim.activity_freeform_open_exit;
+        }
+        if (anim == R.anim.activity_close_enter) {
+            return R.anim.activity_freeform_close_enter;
+        }
+        if (anim == R.anim.activity_close_exit) {
+            return R.anim.activity_freeform_close_exit;
+        }
         return anim;
     }
 
