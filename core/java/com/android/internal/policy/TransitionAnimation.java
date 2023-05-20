@@ -1093,6 +1093,10 @@ public class TransitionAnimation {
         return anim;
     }
 
+    private static int updateToFreeform(int anim) {
+        return anim;
+    }
+
     private static @TransitionOldType int getTransitCompatType(@TransitionType int transit,
             int wallpaperTransit) {
         if (wallpaperTransit == WALLPAPER_TRANSITION_INTRA_OPEN) {
