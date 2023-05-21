@@ -38,6 +38,11 @@ import static android.view.WindowManager.TRANSIT_OLD_TASK_CLOSE;
 import static android.view.WindowManager.TRANSIT_OLD_TASK_OPEN;
 import static android.view.WindowManager.TRANSIT_OLD_TASK_TO_BACK;
 import static android.view.WindowManager.TRANSIT_OLD_TASK_TO_FRONT;
+import static android.view.WindowManager.TRANSIT_OLD_TASK_CHANGE_WINDOWING_MODE;
+import static android.view.WindowManager.TRANSIT_OLD_TASK_CLOSE;
+import static android.view.WindowManager.TRANSIT_OLD_TASK_OPEN;
+import static android.view.WindowManager.TRANSIT_OLD_TASK_TO_BACK;
+import static android.view.WindowManager.TRANSIT_OLD_TASK_TO_FRONT;
 import static android.window.TaskFragmentAnimationParams.DEFAULT_ANIMATION_BACKGROUND_COLOR;
 
 import static com.android.internal.protolog.ProtoLogGroup.WM_DEBUG_ANIM;
