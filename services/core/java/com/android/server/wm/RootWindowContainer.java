@@ -1104,7 +1104,8 @@ class RootWindowContainer extends WindowContainer<DisplayContent>
             } else if (displayContent != null &&
                     !mObscureApplicationContentOnSecondaryDisplaysDueToDream &&
                     (!mObscureApplicationContentOnSecondaryDisplaysDueToKeyguard
-                            || (obscured && w.mAttrs.type == TYPE_KEYGUARD_DIALOG))) {
+                            || (obscured && type == TYPE_KEYGUARD_DIALOG))) {
+                // Allow full screen keyguard presentation dialogs to be seen.
                 displayHasContent = true;
             }
             if ((w.mAttrs.privateFlags & PRIVATE_FLAG_SUSTAINED_PERFORMANCE_MODE) != 0) {
