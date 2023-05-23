@@ -14,7 +14,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.android.internal.util.crdroid;
 
 import android.app.Application;
@@ -69,7 +68,6 @@ public class PixelPropsUtils {
             "com.google.android.apps.turbo",
             "com.google.android.googlequicksearchbox",
             "com.android.chrome",
-            "com.android.vending",
             "com.breel.wallpapers20",
             PACKAGE_PS
     };
@@ -98,7 +96,6 @@ public class PixelPropsUtils {
 
     // Codenames for currently supported Pixels by Google
     private static final String[] pixelCodenames = {
-            "lynx",
             "cheetah",
             "panther",
             "bluejay",
@@ -197,14 +194,6 @@ public class PixelPropsUtils {
             if (!useFallbackFp && sIsGms && Build.VERSION.DEVICE_INITIAL_SDK_INT > Build.VERSION_CODES.S) {
                 dlog("Setting sdk to 32");
                 setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.S);
-            }
-            if (packageName.equals("com.google.android.gms")) {
-                final String processName = Application.getProcessName();
-                if (processName.equals("com.google.android.gms.unstable")) {
-                    sIsGms = true;
-                    spoofBuildGms();
-                }
-                return;
             }
             // Set proper indexing fingerprint
             if (packageName.equals(PACKAGE_SETTINGS_SERVICES)) {
