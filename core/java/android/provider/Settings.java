@@ -5671,7 +5671,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_NOTIF_COUNT = "statusbar_notif_count";
-        
+
         /**
          * Colored QS notification icons
          * @hide
@@ -5930,7 +5930,7 @@ public final class Settings {
          * @hide
          */
         public static final String LS_MEDIA_FILTER_BLUR_RADIUS = "ls_media_filter_blur_radius";
-        
+
         /**
          * lockscreen album art fade level
          * @hide
@@ -6137,6 +6137,26 @@ public final class Settings {
          * @hide
          */
         public static final String QS_TILE_ANIMATION_INTERPOLATOR = "qs_tile_animation_interpolator";
+
+        /**
+         * @hide
+         */
+        public static final String QS_LAYOUT_COLUMNS_LANDSCAPE = "qs_layout_columns_landscape";
+
+        /**
+         * @hide
+         */
+        public static final String QS_LAYOUT_COLUMNS = "qs_layout_columns";
+
+        /**
+         * @hide
+         */
+        public static final String QS_TILE_VERTICAL_LAYOUT = "qs_tile_vertical_layout";
+
+        /**
+         * @hide
+         */
+        public static final String QS_TILE_LABEL_HIDE = "qs_tile_label_hide";
 
         /**
          * Adaptive playback
