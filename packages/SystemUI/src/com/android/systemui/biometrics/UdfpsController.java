@@ -798,7 +798,7 @@ public class UdfpsController implements DozeReceiver, Dumpable {
 
         mLocalPowerManager = LocalServices.getService(PowerManagerInternal.class);
 	mPerf = new BoostFramework();
-        if (com.android.internal.util.spark.Utils.isPackageInstalled(mContext, "com.spark.udfps.animations")) {
+        if (com.android.internal.util.spark.SparkUtils.isPackageInstalled(mContext, "com.spark.udfps.animations")) {
             mUdfpsAnimation = new UdfpsAnimation(mContext, mWindowManager, mSensorProps);
         }
     }

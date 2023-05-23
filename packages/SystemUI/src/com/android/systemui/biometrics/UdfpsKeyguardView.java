@@ -91,7 +91,7 @@ public class UdfpsKeyguardView extends UdfpsAnimationView {
         mMaxBurnInOffsetY = context.getResources()
             .getDimensionPixelSize(R.dimen.udfps_burn_in_offset_y);
 
-        mPackageInstalled = com.android.internal.util.spark.Utils.isPackageInstalled(
+        mPackageInstalled = com.android.internal.util.spark.SparkUtils.isPackageInstalled(
                 mContext, "com.spark.udfps.icons");
     }
 
