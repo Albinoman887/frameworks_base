@@ -5671,7 +5671,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_NOTIF_COUNT = "statusbar_notif_count";
-        
+
         /**
          * Colored QS notification icons
          * @hide
@@ -5930,7 +5930,7 @@ public final class Settings {
          * @hide
          */
         public static final String LS_MEDIA_FILTER_BLUR_RADIUS = "ls_media_filter_blur_radius";
-        
+
         /**
          * lockscreen album art fade level
          * @hide
@@ -6094,6 +6094,24 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
+
+        /**
+         * Change quick settings tiles animation style
+         * @hide
+         */
+        public static final String ANIM_TILE_STYLE = "anim_tile_style";
+
+        /**
+         * Change quick settings tiles animation duration
+         * @hide
+         */
+        public static final String ANIM_TILE_DURATION = "anim_tile_duration";
+
+        /**
+         * Change quick settings tiles interpolator
+         * @hide
+         */
+        public static final String ANIM_TILE_INTERPOLATOR = "anim_tile_interpolator";
 
         /**
          * Change quick settings tiles animation style
