@@ -120,7 +120,7 @@ public enum ScrimState {
     BOUNCER {
         @Override
         public void prepare(ScrimState previousState) {
-            mBehindAlpha = mClipQsScrim ? 1 : mDefaultScrimAlpha;
+            mBehindAlpha = mClipQsScrim ? mCustomScrimAlpha : mDefaultScrimAlpha;
             mBehindTint = Color.TRANSPARENT;
             mNotifAlpha = mClipQsScrim ? mDefaultScrimAlpha : 0;
             mNotifTint = Color.TRANSPARENT;
@@ -147,7 +147,7 @@ public enum ScrimState {
         @Override
         public void prepare(ScrimState previousState) {
             mBehindAlpha = mClipQsScrim ? mCustomScrimAlpha : mDefaultScrimAlpha;
-            mNotifAlpha = mCustomScrimAlpha;
+            mNotifAlpha = 1f;
             mFrontAlpha = 0f;
             mBehindTint = Color.TRANSPARENT;
 
