@@ -308,7 +308,7 @@
     <!-- the padding on the top of the statusbar (usually 0) -->
     <dimen name="status_bar_padding_top">0dp</dimen>
 
-    <!-- the override for padding on the top of the statusbar (recommended to avoid clip/alignment issues) -->  
+    <!-- the override for padding on the top of the statusbar (recommended to avoid clip/alignment issues) -->
     <dimen name="status_bar_padding_top_insets">0dp</dimen>
 
     <!-- the radius of the overflow dot in the status bar -->
@@ -575,8 +575,8 @@
          Scaled @dimen/qs_page_indicator-width by .4f.
     -->
     <dimen name="qs_page_indicator_dot_width">6.4dp</dimen>
-    <dimen name="qs_tile_text_size">14sp</dimen>
-    <dimen name="qs_tile_secondary_label_text_size">12sp</dimen>
+    <dimen name="qs_tile_text_size">15sp</dimen>
+    <dimen name="qs_tile_secondary_label_text_size">13sp</dimen>
     <dimen name="qs_panel_padding">16dp</dimen>
     <dimen name="qs_dual_tile_padding_horizontal">6dp</dimen>
     <dimen name="qs_panel_elevation">4dp</dimen>
