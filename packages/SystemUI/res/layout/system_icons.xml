@@ -14,15 +14,17 @@
   ~ limitations under the License
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:systemui="http://schemas.android.com/apk/res-auto"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:systemui="http://schemas.android.com/apk/res-auto"
     android:id="@+id/system_icons"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:layout_gravity="center_vertical|end"
     android:gravity="center_vertical">
 
-    <com.android.systemui.statusbar.phone.StatusIconContainer android:id="@+id/statusIcons"
+    <com.android.systemui.statusbar.phone.StatusIconContainer 
+    	android:id="@+id/statusIcons"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="match_parent"
@@ -30,9 +32,11 @@
         android:gravity="center_vertical"
         android:orientation="horizontal"/>
 
-    <com.android.systemui.battery.BatteryMeterView android:id="@+id/battery"
+    <com.android.systemui.battery.BatteryMeterView 
+        android:id="@+id/battery"
         android:layout_height="match_parent"
         android:layout_width="wrap_content"
+        android:gravity="center_vertical"
         android:clipToPadding="false"
         android:clipChildren="false"
         systemui:textAppearance="@style/TextAppearance.StatusBar.Clock" />
@@ -41,14 +45,16 @@
         android:id="@+id/right_clock_layout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
+        android:layout_gravity="center_vertical"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         >
         <com.android.systemui.statusbar.policy.Clock
             android:id="@+id/clock_right"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textAlignment="center"
+            android:layout_height="wrap_content"
+            android:textAlignment="viewStart"
             android:includeFontPadding="false"
             android:textAppearance="@style/TextAppearance.StatusBar.Clock"
             android:singleLine="true"

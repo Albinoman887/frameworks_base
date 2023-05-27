@@ -24,6 +24,9 @@ import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.graphics.Rect;
+import android.net.Uri;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.provider.AlarmClock;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -283,6 +286,19 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                 R.dimen.rounded_corner_content_padding);
 
         int statusBarHeight = SystemBarUtils.getStatusBarHeight(mContext);
+
+        mExpandedQsClockDateStart = resources.getDimensionPixelSize(
+                R.dimen.qs_expanded_clock_date_padding_start);
+
+        mStatusBarPaddingStart = resources.getDimensionPixelSize(
+                R.dimen.status_bar_padding_start);
+        mStatusBarPaddingEnd = resources.getDimensionPixelSize(
+                R.dimen.status_bar_padding_end);
+
+        int qsOffsetHeight = SystemBarUtils.getQuickQsOffsetHeight(mContext);
+
+        mStatusBarPaddingTop = resources.getDimensionPixelSize(
+                R.dimen.status_bar_padding_top_insets);
 
         mDatePrivacyView.getLayoutParams().height = statusBarHeight;
         mDatePrivacyView.setLayoutParams(mDatePrivacyView.getLayoutParams());
