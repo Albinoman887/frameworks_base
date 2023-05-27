@@ -422,6 +422,8 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                         }
                         // Make it gone so there's enough room for carrier names
                         mClockDateView.setVisibility(View.GONE);
+                        mQSCarriers.setVisibility(View.VISIBLE);
+                        updateRightLayout(true);
                     }
 
                     @Override
@@ -429,9 +431,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                         mClockDateView.setVisibility(View.VISIBLE);
                         mClockDateView.setFreezeSwitching(true);
                         setSeparatorVisibility(false);
-                        if (!mIsSingleCarrier) {
-                            mIconContainer.addIgnoredSlots(mRssiIgnoredSlots);
-                        }
                     }
 
                     @Override
