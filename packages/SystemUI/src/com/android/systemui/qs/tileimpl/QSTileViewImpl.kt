@@ -31,6 +31,7 @@ import android.os.UserHandle
 import android.service.quicksettings.Tile
 import android.text.TextUtils
 import android.util.Log
+import android.util.TypedValue
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -188,12 +189,14 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private var vertical = false
     private val forceHideCheveron = true
     private var labelHide = false
+    private var labelSize = 14f
 
     init {
         setId(generateViewId())
 
         vertical = TileUtils.getQSTileVerticalLayout(context, if (vertical) 1 else 0)
         labelHide = TileUtils.getQSTileLabelHide(context)
+        labelSize = TileUtils.getQSTileLabelSize(context)
 
         importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
         clipChildren = false
