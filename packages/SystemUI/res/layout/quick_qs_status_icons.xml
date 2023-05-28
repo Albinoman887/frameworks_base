@@ -42,7 +42,7 @@
             android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
             android:paddingEnd="@dimen/status_bar_left_clock_end_padding"
             android:singleLine="true"
-            android:textAlignment="viewStart" 
+            android:textAlignment="viewStart"
             android:includeFontPadding="false"
             android:textAppearance="@style/TextAppearance.QS.Status" />
 
@@ -58,6 +58,7 @@
             android:textAppearance="@style/TextAppearance.QS.Status"
             systemui:longDatePattern="@string/abbrev_wday_month_day_no_year_alarm"
             systemui:shortDatePattern="@string/abbrev_month_day_no_year"
+            android:paddingTop="8dp"
         />
     </LinearLayout>
 
