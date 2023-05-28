@@ -406,7 +406,6 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
                         }
                         // Make it gone so there's enough room for carrier names
                         mClockDateView.setVisibility(View.GONE);
-                        mQSCarriers.setVisibility(View.VISIBLE);
                     }
 
                     @Override
