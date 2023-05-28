@@ -188,7 +188,8 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private var vertical = false
     private val forceHideCheveron = true
     private var labelHide = false
-    private var labelSize = 13f
+    private var labelSize = 15f
+    private var secondaryLabelSize = 13f
 
     init {
         setId(generateViewId())
@@ -196,6 +197,8 @@ open class QSTileViewImpl @JvmOverloads constructor(
         vertical = TileUtils.getQSTileVerticalLayout(context, if (vertical) 1 else 0)
         labelHide = TileUtils.getQSTileLabelHide(context)
         labelSize = TileUtils.getQSTileLabelSize(context)
+        secondaryLabelSize = TileUtils.getQSTileSecondaryLabelSize(context)
+
 
         importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
         clipChildren = false
@@ -234,7 +237,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
 
     fun updateResources() {
         label.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
-        secondaryLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
+        secondaryLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondaryLabelSize)
 
         val iconSize = context.resources.getDimensionPixelSize(R.dimen.qs_icon_size)
         _icon.layoutParams.apply {

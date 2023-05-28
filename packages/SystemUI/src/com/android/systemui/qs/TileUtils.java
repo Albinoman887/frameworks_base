@@ -53,6 +53,12 @@ public class TileUtils {
                 14, UserHandle.USER_CURRENT);
     }
 
+    public static float getQSTileSecondaryLabelSize(Context context) {
+        return (float) Settings.System.getIntForUser(context.getContentResolver(),
+                Settings.System.QS_TILE_SECONDARY_LABEL_SIZE,
+                14, UserHandle.USER_CURRENT);
+    }
+
     public static boolean getQSTileVerticalLayout(Context context, int defaultValue) {
         return Settings.System.getIntForUser(context.getContentResolver(),
                 Settings.System.QS_TILE_VERTICAL_LAYOUT,
