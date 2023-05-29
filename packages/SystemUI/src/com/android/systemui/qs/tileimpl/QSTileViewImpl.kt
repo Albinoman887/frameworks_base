@@ -187,9 +187,24 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private val locInScreen = IntArray(2)
     private var vertical = false
     private val forceHideCheveron = true
-    private var labelHide = false
-    private var labelSize = 15f
-    private var secondaryLabelSize = 13f
+
+   private var labelSize = 15f
+        set(value) {
+            Log.d(TAG, "labelSize changed from $field to $value")
+            field = value
+        }
+
+   private var secondaryLabelSize = 13f
+        set(value) {
+            Log.d(TAG, "secondaryLabelSize changed from $field to $value")
+            field = value
+        }
+
+   private var labelHide = false
+        set(value) {
+            Log.d(TAG, "labelHide changed from $field to $value")
+            field = value
+        }
 
     init {
         setId(generateViewId())
@@ -236,8 +251,13 @@ open class QSTileViewImpl @JvmOverloads constructor(
     }
 
     fun updateResources() {
+        Log.d(TAG, "updateResources called: labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+
         label.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
         secondaryLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondaryLabelSize)
+
+        Log.d(TAG, "finished with setting fonts, now values are...: labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+
 
         val iconSize = context.resources.getDimensionPixelSize(R.dimen.qs_icon_size)
         _icon.layoutParams.apply {
@@ -251,6 +271,20 @@ open class QSTileViewImpl @JvmOverloads constructor(
         } else {
             orientation = LinearLayout.HORIZONTAL
             gravity = Gravity.CENTER_VERTICAL or Gravity.START
+        }
+
+        if (labelSize == 0f && secondaryLabelSize == 0f) {
+                Log.d(TAG, "INSIDE THE the check for are both labels 0...: labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+
+            labelHide = true;
+        }
+
+        if (TileUtils.getQSTileLabelSize(context) == 0f &&
+            TileUtils.getQSTileSecondaryLabelSize(context) == 0f) {
+
+            Log.d(TAG, "inside if both getQSTile settings are 0... : labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+
+            labelHide = true;
         }
 
         if (labelHide)
@@ -278,9 +312,13 @@ open class QSTileViewImpl @JvmOverloads constructor(
             height = iconSize
             marginEnd = endMargin
         }
+        Log.d(TAG, "updateResources finished: labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+
     }
 
     private fun createAndAddLabels() {
+            Log.d(TAG, "createAndAddLabels called: labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+
         labelContainer = LayoutInflater.from(context)
                 .inflate(if (vertical) R.layout.qs_tile_label_vertical else R.layout.qs_tile_label,this, false) as IgnorableChildLinearLayout
         label = labelContainer.requireViewById(R.id.tile_label)
@@ -296,9 +334,24 @@ open class QSTileViewImpl @JvmOverloads constructor(
         }
         setLabelColor(getLabelColorForState(QSTile.State.DEFAULT_STATE))
         setSecondaryLabelColor(getSecondaryLabelColorForState(QSTile.State.DEFAULT_STATE))
+
+        if (labelSize == 0f && secondaryLabelSize == 0f) {
+                Log.d(TAG, "INSIDE THE the check for are both labels 0 in AddLabels...: labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+            labelHide = true;
+        }
+
+        if (TileUtils.getQSTileLabelSize(context) == 0f &&
+            TileUtils.getQSTileSecondaryLabelSize(context) == 0f) {
+            Log.d(TAG, "inside if both getQSTile settings are 0 in AddLabels... : labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+            labelHide = true;
+        }
+
         if (!labelHide)
             addView(labelContainer)
-    }
+
+        Log.d(TAG, "createAndAddLabels finished: labelSize=$labelSize, secondaryLabelSize=$secondaryLabelSize, labelHide=$labelHide")
+
+        }
 
     private fun createAndAddSideView() {
         sideView = LayoutInflater.from(context)

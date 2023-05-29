@@ -23,6 +23,8 @@ import com.android.systemui.qs.tileimpl.QSTileViewImplKt;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 public class TileLayout extends ViewGroup implements QSTileLayout {
 
     public static final int NO_MAX_COLUMNS = 100;
@@ -221,9 +223,11 @@ public class TileLayout extends ViewGroup implements QSTileLayout {
     }
 
     protected int getCellHeight() {
-        if (TileUtils.getQSTileLabelHide(mContext)) {
+        if (TileUtils.getQSTileLabelSize(mContext) == 0f && TileUtils.getQSTileSecondaryLabelSize(mContext) == 0f) {
+            Log.d(TAG, "Both labelSize and secondaryLabelSize are zero. Returning qs_quick_tile_size.");
             return getResources().getDimensionPixelSize(R.dimen.qs_quick_tile_size);
         }
+        Log.d(TAG, "At least one of labelSize and secondaryLabelSize is not zero. Returning mMaxCellHeight.");
         return mMaxCellHeight;
     }
 
