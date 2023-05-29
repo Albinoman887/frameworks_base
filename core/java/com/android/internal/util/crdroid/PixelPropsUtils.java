@@ -42,10 +42,9 @@ public class PixelPropsUtils {
     private static final Map<String, Object> propsToChangeROG6;
     private static final Map<String, Object> propsToChangeXP5;
     private static final Map<String, Object> propsToChangeOP8P;
-    private static final Map<String, Object> propsToChangeOP9P;
-    private static final Map<String, Object> propsToChangeMI11T;
-    private static final Map<String, Object> propsToChangeMI13P;
-    private static final Map<String, Object> propsToChangeF5;
+    private static final Map<String, Object> propsToChangeOP9R;
+    private static final Map<String, Object> propsToChange11T;
+    private static final Map<String, Object> propsToChangeF4;
     private static final Map<String, Object> propsToChangeK30U;
     private static final Map<String, ArrayList<String>> propsToKeep;
 
@@ -220,19 +219,15 @@ public class PixelPropsUtils {
         propsToChangeOP8P = new HashMap<>();
         propsToChangeOP8P.put("MODEL", "IN2020");
         propsToChangeOP8P.put("MANUFACTURER", "OnePlus");
-        propsToChangeOP9P = new HashMap<>();
-        propsToChangeOP9P.put("MODEL", "LE2123");
-        propsToChangeOP9P.put("MANUFACTURER", "OnePlus");
-        propsToChangeMI11T = new HashMap<>();
-        propsToChangeMI11T.put("MODEL", "21081111RG");
-        propsToChangeMI11T.put("MANUFACTURER", "Xiaomi");
-        propsToChangeMI13P = new HashMap<>();
-        propsToChangeMI13P.put("BRAND", "Xiaomi");
-        propsToChangeMI13P.put("MANUFACTURER", "Xiaomi");
-        propsToChangeMI13P.put("MODEL", "2210132C");
-        propsToChangeF5 = new HashMap<>();
-        propsToChangeF5.put("MODEL", "23049PCD8G");
-        propsToChangeF5.put("MANUFACTURER", "Xiaomi");
+        propsToChangeOP9R = new HashMap<>();
+        propsToChangeOP9R.put("MODEL", "LE2101");
+        propsToChangeOP9R.put("MANUFACTURER", "OnePlus");
+        propsToChange11T = new HashMap<>();
+        propsToChange11T.put("MODEL", "21081111RG");
+        propsToChange11T.put("MANUFACTURER", "Xiaomi");
+        propsToChangeF4 = new HashMap<>();
+        propsToChangeF4.put("MODEL", "22021211RG");
+        propsToChangeF4.put("MANUFACTURER", "Xiaomi");
         propsToChangeK30U = new HashMap<>();
         propsToChangeK30U.put("MODEL", "M2006J10C");
         propsToChangeK30U.put("MANUFACTURER", "Xiaomi");
@@ -262,7 +257,7 @@ public class PixelPropsUtils {
                     if (isPixelDevice) return;
                     propsToChange.putAll(propsToChangePixel5);
                 }
-            } else if (packageName.equals("com.netflix.mediaclient") && 
+            } else if (packageName.equals("com.netflix.mediaclient") &&
                         !SystemProperties.getBoolean("persist.sys.pixelprops.netflix", false)) {
                     if (DEBUG) Log.d(TAG, "Netflix spoofing disabled by system prop");
                     return;
@@ -353,7 +348,14 @@ public class PixelPropsUtils {
                     Object value = prop.getValue();
                     setPropValue(key, value);
                 }
-            } else if (Arrays.asList(packagesToChangeF5).contains(packageName)) {
+            } else if (Arrays.asList(packagesToChangeK30U).contains(packageName)) {
+                if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
+                for (Map.Entry<String, Object> prop : propsToChangeK30U.entrySet()) {
+                    String key = prop.getKey();
+                    Object value = prop.getValue();
+                    setPropValue(key, value);
+                }
+            } else if (Arrays.asList(packagesToChange11T).contains(packageName)) {
                 if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
                 for (Map.Entry<String, Object> prop : propsToChangeF5.entrySet()) {
                     String key = prop.getKey();
