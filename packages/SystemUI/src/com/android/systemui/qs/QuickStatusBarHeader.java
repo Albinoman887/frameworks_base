@@ -76,6 +76,9 @@ public class QuickStatusBarHeader extends FrameLayout implements TunerService.Tu
     private static final String QS_HEADER_IMAGE =
             "system:" + Settings.System.QS_HEADER_IMAGE;
 
+    private static final float LARGE_CLOCK_SCALE_X = 2.3f;
+    private static final float LARGE_CLOCK_SCALE_Y = 2.4f;
+
     private boolean mExpanded;
     private boolean mQsDisabled;
 
