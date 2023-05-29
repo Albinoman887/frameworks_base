@@ -44,9 +44,6 @@
     <LinearLayout android:id="@+id/status_bar_contents"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingStart="@dimen/status_bar_padding_start"
-        android:paddingEnd="@dimen/status_bar_padding_end"
-        android:paddingTop="@dimen/status_bar_padding_top"
         android:orientation="horizontal">
 
         <!-- Container for the entire start half of the status bar. It will always use the same
@@ -88,8 +85,6 @@
                         android:id="@+id/clock"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAlignment="viewStart"
-                        android:includeFontPadding="false"
                         android:textAppearance="@style/TextAppearance.StatusBar.Clock"
                         android:singleLine="true"
                         android:paddingStart="@dimen/status_bar_left_clock_starting_padding"
