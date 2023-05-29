@@ -6497,6 +6497,11 @@ public final class Settings {
         public static final String QS_TILE_LABEL_SIZE = "qs_tile_label_size";
 
         /**
+         * @hide
+         */
+        public static final String QS_TILE_SECONDARY_LABEL_SIZE = "qs_tile_secondary_label_size";
+
+        /**
          * Direction of repeat animations of Ambient edge light
          * 0 is restart
          * 1 is reverse
