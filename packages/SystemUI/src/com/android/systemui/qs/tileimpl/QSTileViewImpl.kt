@@ -48,7 +48,6 @@ import android.widget.TextView
 import androidx.annotation.VisibleForTesting
 import android.annotation.SuppressLint;
 import com.android.settingslib.Utils
-import com.android.systemui.FontSizeUtils
 import com.android.systemui.R
 import com.android.systemui.animation.LaunchableView
 import com.android.systemui.animation.LaunchableViewDelegate
@@ -191,7 +190,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private var vertical = false
     private val forceHideCheveron = true
     private var labelHide = false
-   private var labelSize = 15f
+    private var labelSize = 15f
    private var secondaryLabelSize = 13f
 
     private var shouldVibrateOnTouch = false;
@@ -265,6 +264,10 @@ open class QSTileViewImpl @JvmOverloads constructor(
             gravity = Gravity.CENTER_VERTICAL or Gravity.START
         }
 
+        if (labelSize == 0f && secondaryLabelSize == 0f) {
+            labelHide = true;
+        }
+
         if (labelHide)
             gravity = Gravity.CENTER_HORIZONTAL or Gravity.CENTER_VERTICAL
 
@@ -308,6 +311,11 @@ open class QSTileViewImpl @JvmOverloads constructor(
         }
         setLabelColor(getLabelColorForState(QSTile.State.DEFAULT_STATE))
         setSecondaryLabelColor(getSecondaryLabelColorForState(QSTile.State.DEFAULT_STATE))
+
+        if (labelSize == 0f && secondaryLabelSize == 0f) {
+            labelHide = true;
+        }
+
         if (!labelHide)
             addView(labelContainer)
     }
