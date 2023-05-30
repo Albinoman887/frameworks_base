@@ -13,11 +13,11 @@
 <resources>
     <!-- Whether to cancel fingerprint operation if not idle -->
     <java-symbol type="bool" name="config_fpCancelIfNotIdle" />
-	
+
 	<!-- Light / Regular style fonts -->
     <java-symbol type="string" name="config_lightFontFamily" />
     <java-symbol type="string" name="config_regularFontFamily" />
-	
+
 	<!-- Advanced reboot -->
     <java-symbol type="string" name="reboot_to_recovery_title" />
     <java-symbol type="string" name="reboot_to_recovery_message" />
@@ -28,10 +28,10 @@
 
     <!-- Global Actions pref list -->
     <java-symbol type="array" name="custom_config_globalActionsList" />
-	
+
 	<!-- Whether to force enable multi resolution configuration for camera -->
     <java-symbol type="bool" name="config_forceMultiResolution" />
-	
+
 	<!-- Proximity check on screen on -->
     <java-symbol type="bool" name="config_proximityCheckOnWake" />
 
@@ -40,14 +40,14 @@
 
     <!-- Proximity check on screen on default -->
     <java-symbol type="bool" name="config_proximityCheckOnWakeEnabledByDefault" />
-	
+
 	<!-- Whether device supports an alt. ambient display -->
     <java-symbol type="bool" name="config_alt_ambient_display"/>
-	
+
 	<!-- SystemUI Restart -->
     <java-symbol type="string" name="systemui_restart_title" />
     <java-symbol type="string" name="systemui_restart_message" />
-    
+
     <java-symbol type="bool" name="config_intrusiveBatteryLed" />
     <java-symbol type="bool" name="config_multiColorBatteryLed" />
     <java-symbol type="bool" name="config_ledCanPulse" />
@@ -56,11 +56,11 @@
     <java-symbol type="id" name="aerr_copy" />
     <java-symbol type="string" name="url_copy_success" />
     <java-symbol type="string" name="url_copy_failed" />
-	
+
 	<!-- Device keyhandlers -->
     <java-symbol type="array" name="config_deviceKeyHandlerLibs" />
     <java-symbol type="array" name="config_deviceKeyHandlerClasses" />
-	
+
 	<!-- Whether device has physical tri state switch -->
     <java-symbol type="bool" name="config_hasAlertSlider" />
 
@@ -72,7 +72,7 @@
 
     <!-- Whether key handler sends intent when changing slider position -->
     <java-symbol type="string" name="config_alertSliderIntent" />
-	
+
 	<!-- For dynamic default font styles -->
     <java-symbol type="string" name="config_bodyFontFamily" />
 
@@ -159,7 +159,7 @@
     <java-symbol type="string" name="config_smartChargingSysfsNode" />
     <java-symbol type="string" name="config_smartChargingSuspendValue" />
     <java-symbol type="string" name="config_smartChargingResumeValue" />
-	
+
 	<!-- Lock gesture -->
     <java-symbol type="string" name="gesture_locked_warning" />
 
@@ -173,7 +173,7 @@
   <java-symbol type="style" name="GlobalActionsAnimationXylon" />
   <java-symbol type="style" name="GlobalActionsAnimationCard" />
   <java-symbol type="style" name="GlobalActionsAnimationRotate" />
-	
+
 	<!-- Boost Framework -->
     <java-symbol type="bool" name="config_supportsBoostFramework" />
 
@@ -226,7 +226,7 @@
   <java-symbol type="string" name="config_batterymeterLandBoltPathStyleB" />
   <java-symbol type="string" name="config_batterymeterLandPowersavePathStyleB" />
   <java-symbol type="string" name="config_batterymeterLandErrorPerimeterPathStyleB" />
-  
+
    <!-- Whether the device supports Smart Pixels -->
     <java-symbol type="bool" name="config_supportSmartPixels" />
 
@@ -265,4 +265,10 @@
     <java-symbol type="anim" name="activity_freeform_open_exit" />
     <java-symbol type="anim" name="activity_freeform_close_enter" />
     <java-symbol type="anim" name="activity_freeform_close_exit" />
+
+    <!-- Fingerprint from a certified device against current platform SPL level -->
+    <java-symbol type="string" name="config_certifiedFingerprint" />
+
+    <!-- Fingerprint from stock ROM -->
+    <java-symbol type="string" name="config_stockFingerprint" />
 </resources>
