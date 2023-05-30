@@ -64,8 +64,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
 
-import com.android.internal.util.spark.PixelPropsUtils;
-
 /**
  * Base class for implementing application instrumentation code.  When running
  * with instrumentation turned on, this class will be instantiated for you
@@ -1239,16 +1237,14 @@ public class Instrumentation {
      * @return The newly instantiated Application object.
      */
     public Application newApplication(ClassLoader cl, String className, Context context)
-            throws InstantiationException, IllegalAccessException, 
+            throws InstantiationException, IllegalAccessException,
             ClassNotFoundException {
         Application app = getFactory(context.getPackageName())
                 .instantiateApplication(cl, className);
         app.attach(context);
-        String packageName = context.getPackageName();
-        PixelPropsUtils.setProps(packageName);
         return app;
     }
-    
+
     /**
      * Perform instantiation of the process's {@link Application} object.  The
      * default implementation provides the normal system behavior.
@@ -1259,12 +1255,10 @@ public class Instrumentation {
      * @return The newly instantiated Application object.
      */
     static public Application newApplication(Class<?> clazz, Context context)
-            throws InstantiationException, IllegalAccessException, 
+            throws InstantiationException, IllegalAccessException,
             ClassNotFoundException {
         Application app = (Application)clazz.newInstance();
         app.attach(context);
-        String packageName = context.getPackageName();
-        PixelPropsUtils.setProps(packageName);
         return app;
     }
 
@@ -1304,8 +1298,8 @@ public class Instrumentation {
      * @throws InstantiationException
      * @throws IllegalAccessException
      */
-    public Activity newActivity(Class<?> clazz, Context context, 
-            IBinder token, Application application, Intent intent, ActivityInfo info, 
+    public Activity newActivity(Class<?> clazz, Context context,
+            IBinder token, Application application, Intent intent, ActivityInfo info,
             CharSequence title, Activity parent, String id,
             Object lastNonConfigurationInstance) throws InstantiationException,
             IllegalAccessException {
@@ -1705,7 +1699,7 @@ public class Instrumentation {
         results.putLong("global_alloc_size", Debug.getGlobalAllocSize());
         results.putLong("global_freed_count", Debug.getGlobalFreedCount());
         results.putLong("global_freed_size", Debug.getGlobalFreedSize());
-        results.putLong("gc_invocation_count", Debug.getGlobalGcInvocationCount());    
+        results.putLong("gc_invocation_count", Debug.getGlobalGcInvocationCount());
         return results;
     }
 
@@ -2168,7 +2162,7 @@ public class Instrumentation {
     }
 
     /*package*/ final void init(ActivityThread thread,
-            Context instrContext, Context appContext, ComponentName component, 
+            Context instrContext, Context appContext, ComponentName component,
             IInstrumentationWatcher watcher, IUiAutomationConnection uiAutomationConnection) {
         mThread = thread;
         mMessageQueue = mThread.getLooper().myQueue();
