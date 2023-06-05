@@ -266,4 +266,10 @@
 
     <!-- Mock Oplus LinearmotorVibratorService -->
     <bool name="config_mockOplusLinearmotorVibratorService">false</bool>
+
+    <!-- Fingerprint from a certified device against current platform SPL level -->
+    <string name="config_certifiedFingerprint" translatable="false"></string>
+
+    <!-- Fingerprint from stock ROM -->
+    <string name="config_stockFingerprint" translatable="false"></string>
 </resources>
