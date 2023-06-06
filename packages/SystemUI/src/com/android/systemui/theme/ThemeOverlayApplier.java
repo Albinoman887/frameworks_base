@@ -118,6 +118,19 @@ public class ThemeOverlayApplier implements Dumpable {
     @VisibleForTesting
     static final String OVERLAY_CATEGORY_LOCK_CLOCK_FONT =
             "android.theme.customization.lockscreen_clock_font";
+    @VisibleForTesting
+    static final String OVERLAY_CATEGORY_UI_STYLE_ANDROID =
+            "android.theme.customization.style.android";
+    @VisibleForTesting
+    static final String OVERLAY_CATEGORY_UI_STYLE_SETTINGS =
+            "android.theme.customization.style.settings";
+    @VisibleForTesting
+    static final String OVERLAY_CATEGORY_UI_STYLE_SYSUI =
+            "android.theme.customization.style.systemui";
+    @VisibleForTesting
+    static final String OVERLAY_CATEGORY_QS_PANEL =
+            "android.theme.customization.qs_panel";
+
 
     static final String OVERLAY_BRIGHTNESS_SLIDER_FILLED =
             "com.android.systemui.brightness_slider.filled";
@@ -173,7 +186,8 @@ public class ThemeOverlayApplier implements Dumpable {
             OVERLAY_CATEGORY_ICON_SIGNAL,
             OVERLAY_CATEGORY_ICON_WIFI,
             OVERLAY_CATEGORY_NAVBAR,
-            OVERLAY_CATEGORY_LOCK_CLOCK_FONT);
+            OVERLAY_CATEGORY_LOCK_CLOCK_FONT,
+            OVERLAY_CATEGORY_QS_PANEL);
 
     /* Categories that need to be applied to the current user as well as the system user. */
     @VisibleForTesting
@@ -185,7 +199,8 @@ public class ThemeOverlayApplier implements Dumpable {
             OVERLAY_CATEGORY_ICON_ANDROID,
             OVERLAY_CATEGORY_ICON_SYSUI,
             OVERLAY_CATEGORY_NAVBAR,
-            OVERLAY_CATEGORY_LOCK_CLOCK_FONT);
+            OVERLAY_CATEGORY_LOCK_CLOCK_FONT,
+            OVERLAY_CATEGORY_QS_PANEL);
 
     /* Brightness slider overlays */
     static final List<String> BRIGHTNESS_SLIDER_OVERLAYS = Lists.newArrayList(
@@ -252,6 +267,7 @@ public class ThemeOverlayApplier implements Dumpable {
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_WIFI, SYSUI_PACKAGE);
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_NAVBAR, SYSUI_PACKAGE);
         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_LOCK_CLOCK_FONT, ANDROID_PACKAGE);
+        mCategoryToTargetPackage.put(OVERLAY_CATEGORY_QS_PANEL, SYSUI_PACKAGE);
 
         dumpManager.registerDumpable(TAG, this);
     }
