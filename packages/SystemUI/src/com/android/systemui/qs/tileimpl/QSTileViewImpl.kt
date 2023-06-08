@@ -192,6 +192,7 @@ open class QSTileViewImpl @JvmOverloads constructor(
     private val forceHideCheveron = true
     private var labelHide = false
    private var labelSize = 15f
+   private var secondaryLabelSize = 13f
 
     private var shouldVibrateOnTouch = false;
 
@@ -201,6 +202,8 @@ open class QSTileViewImpl @JvmOverloads constructor(
         vertical = TileUtils.getQSTileVerticalLayout(context, if (vertical) 1 else 0)
         labelHide = TileUtils.getQSTileLabelHide(context)
         labelSize = TileUtils.getQSTileLabelSize(context)
+        secondaryLabelSize = TileUtils.getQSTileSecondaryLabelSize(context)
+
 
         importantForAccessibility = IMPORTANT_FOR_ACCESSIBILITY_YES
         clipChildren = false
@@ -244,8 +247,9 @@ open class QSTileViewImpl @JvmOverloads constructor(
     }
 
     fun updateResources() {
-        FontSizeUtils.updateFontSize(label, R.dimen.qs_tile_text_size)
-        FontSizeUtils.updateFontSize(secondaryLabel, R.dimen.qs_tile_secondary_label_text_size)
+        label.setTextSize(TypedValue.COMPLEX_UNIT_SP, labelSize)
+        secondaryLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, secondaryLabelSize)
+
 
         val iconSize = context.resources.getDimensionPixelSize(R.dimen.qs_icon_size)
         _icon.layoutParams.apply {
