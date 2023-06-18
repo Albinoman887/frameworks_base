@@ -937,7 +937,7 @@ public class QSPanel extends LinearLayout implements Tunable {
             default:
                 break;
         }
-        animTile.setDuration(mAnimDuration * 1000);
+        animTile.setDuration(mAnimDuration);
         animTile.start();
     }
 
