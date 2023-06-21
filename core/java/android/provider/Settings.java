@@ -5540,13 +5540,13 @@ public final class Settings {
          */
         @Readable
         public static final String DESKTOP_MODE = "desktop_mode";
-		
+
 		/**
          * Swipe to screenshot
          * @hide
          */
         public static final String SWIPE_TO_SCREENSHOT = "swipe_to_screenshot";
-		
+
 		/**
          * Whether to play notification sound and vibration if screen is ON
          * 0 - never
@@ -5554,7 +5554,7 @@ public final class Settings {
          * @hide
          */
         public static final String NOTIFICATION_SOUND_VIB_SCREEN_ON = "notification_sound_vib_screen_on";
-		
+
 		/**
          * Whether the phone vibrates on call connect
          * @hide
@@ -5663,19 +5663,19 @@ public final class Settings {
         * @hide
         */
        public static final String BATTERY_LIGHT_REALLYFULL_COLOR = "battery_light_reallyfull_color";
-	   
+
 	   /**
          * Whether to show or hide alert slider notifications on supported devices
          * @hide
          */
         public static final String ALERT_SLIDER_NOTIFICATIONS = "alert_slider_notifications";
-		
+
 		/**
          * Whether or not volume button music controls should be enabled to seek media tracks
          * @hide
          */
         public static final String VOLBTN_MUSIC_CONTROLS = "volbtn_music_controls";
-		
+
 		/**
          * Whether to allow one finger quick settings expansion on the side of the statusbar.
          * 0 = 0ff, 1 = right, 2 = left, 3 = both
@@ -5709,7 +5709,7 @@ public final class Settings {
          * @hide
          */
         public static final String NAVIGATION_BAR_INVERSE = "navigation_bar_inverse";
-		
+
 		/**
          * Wheter to show network traffic indicator in statusbar
          * @hide
@@ -5721,7 +5721,7 @@ public final class Settings {
          * @hide
          */
         public static final String NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD = "network_traffic_autohide_threshold";
-		
+
 		/**
          * @hide
          */
@@ -5756,7 +5756,7 @@ public final class Settings {
          * @hide
          */
         public static final String LS_MEDIA_FILTER_BLUR_RADIUS = "ls_media_filter_blur_radius";
-        
+
         /**
          * lockscreen album art fade level
          * @hide
@@ -5781,7 +5781,7 @@ public final class Settings {
          * @hide
          */
         public static final String INCREASING_RING_RAMP_UP_TIME = "increasing_ring_ramp_up_time";
-		
+
 		/**
          * Whether to show the battery info on the lockscreen while charging
          * @hide
@@ -5812,7 +5812,7 @@ public final class Settings {
          * @hide
          */
 	public static final String DISABLE_USERCARD = "disable_usercard";
-		
+
 		/**
          * boolean value. toggles compact layout in navigation bar
          * @hide
@@ -5830,7 +5830,7 @@ public final class Settings {
          * @hide
          */
         public static final String STATUSBAR_NOTIF_COUNT = "statusbar_notif_count";
-		
+
 		/**
          * Whether to display sound panel in the power menu
          * @hide
@@ -5902,7 +5902,7 @@ public final class Settings {
          * @hide
          */
         public static final String POWERMENU_TORCH = "powermenu_torch";
-		
+
 		/**
          * Whether to display the Device controls option in the power menu
          * @hide
@@ -5925,7 +5925,7 @@ public final class Settings {
           */
         @Readable
         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
-		
+
 		/**
          * Volume rocker wake
          * @hide
@@ -5960,7 +5960,7 @@ public final class Settings {
          * @hide
          */
         public static final String POCKET_JUDGE = "pocket_judge";
-		
+
 		/**
          * Color temperature of the display during the day
          * @hide
@@ -6065,7 +6065,7 @@ public final class Settings {
          * @hide
          */
         public static final String SEEK_BAR_BATTERY_CHARGE_LEVEL_SOUND = "battery_level_charge_seek_bar";
-		
+
 		/**
          * Whether the torch launch gesture to double tap or long press the power button when the
          * screen is off should be enabled. *
@@ -6104,7 +6104,7 @@ public final class Settings {
          */
         public static final String HIGH_TOUCH_SENSITIVITY_ENABLE =
                 "high_touch_sensitivity_enable";
-		
+
 	/** @hide */
         public static final String BACK_GESTURE_HEIGHT = "back_gesture_height";
         /**
@@ -6117,7 +6117,7 @@ public final class Settings {
          * @hide
          */
         public static final String QS_PANEL_STYLE = "qs_panel_style";
-        
+
 	/**
          * @hide
          */
@@ -6128,7 +6128,7 @@ public final class Settings {
          * @hide
          */
         public static final String SHOW_APP_VOLUME = "show_app_volume";
-        
+
         /**
          * Size of gesture bar radius.
          * @hide
@@ -6302,25 +6302,6 @@ public final class Settings {
          */
         public static final String FP_ERROR_VIBRATE = "fp_error_vibrate";
 
-        /**
-         * @hide
-         */
-        public static final String QS_TILE_LABEL_HIDE = "qs_tile_label_hide";
-
-        /**
-         * @hide
-         */
-        public static final String QS_TILE_VERTICAL_LAYOUT = "qs_tile_vertical_layout";
-
-        /**
-         * @hide
-         */
-        public static final String QS_LAYOUT = "qs_layout";
-
-        /**
-         * @hide
-         */
-        public static final String QQS_LAYOUT = "qqs_layout";
 
         /**
          * @hide
@@ -6602,7 +6583,7 @@ public final class Settings {
          */
         public static final String CLICK_PARTIAL_SCREENSHOT = "click_partial_screenshot";
 
-        /**        
+        /**
          * Statusbar clock background
          * 0 - hide accented chip
          * 1 - show accented chip (default)
@@ -6753,7 +6734,7 @@ public final class Settings {
          */
         public static final String NAVIGATION_BAR_MENU_ARROW_KEYS = "navigation_bar_menu_arrow_keys";
 
-        /** 
+        /**
          * @hide
          */
         public static final String FORCE_MOUSE_AS_TOUCH = "force_mouse_as_touch";
@@ -12198,8 +12179,8 @@ public final class Settings {
          * @hide
          */
         public static final String ENABLE_PROJECTION_PRIVACY_INDICATOR = "enable_projection_privacy_indicator";
-		
-	    /**	
+
+	    /**
          * Volume panel on left
          * @hide
          */
@@ -12447,7 +12428,7 @@ public final class Settings {
          */
         public static final String DOZE_ON_CHARGE = "doze_on_charge";
 
-        /**        
+        /**
          * Whether touch hovering is enabled on supported hardware
          * @hide
          */
@@ -19936,7 +19917,7 @@ public final class Settings {
         @SdkConstant(SdkConstant.SdkConstantType.ACTIVITY_INTENT_ACTION)
         public static final String ACTION_MOBILE_DATA =
                 "android.settings.panel.action.MOBILE_DATA";
-				
+
 		/**
          * @hide
          */
