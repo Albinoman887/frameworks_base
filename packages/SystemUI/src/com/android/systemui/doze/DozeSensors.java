@@ -241,7 +241,9 @@ public class DozeSensors {
                         false /* ignoresSetting */,
                         dozeParameters.longPressUsesProx(),
                         !dozeParameters.longPressNeedsProximityCheck() /* performsProxCheck */,
-                        false /* immediatelyReRegister */),
+                        false /* immediatelyReRegister */,
+                        !mScreenOffUdfpsEnabled /* requiresAod */
+                ),
                 new PluginSensor(
                         new SensorManagerPlugin.Sensor(TYPE_WAKE_DISPLAY),
                         Settings.Secure.DOZE_WAKE_DISPLAY_GESTURE,
